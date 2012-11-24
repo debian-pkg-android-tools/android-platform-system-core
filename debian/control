@@ -1,0 +1,24 @@
+Source: androidsystemcore
+Section: devel
+Priority: extra
+Maintainer: Android tools Maintainer <android-tools-devel@lists.alioth.debian.org>
+Uploaders: Stefan Handschuh <handschuh.stefan@googlemail.com>
+Build-Depends: debhelper (>=9), libbsd-dev
+Standards-Version: 3.9.3
+Homepage: https://android.googlesource.com/platform/system/core
+Vcs-Git: git://anonscm.debian.org/git/android-tools/systemcore.git
+
+Package: libandroidlog1
+Section: libs
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Android logging library
+ Library providing logging capabilities to android related tools.
+
+Package: libandroidcutils1
+Section: libs
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Android utils library for C
+ This library provides common functionalities for android related tools.
+

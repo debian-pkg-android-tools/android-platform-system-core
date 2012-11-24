@@ -3,7 +3,7 @@ Section: devel
 Priority: extra
 Maintainer: Android tools Maintainer <android-tools-devel@lists.alioth.debian.org>
 Uploaders: Stefan Handschuh <handschuh.stefan@googlemail.com>
-Build-Depends: debhelper (>=9), libbsd-dev
+Build-Depends: dh-exec (>= 0.2), debhelper (>=9), libbsd-dev
 Standards-Version: 3.9.3
 Homepage: https://android.googlesource.com/platform/system/core
 Vcs-Git: git://anonscm.debian.org/git/android-tools/systemcore.git
@@ -12,6 +12,8 @@ Package: libandroidlog1
 Section: libs
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Multi-Arch: same
 Description: Android logging library
  Library providing logging capabilities to android related tools.
 
@@ -19,6 +21,8 @@ Package: libandroidlog-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, libc-dev, libandroidlog1 (= ${binary:Version})
+Pre-Depends: ${misc:Pre-Depends}
+Multi-Arch: same
 Description: Android logging library - Development files
  Library providing logging capabilities to android related tools.
  .
@@ -28,6 +32,8 @@ Package: libandroidcutils1
 Section: libs
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Multi-Arch: same
 Description: Android utils library for C
  This library provides common functionalities for android related tools.
 
@@ -35,6 +41,8 @@ Package: libandroidcutils-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, libandroidcutils1 (= ${binary:Version}), libandroidlog-dev (= ${binary:Version}), libbsd-dev
+Pre-Depends: ${misc:Pre-Depends}
+Multi-Arch: same
 Description: Android utils library for C - Development files
  This library provides common functionalities for android related tools.
  .

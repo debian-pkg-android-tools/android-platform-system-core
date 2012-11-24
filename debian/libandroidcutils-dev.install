@@ -1,3 +1,5 @@
+#!/usr/bin/dh-exec
+
 include/android usr/include/android/
 include/cutils/abort_socket.h usr/include/cutils
 include/cutils/array.h usr/include/cutils
@@ -21,4 +23,4 @@ include/cutils/sockets.h usr/include/cutils
 include/cutils/str_parms.h usr/include/cutils
 include/cutils/threads.h usr/include/cutils
 include/cutils/zygote.h usr/include/cutils
-libcutils/libandroidcutils.a usr/lib
+libcutils/libandroidcutils.a usr/lib/${DEB_HOST_MULTIARCH}/

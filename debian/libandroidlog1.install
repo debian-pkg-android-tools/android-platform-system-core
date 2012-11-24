@@ -1,1 +1,3 @@
-liblog/libandroidlog.so.1 usr/lib
+#!/usr/bin/dh-exec
+
+liblog/libandroidlog.so.1 usr/lib/${DEB_HOST_MULTIARCH}/

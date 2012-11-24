@@ -1,6 +1,8 @@
+#!/usr/bin/dh-exec
+
 include/cutils/event_tag_map.h usr/include/android/cutils
 include/cutils/log.h usr/include/android/cutils
 include/cutils/logd.h usr/include/android/cutils
 include/cutils/logger.h usr/include/android/cutils
 include/cutils/logprint.h usr/include/android/cutils
-liblog/libandroidlog.a usr/lib
+liblog/libandroidlog.a usr/lib/${DEB_HOST_MULTIARCH}/

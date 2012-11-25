@@ -38,11 +38,11 @@ Index: androidsystemcore/liblog/androidlog.pc.in
 +
 Index: androidsystemcore/liblog/Makefile
 ===================================================================
---- androidsystemcore.orig/liblog/Makefile	2012-11-24 12:15:11.552775466 +0100
-+++ androidsystemcore/liblog/Makefile	2012-11-25 01:09:16.465218490 +0100
+--- androidsystemcore.orig/liblog/Makefile	2012-11-26 00:07:06.643820884 +0100
++++ androidsystemcore/liblog/Makefile	2012-11-26 00:07:06.655820884 +0100
 @@ -17,12 +17,16 @@
  
- LIBNAME := androidlog
+ LIBNAME = androidlog
  
 -all: $(OBJECTS)
 +all: $(OBJECTS) $(LIBNAME).pc
@@ -60,11 +60,11 @@ Index: androidsystemcore/liblog/Makefile
  
 Index: androidsystemcore/libcutils/Makefile
 ===================================================================
---- androidsystemcore.orig/libcutils/Makefile	2012-11-24 12:15:31.560776014 +0100
-+++ androidsystemcore/libcutils/Makefile	2012-11-25 01:09:23.933218506 +0100
+--- androidsystemcore.orig/libcutils/Makefile	2012-11-26 00:07:06.643820884 +0100
++++ androidsystemcore/libcutils/Makefile	2012-11-26 00:07:06.655820884 +0100
 @@ -47,12 +47,16 @@
  
- LIBNAME := androidcutils
+ LIBNAME = androidcutils
  
 -all: $(OBJECTS)
 +all: $(OBJECTS) $(LIBNAME).pc

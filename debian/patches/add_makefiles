@@ -1,9 +1,9 @@
 Index: androidsystemcore/Makefile
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ androidsystemcore/Makefile	2012-11-24 12:11:28.172769314 +0100
++++ androidsystemcore/Makefile	2012-11-25 23:59:00.859819615 +0100
 @@ -0,0 +1,10 @@
-+#!/usr/bin/make
++#!/bin/make
 +
 +all:
 +	make -C liblog
@@ -16,56 +16,56 @@ Index: androidsystemcore/Makefile
 Index: androidsystemcore/libcutils/Makefile
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ androidsystemcore/libcutils/Makefile	2012-11-24 12:15:31.560776014 +0100
++++ androidsystemcore/libcutils/Makefile	2012-11-25 23:59:39.595819716 +0100
 @@ -0,0 +1,58 @@
 +#!/bin/make
 +
-+CC := gcc
++CC = gcc
 +
-+SOURCES := abort_socket.c \
-+           array.c \
-+           ashmem-host.c \
-+           buffer.c \
-+           config_utils.c \
-+           cpu_info.c \
-+           hashmap.c \
-+           iosched_policy.c \
-+           list.c \
-+           load_file.c \
-+           native_handle.c \
-+           open_memstream.c \
-+           process_name.c \
-+           properties.c \
-+           qsort_r_compat.c \
-+           record_stream.c \
-+           sched_policy.c \
-+           selector.c \
-+           sockets.c \
-+           socket_inaddr_any_server.c \
-+           socket_local_client.c \
-+           socket_local_server.c \
-+           socket_loopback_client.c \
-+           socket_loopback_server.c \
-+           socket_network_client.c \
-+           strdup16to8.c \
-+           strdup8to16.c \
-+           str_parms.c \
-+           threads.c \
-+           zygote.c
++SOURCES = abort_socket.c \
++          array.c \
++          ashmem-host.c \
++          buffer.c \
++          config_utils.c \
++          cpu_info.c \
++          hashmap.c \
++          iosched_policy.c \
++          list.c \
++          load_file.c \
++          native_handle.c \
++          open_memstream.c \
++          process_name.c \
++          properties.c \
++          qsort_r_compat.c \
++          record_stream.c \
++          sched_policy.c \
++          selector.c \
++          sockets.c \
++          socket_inaddr_any_server.c \
++          socket_local_client.c \
++          socket_local_server.c \
++          socket_loopback_client.c \
++          socket_loopback_server.c \
++          socket_network_client.c \
++          strdup16to8.c \
++          strdup8to16.c \
++          str_parms.c \
++          threads.c \
++          zygote.c
 +
-+OBJECTS := $(SOURCES:.c=.o)
++OBJECTS = $(SOURCES:.c=.o)
 +
-+LD_FLAGS := -L../liblog -lpthread -landroidlog -lbsd
-+CFLAGS := -c -fPIC -I../include \
-+          -DHAVE_SYS_UIO_H \
-+          -DHAVE_PTHREADS \
-+          -DANDROID_SMP=0 \
-+          -DHAVE_GNU_QSORT_R \
-+          -DHAVE_OPEN_MEMSTREAM \
-+          -DHAVE_SYSTEM_PROPERTY_SERVER \
-+          -DHAVE_STRLCPY
++LD_FLAGS = -L../liblog -lpthread -landroidlog -lbsd
++CFLAGS = -c -fPIC -I../include \
++         -DHAVE_SYS_UIO_H \
++         -DHAVE_PTHREADS \
++         -DANDROID_SMP=0 \
++         -DHAVE_GNU_QSORT_R \
++         -DHAVE_OPEN_MEMSTREAM \
++         -DHAVE_SYSTEM_PROPERTY_SERVER \
++         -DHAVE_STRLCPY
 +
-+LIBNAME := androidcutils
++LIBNAME = androidcutils
 +
 +all: $(OBJECTS)
 +	$(CC) -shared -Wl,-soname,lib$(LIBNAME).so.1 -o lib$(LIBNAME).so.1 $(OBJECTS) $(LD_FLAGS)
@@ -79,26 +79,26 @@ Index: androidsystemcore/libcutils/Makefile
 Index: androidsystemcore/liblog/Makefile
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ androidsystemcore/liblog/Makefile	2012-11-24 12:15:11.552775466 +0100
++++ androidsystemcore/liblog/Makefile	2012-11-26 00:00:12.899819803 +0100
 @@ -0,0 +1,28 @@
 +#!/bin/make
 +
-+CC := gcc
++CC = gcc
 +
-+SOURCES := event_tag_map.c \
-+           fake_log_device.c \
-+           logd_write.c \
-+           logprint.c
++SOURCES = event_tag_map.c \
++          fake_log_device.c \
++          logd_write.c \
++          logprint.c
 +
-+OBJECTS := $(SOURCES:.c=.o)
++OBJECTS = $(SOURCES:.c=.o)
 +
-+LD_FLAGS := -lpthread
-+CFLAGS := -c -fPIC -I../include \
-+          -DFAKE_LOG_DEVICE=1 \
-+          -DHAVE_SYS_UIO_H \
-+          -DHAVE_PTHREADS
++LD_FLAGS = -lpthread
++CFLAGS = -c -fPIC -I../include \
++         -DFAKE_LOG_DEVICE=1 \
++         -DHAVE_SYS_UIO_H \
++         -DHAVE_PTHREADS
 +
-+LIBNAME := androidlog
++LIBNAME = androidlog
 +
 +all: $(OBJECTS)
 +	$(CC) -shared -Wl,-soname,lib$(LIBNAME).so.1 -o lib$(LIBNAME).so.1 $(OBJECTS) $(LD_FLAGS)

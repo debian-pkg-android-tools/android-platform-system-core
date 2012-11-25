@@ -24,3 +24,4 @@ include/cutils/str_parms.h usr/include/cutils
 include/cutils/threads.h usr/include/cutils
 include/cutils/zygote.h usr/include/cutils
 libcutils/libandroidcutils.a usr/lib/${DEB_HOST_MULTIARCH}/
+libcutils/androidcutils.pc usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig

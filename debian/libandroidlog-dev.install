@@ -6,3 +6,4 @@ include/cutils/logd.h usr/include/android/cutils
 include/cutils/logger.h usr/include/android/cutils
 include/cutils/logprint.h usr/include/android/cutils
 liblog/libandroidlog.a usr/lib/${DEB_HOST_MULTIARCH}/
+liblog/androidlog.pc usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig

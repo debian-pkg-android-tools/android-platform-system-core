@@ -18,8 +18,8 @@ echo "Version $VERSION"
 
 # now we delete the files that we dont intend to use
 echo "Deleting not needed files ..."
-rm -fr `find $DIRECTORY -maxdepth 1 -type d ! -name $DIRECTORY ! -name liblog ! -name libcutils ! -name include`
-rm -fr `find $DIRECTORY/include -maxdepth 1 -type d ! -name include ! -name cutils ! -name android`
+rm -fr `find $DIRECTORY -maxdepth 1 -type d ! -name $DIRECTORY ! -name liblog ! -name libcutils ! -name include ! -name libzipfile`
+rm -fr `find $DIRECTORY/include -maxdepth 1 -type d ! -name include ! -name cutils ! -name android ! -name zipfile`
 
 
 echo "Packaging archive into ../${DIRECTORY}_$REVISION+git$VERSION.orig.tar.gz ..."

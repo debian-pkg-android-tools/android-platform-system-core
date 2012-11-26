@@ -6,9 +6,11 @@ where the following files and directories have been deleted:
     - include
     - liblog
     - libcutils
+    - libzipfile
  - all directories in include except
     - android
     - cutils
+    - zipfile
 
 The script 'orig-tar.sh' can be used to generate the source archive.
 

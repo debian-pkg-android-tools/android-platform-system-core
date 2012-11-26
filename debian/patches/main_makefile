@@ -1,15 +1,17 @@
 Index: androidsystemcore/Makefile
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ androidsystemcore/Makefile	2012-11-26 22:17:45.000000000 +0100
-@@ -0,0 +1,10 @@
++++ androidsystemcore/Makefile	2012-11-26 22:52:27.908199571 +0100
+@@ -0,0 +1,12 @@
 +#!/bin/make
 +
 +all:
 +	make -C liblog
 +	make -C libcutils
++	make -C libzipfile
 +
 +clean:
 +	make -C liblog clean
 +	make -C libcutils clean
++	make -C libzipfile clean
 +

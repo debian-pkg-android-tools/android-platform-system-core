@@ -1,23 +1,8 @@
-Index: androidsystemcore/Makefile
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ androidsystemcore/Makefile	2012-11-25 23:59:00.859819615 +0100
-@@ -0,0 +1,10 @@
-+#!/bin/make
-+
-+all:
-+	make -C liblog
-+	make -C libcutils
-+
-+clean:
-+	make -C liblog clean
-+	make -C libcutils clean
-+
 Index: androidsystemcore/libcutils/Makefile
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ androidsystemcore/libcutils/Makefile	2012-11-25 23:59:39.595819716 +0100
-@@ -0,0 +1,58 @@
++++ androidsystemcore/libcutils/Makefile	2012-11-26 22:43:58.812198243 +0100
+@@ -0,0 +1,62 @@
 +#!/bin/make
 +
 +CC = gcc
@@ -67,45 +52,35 @@ Index: androidsystemcore/libcutils/Makefile
 +
 +LIBNAME = androidcutils
 +
-+all: $(OBJECTS)
++all: $(OBJECTS) $(LIBNAME).pc
 +	$(CC) -shared -Wl,-soname,lib$(LIBNAME).so.1 -o lib$(LIBNAME).so.1 $(OBJECTS) $(LD_FLAGS)
-+	ln -s lib$(LIBNAME).so.1 lib$(LIBNAME).so
++	ln -sf lib$(LIBNAME).so.1 lib$(LIBNAME).so
 +	ar rs lib$(LIBNAME).a $(OBJECTS)
 +
-+clean:
-+	rm -fr $(OBJECTS)
-+	rm -fr lib$(LIBNAME).so lib$(LIBNAME).so.1 lib$(LIBNAME).a
++$(LIBNAME).pc: $(LIBNAME).pc.in
++	sed -e 's/@VERSION@/$(VERSION)/g' -e 's/@TRIPLET@/$(TRIPLET)/g' $(LIBNAME).pc.in > $(LIBNAME).pc
 +
-Index: androidsystemcore/liblog/Makefile
++clean:
++	rm -f $(OBJECTS)
++	rm -f lib$(LIBNAME).so lib$(LIBNAME).so.1 lib$(LIBNAME).a
++	rm -f $(LIBNAME).pc
++
+Index: androidsystemcore/libcutils/androidcutils.pc.in
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ androidsystemcore/liblog/Makefile	2012-11-26 00:00:12.899819803 +0100
-@@ -0,0 +1,28 @@
-+#!/bin/make
++++ androidsystemcore/libcutils/androidcutils.pc.in	2012-11-26 22:43:39.548198192 +0100
+@@ -0,0 +1,14 @@
++prefix=/usr
++exec_prefix=
++libdir=${prefix}/lib/@TRIPLET@
++includedir=${prefix}/include/android
 +
-+CC = gcc
++Name: androidctuils
++Description: Android utils library for C
++Version: @VERSION@
 +
-+SOURCES = event_tag_map.c \
-+          fake_log_device.c \
-+          logd_write.c \
-+          logprint.c
-+
-+OBJECTS = $(SOURCES:.c=.o)
-+
-+LD_FLAGS = -lpthread
-+CFLAGS = -c -fPIC -I../include \
-+         -DFAKE_LOG_DEVICE=1 \
-+         -DHAVE_SYS_UIO_H \
-+         -DHAVE_PTHREADS
-+
-+LIBNAME = androidlog
-+
-+all: $(OBJECTS)
-+	$(CC) -shared -Wl,-soname,lib$(LIBNAME).so.1 -o lib$(LIBNAME).so.1 $(OBJECTS) $(LD_FLAGS)
-+	ln -s lib$(LIBNAME).so.1 lib$(LIBNAME).so
-+	ar rs lib$(LIBNAME).a $(OBJECTS)
-+
-+clean:
-+	rm -fr $(OBJECTS)
-+	rm -fr lib$(LIBNAME).so lib$(LIBNAME).so.1 lib$(LIBNAME).a
++Requires: androidlog = @VERSION@, bsd
++Libs: -L${libdir} -landroidcutils
++Libs.private: -lpthread
++Cflags: -I${includedir}
 +

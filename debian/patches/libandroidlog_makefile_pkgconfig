@@ -1,0 +1,56 @@
+Index: androidsystemcore/liblog/Makefile
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ androidsystemcore/liblog/Makefile	2012-11-26 22:43:14.864198129 +0100
+@@ -0,0 +1,32 @@
++#!/bin/make
++
++CC = gcc
++
++SOURCES = event_tag_map.c \
++          fake_log_device.c \
++          logd_write.c \
++          logprint.c
++
++OBJECTS = $(SOURCES:.c=.o)
++
++LD_FLAGS = -lpthread
++CFLAGS = -c -fPIC -I../include \
++         -DFAKE_LOG_DEVICE=1 \
++         -DHAVE_SYS_UIO_H \
++         -DHAVE_PTHREADS
++
++LIBNAME = androidlog
++
++all: $(OBJECTS) $(LIBNAME).pc
++	$(CC) -shared -Wl,-soname,lib$(LIBNAME).so.1 -o lib$(LIBNAME).so.1 $(OBJECTS) $(LD_FLAGS)
++	ln -sf lib$(LIBNAME).so.1 lib$(LIBNAME).so
++	ar rs lib$(LIBNAME).a $(OBJECTS)
++
++$(LIBNAME).pc: $(LIBNAME).pc.in
++	sed -e 's/@VERSION@/$(VERSION)/g' -e 's/@TRIPLET@/$(TRIPLET)/g' $(LIBNAME).pc.in > $(LIBNAME).pc
++
++clean:
++	rm -f $(OBJECTS)
++	rm -f lib$(LIBNAME).so lib$(LIBNAME).so.1 lib$(LIBNAME).a
++	rm -f $(LIBNAME).pc
++
+Index: androidsystemcore/liblog/androidlog.pc.in
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ androidsystemcore/liblog/androidlog.pc.in	2012-11-26 22:42:55.944198080 +0100
+@@ -0,0 +1,14 @@
++prefix=/usr
++exec_prefix=
++libdir=${prefix}/lib/@TRIPLET@
++includedir=${prefix}/include/android
++
++Name: androidlog
++Description: Android logging library
++Version: @VERSION@
++
++Requires:
++Libs: -L${libdir} -landroidlog
++Libs.private: -lpthread
++Cflags: -I${includedir}
++

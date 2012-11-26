@@ -1,2 +1,3 @@
-add_makefiles
-add_pkgconfig
+libandroidcutils_makefile_pkgconfig
+libandroidlog_makefile_pkgconfig
+main_makefile

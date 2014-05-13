@@ -1,7 +1,7 @@
 #!/bin/bash
 
 REVISION=21
-gitclonedir=androidsystemcore
+gitclonedir=android-platform-system-core
 
 if [ -d $gitclonedir -o -f $gitclonedir ]
 then

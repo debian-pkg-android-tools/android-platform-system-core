@@ -1,7 +1,7 @@
-Index: androidsystemcore/libcutils/Makefile
+Index: android-platform-system-core/libcutils/Makefile
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ androidsystemcore/libcutils/Makefile	2012-11-26 22:43:58.812198243 +0100
++++ android-platform-system-core/libcutils/Makefile	2012-11-26 22:43:58.812198243 +0100
 @@ -0,0 +1,62 @@
 +#!/bin/make
 +
@@ -65,10 +65,10 @@ Index: androidsystemcore/libcutils/Makefile
 +	rm -f lib$(LIBNAME).so lib$(LIBNAME).so.1 lib$(LIBNAME).a
 +	rm -f $(LIBNAME).pc
 +
-Index: androidsystemcore/libcutils/androidcutils.pc.in
+Index: android-platform-system-core/libcutils/androidcutils.pc.in
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ androidsystemcore/libcutils/androidcutils.pc.in	2012-11-26 22:43:39.548198192 +0100
++++ android-platform-system-core/libcutils/androidcutils.pc.in	2012-11-26 22:43:39.548198192 +0100
 @@ -0,0 +1,14 @@
 +prefix=/usr
 +exec_prefix=

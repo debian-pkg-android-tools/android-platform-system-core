@@ -1,7 +1,7 @@
-Index: androidsystemcore/liblog/Makefile
+Index: android-platform-system-core/liblog/Makefile
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ androidsystemcore/liblog/Makefile	2012-11-26 22:43:14.864198129 +0100
++++ android-platform-system-core/liblog/Makefile	2012-11-26 22:43:14.864198129 +0100
 @@ -0,0 +1,32 @@
 +#!/bin/make
 +
@@ -35,10 +35,10 @@ Index: androidsystemcore/liblog/Makefile
 +	rm -f lib$(LIBNAME).so lib$(LIBNAME).so.1 lib$(LIBNAME).a
 +	rm -f $(LIBNAME).pc
 +
-Index: androidsystemcore/liblog/androidlog.pc.in
+Index: android-platform-system-core/liblog/androidlog.pc.in
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ androidsystemcore/liblog/androidlog.pc.in	2012-11-26 22:42:55.944198080 +0100
++++ android-platform-system-core/liblog/androidlog.pc.in	2012-11-26 22:42:55.944198080 +0100
 @@ -0,0 +1,14 @@
 +prefix=/usr
 +exec_prefix=

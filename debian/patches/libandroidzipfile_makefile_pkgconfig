@@ -1,7 +1,7 @@
-Index: androidsystemcore/libzipfile/Makefile
+Index: android-platform-system-core/libzipfile/Makefile
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ androidsystemcore/libzipfile/Makefile	2012-11-26 22:56:22.200200184 +0100
++++ android-platform-system-core/libzipfile/Makefile	2012-11-26 22:56:22.200200184 +0100
 @@ -0,0 +1,26 @@
 +#!/bin/make
 +
@@ -29,10 +29,10 @@ Index: androidsystemcore/libzipfile/Makefile
 +	rm -f lib$(LIBNAME).so lib$(LIBNAME).so.1 lib$(LIBNAME).a
 +	rm -f $(LIBNAME).pc
 +
-Index: androidsystemcore/libzipfile/androidzipfile.pc.in
+Index: android-platform-system-core/libzipfile/androidzipfile.pc.in
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ androidsystemcore/libzipfile/androidzipfile.pc.in	2012-11-26 22:54:04.604199825 +0100
++++ android-platform-system-core/libzipfile/androidzipfile.pc.in	2012-11-26 22:54:04.604199825 +0100
 @@ -0,0 +1,13 @@
 +prefix=/usr
 +exec_prefix=

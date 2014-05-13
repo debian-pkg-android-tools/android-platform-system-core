@@ -1,4 +1,4 @@
-Source: androidsystemcore
+Source: android-platform-system-core
 Section: devel
 Priority: extra
 Maintainer: Android tools Maintainer <android-tools-devel@lists.alioth.debian.org>

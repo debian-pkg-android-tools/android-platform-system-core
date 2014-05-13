@@ -1,0 +1,11 @@
+files
+*.debhelper
+*.substvars
+*.log
+libandroidcutils-dev
+libandroidcutils1
+libandroidlog-dev
+libandroidlog1
+libandroidzipfile-dev
+libandroidzipfile1
+tmp

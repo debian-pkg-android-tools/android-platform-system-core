@@ -7,7 +7,8 @@ Uploaders: Stefan Handschuh <handschuh.stefan@googlemail.com>,
 Build-Depends: dh-exec (>= 0.2), debhelper (>=9), libbsd-dev, zlib1g-dev
 Standards-Version: 3.9.5
 Homepage: https://android.googlesource.com/platform/system/core
-Vcs-Git: git://anonscm.debian.org/git/android-tools/systemcore.git
+Vcs-Git: https://alioth.debian.org/anonscm/git/android-tools/android-platform-system-core.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=android-tools/android-platform-system-core.git
 
 Package: libandroidlog1
 Section: libs

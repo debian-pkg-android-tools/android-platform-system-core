@@ -2,7 +2,8 @@ Source: android-platform-system-core
 Section: devel
 Priority: extra
 Maintainer: Android tools Maintainer <android-tools-devel@lists.alioth.debian.org>
-Uploaders: Stefan Handschuh <handschuh.stefan@googlemail.com>
+Uploaders: Stefan Handschuh <handschuh.stefan@googlemail.com>,
+           Hans-Christoph Steiner <hans@eds.org>
 Build-Depends: dh-exec (>= 0.2), debhelper (>=9), libbsd-dev, zlib1g-dev
 Standards-Version: 3.9.3
 Homepage: https://android.googlesource.com/platform/system/core

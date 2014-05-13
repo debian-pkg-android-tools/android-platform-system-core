@@ -21,9 +21,10 @@ echo "Deleting not needed files ..."
 rm -fr `find $DIRECTORY -maxdepth 1 -type d ! -name $DIRECTORY ! -name liblog ! -name libcutils ! -name include ! -name libzipfile`
 rm -fr `find $DIRECTORY/include -maxdepth 1 -type d ! -name include ! -name cutils ! -name android ! -name zipfile`
 
+tarballdir=$(cd `dirname $0`/../../; pwd)
 
 echo "Packaging archive into ../${DIRECTORY}_$REVISION+git$VERSION.orig.tar.gz ..."
-tar -czf ../${DIRECTORY}_$REVISION+git$VERSION.orig.tar.gz $DIRECTORY
+tar -czf ${tarballdir}/${DIRECTORY}_$REVISION+git$VERSION.orig.tar.gz $DIRECTORY
 echo "Deleting folder '$DIRECTORY'"
-rm -Ir $DIRECTORY
+rm -rf $DIRECTORY
 

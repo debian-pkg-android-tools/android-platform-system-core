@@ -10,6 +10,15 @@ Homepage: https://android.googlesource.com/platform/system/core
 Vcs-Git: https://alioth.debian.org/anonscm/git/android-tools/android-platform-system-core.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=android-tools/android-platform-system-core.git
 
+Package: androidsystem-dev
+Section: libdevel
+Architecture: all
+Depends: ${misc:Depends},
+Description: Android system development headers
+ Headers that define various macros and data structures for the Android code.
+ .
+ This package contains the development files.
+
 Package: libandroidlog1
 Section: libs
 Architecture: any

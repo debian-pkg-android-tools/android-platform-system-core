@@ -1,0 +1,7 @@
+#!/usr/bin/dh-exec
+
+include/system/audio.h usr/include/android/system
+include/system/audio_policy.h usr/include/android/system
+include/system/camera.h usr/include/android/system
+include/system/graphics.h usr/include/android/system
+include/system/window.h usr/include/android/system

@@ -1,7 +1,12 @@
 #!/usr/bin/dh-exec
 
-include/system/audio.h usr/include/android/system
+include/system/audio.h        usr/include/android/system
 include/system/audio_policy.h usr/include/android/system
-include/system/camera.h usr/include/android/system
-include/system/graphics.h usr/include/android/system
-include/system/window.h usr/include/android/system
+include/system/camera.h       usr/include/android/system
+include/system/graphics.h     usr/include/android/system
+include/system/window.h       usr/include/android/system
+include/corkscrew/ptrace.h       usr/include/android/corkscrew
+include/corkscrew/demangle.h     usr/include/android/corkscrew
+include/corkscrew/map_info.h     usr/include/android/corkscrew
+include/corkscrew/backtrace.h    usr/include/android/corkscrew
+include/corkscrew/symbol_table.h usr/include/android/corkscrew

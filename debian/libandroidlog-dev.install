@@ -1,5 +1,6 @@
 #!/usr/bin/dh-exec
 
+include/android usr/include/android/
 include/cutils/event_tag_map.h usr/include/android/cutils
 include/cutils/log.h usr/include/android/cutils
 include/cutils/logd.h usr/include/android/cutils

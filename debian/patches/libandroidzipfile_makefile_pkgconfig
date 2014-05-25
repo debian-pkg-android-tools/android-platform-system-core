@@ -1,8 +1,6 @@
-Index: android-platform-system-core/libzipfile/Makefile
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ android-platform-system-core/libzipfile/Makefile	2012-11-26 22:56:22.200200184 +0100
-@@ -0,0 +1,26 @@
+--- /dev/null
++++ b/libzipfile/Makefile
+@@ -0,0 +1,28 @@
 +#!/bin/make
 +
 +CC = gcc
@@ -12,12 +10,14 @@ Index: android-platform-system-core/libzipfile/Makefile
 +
 +OBJECTS = $(SOURCES:.c=.o)
 +
-+LD_FLAGS = -lz
-+CFLAGS = -c -fPIC -I../include
++CFLAGS += -fPIC -I../include
++LDFLAGS += -fPIC
++LIBS += -lz
 +LIBNAME = androidzipfile
 +
 +all: $(OBJECTS) $(LIBNAME).pc
-+	$(CC) -shared -Wl,-soname,lib$(LIBNAME).so.1 -o lib$(LIBNAME).so.1 $(OBJECTS) $(LD_FLAGS)
++	$(CC) $(LDFLAGS) -shared \
++		-Wl,-soname,lib$(LIBNAME).so.1 -o lib$(LIBNAME).so.1 $(OBJECTS) $(LIBS)
 +	ln -sf lib$(LIBNAME).so.1 lib$(LIBNAME).so
 +	ar rs lib$(LIBNAME).a $(OBJECTS)
 +
@@ -29,10 +29,8 @@ Index: android-platform-system-core/libzipfile/Makefile
 +	rm -f lib$(LIBNAME).so lib$(LIBNAME).so.1 lib$(LIBNAME).a
 +	rm -f $(LIBNAME).pc
 +
-Index: android-platform-system-core/libzipfile/androidzipfile.pc.in
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ android-platform-system-core/libzipfile/androidzipfile.pc.in	2012-11-26 22:54:04.604199825 +0100
+--- /dev/null
++++ b/libzipfile/androidzipfile.pc.in
 @@ -0,0 +1,13 @@
 +prefix=/usr
 +exec_prefix=

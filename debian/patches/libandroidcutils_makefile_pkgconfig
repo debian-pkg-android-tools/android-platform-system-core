@@ -1,6 +1,6 @@
 --- /dev/null
 +++ b/libcutils/Makefile
-@@ -0,0 +1,72 @@
+@@ -0,0 +1,66 @@
 +#!/bin/make
 +
 +CC = gcc
@@ -47,21 +47,15 @@
 +OBJECTS = $(SOURCES:.c=.o)
 +
 +CFLAGS += -fPIC -I../include \
-+         -DHAVE_SYS_UIO_H \
-+         -DHAVE_PTHREADS \
-+         -DANDROID_SMP=0 \
-+         -DHAVE_GNU_QSORT_R \
-+         -DHAVE_OPEN_MEMSTREAM \
-+         -DHAVE_SYSTEM_PROPERTY_SERVER \
-+         -DHAVE_STRLCPY
-+LDFLAGS += -fPIC
++	-DANDROID_SMP=0 \
++	-include ../include/arch/linux-x86/AndroidConfig.h
++LDFLAGS += -fPIC -shared
 +LIBS += -L../liblog -lpthread -landroidlog -lbsd
 +
 +LIBNAME = androidcutils
 +
 +all: $(OBJECTS) $(LIBNAME).pc
-+	$(CC) $(LDFLAGS) -shared \
-+		-Wl,-soname,lib$(LIBNAME).so.1 -o lib$(LIBNAME).so.1 $(OBJECTS) $(LIBS)
++	$(CC) $(LDFLAGS) -Wl,-soname,lib$(LIBNAME).so.1 -o lib$(LIBNAME).so.1 $(OBJECTS) $(LIBS)
 +	ln -sf lib$(LIBNAME).so.1 lib$(LIBNAME).so
 +	ar rs lib$(LIBNAME).a $(OBJECTS)
 +

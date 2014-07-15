@@ -10,7 +10,7 @@ Homepage: https://android.googlesource.com/platform/system/core
 Vcs-Git: https://alioth.debian.org/anonscm/git/android-tools/android-platform-system-core.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=android-tools/android-platform-system-core.git
 
-Package: androidsystem-dev
+Package: android-system-dev
 Section: libdevel
 Architecture: all
 Depends: ${misc:Depends},

@@ -2,7 +2,7 @@ files
 *.debhelper
 *.substvars
 *.log
-androidsystem-dev/
+android-system-dev/
 libandroidcutils-dev/
 libandroidcutils1/
 libandroidlog-dev/

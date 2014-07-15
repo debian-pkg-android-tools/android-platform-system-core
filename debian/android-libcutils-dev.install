@@ -39,4 +39,3 @@ include/cutils/uevent.h usr/include/android/cutils/
 include/cutils/uio.h usr/include/android/cutils/
 include/cutils/zygote.h usr/include/android/cutils/
 libcutils/libcutils.a usr/lib/android/
-libcutils/androidcutils.pc usr/lib/android/pkgconfig

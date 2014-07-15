@@ -1,3 +1,2 @@
 include/zipfile usr/include/android/
 libzipfile/libzipfile.a usr/lib/android/
-libzipfile/androidzipfile.pc usr/lib/android/pkgconfig

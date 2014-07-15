@@ -1,6 +1,6 @@
 --- /dev/null
 +++ b/libzipfile/Makefile
-@@ -0,0 +1,28 @@
+@@ -0,0 +1,23 @@
 +#!/bin/make
 +
 +CC = gcc
@@ -16,32 +16,11 @@
 +LIBS += -lz
 +LIBNAME = zipfile
 +
-+all: $(OBJECTS) $(LIBNAME).pc
++all: $(OBJECTS)
 +	$(CC) $(LDFLAGS) -shared \
 +		-Wl,-soname,lib$(LIBNAME).so -o lib$(LIBNAME).so $(OBJECTS) $(LIBS)
 +	ar rs lib$(LIBNAME).a $(OBJECTS)
 +
-+$(LIBNAME).pc: $(LIBNAME).pc.in
-+	sed -e 's/@VERSION@/$(VERSION)/g' -e 's/@TRIPLET@/$(TRIPLET)/g' $(LIBNAME).pc.in > $(LIBNAME).pc
-+
 +clean:
 +	rm -f $(OBJECTS)
 +	rm -f lib$(LIBNAME).so lib$(LIBNAME).a
-+	rm -f $(LIBNAME).pc
-+
---- /dev/null
-+++ b/libzipfile/androidzipfile.pc.in
-@@ -0,0 +1,13 @@
-+prefix=/usr
-+exec_prefix=
-+libdir=${prefix}/lib/@TRIPLET@
-+includedir=${prefix}/include/android
-+
-+Name: androidzipfile
-+Description: Android zipfile library
-+Version: @VERSION@
-+
-+Requires: z
-+Libs: -L${libdir} -landroidzipfile -lz
-+Cflags: -I${includedir}
-+

@@ -57,17 +57,19 @@ Description: Android utils library for C - Development files
  .
  This package contains the development files.
 
-Package: libandroidzipfile1
+Package: android-libzipfile
 Section: libs
 Architecture: amd64 i386
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android zipfile library
  Library providing zipfile handling capabilities to android related tools.
 
-Package: libandroidzipfile-dev
+Package: android-libzipfile-dev
 Section: libdevel
 Architecture: amd64 i386
-Depends: ${misc:Depends}, zlib1g-dev
+Depends: ${misc:Depends},
+         android-libzipfile (= ${binary:Version}),
+         zlib1g-dev
 Description: Android zipfile library - Development files
  Library providing zipfile handling capabilities to android related tools.
  .

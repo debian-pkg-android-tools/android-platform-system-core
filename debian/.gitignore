@@ -3,8 +3,8 @@ files
 *.substvars
 *.log
 android-system-dev/
-libandroidcutils-dev/
-libandroidcutils1/
+android-libcutils-dev/
+android-libcutils/
 libandroidlog-dev/
 libandroidlog1/
 libandroidzipfile-dev/

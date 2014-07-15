@@ -14,7 +14,7 @@ Package: android-system-dev
 Section: libdevel
 Architecture: amd64 i386
 Depends: ${misc:Depends},
-         libandroidcutils-dev (= ${binary:Version}),
+         android-libcutils-dev (= ${binary:Version}),
 Description: Android system development headers
  Headers that define various macros and data structures for the Android code.
  .
@@ -36,18 +36,18 @@ Description: Android logging library - Development files
  .
  This package contains the development files.
 
-Package: libandroidcutils1
+Package: android-libcutils
 Section: libs
 Architecture: amd64 i386
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android utils library for C
  This library provides common functionalities for android related tools.
 
-Package: libandroidcutils-dev
+Package: android-libcutils-dev
 Section: libdevel
 Architecture: amd64 i386
 Depends: ${misc:Depends},
-         libandroidcutils1 (= ${binary:Version}),
+         android-libcutils (= ${binary:Version}),
          libandroidlog-dev (= ${binary:Version}),
          libbsd-dev
 Description: Android utils library for C - Development files

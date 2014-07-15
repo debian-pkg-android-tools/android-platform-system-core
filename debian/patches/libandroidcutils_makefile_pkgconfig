@@ -50,7 +50,7 @@
 +	-DANDROID_SMP=0 \
 +	-include ../include/arch/linux-x86/AndroidConfig.h
 +LDFLAGS += -fPIC -shared
-+LIBS += -L../liblog -lpthread -landroidlog -lbsd
++LIBS += -L../liblog -lpthread -llog -lbsd
 +
 +LIBNAME = cutils
 +

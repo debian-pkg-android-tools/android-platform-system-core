@@ -20,17 +20,19 @@ Description: Android system development headers
  .
  This package contains the development files.
 
-Package: libandroidlog1
+Package: android-liblog
 Section: libs
 Architecture: amd64 i386
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android logging library
  Library providing logging capabilities to android related tools.
 
-Package: libandroidlog-dev
+Package: android-liblog-dev
 Section: libdevel
 Architecture: amd64 i386
-Depends: ${misc:Depends}, libc-dev, libandroidlog1 (= ${binary:Version})
+Depends: ${misc:Depends},
+         libc-dev,
+         android-liblog (= ${binary:Version})
 Description: Android logging library - Development files
  Library providing logging capabilities to android related tools.
  .
@@ -48,7 +50,7 @@ Section: libdevel
 Architecture: amd64 i386
 Depends: ${misc:Depends},
          android-libcutils (= ${binary:Version}),
-         libandroidlog-dev (= ${binary:Version}),
+         android-liblog-dev (= ${binary:Version}),
          libbsd-dev
 Description: Android utils library for C - Development files
  This library provides common functionalities for android related tools.

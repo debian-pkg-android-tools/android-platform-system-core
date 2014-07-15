@@ -4,5 +4,5 @@ include/cutils/log.h usr/include/android/cutils
 include/cutils/logd.h usr/include/android/cutils
 include/cutils/logger.h usr/include/android/cutils
 include/cutils/logprint.h usr/include/android/cutils
-liblog/libandroidlog.a usr/lib/android/
+liblog/liblog.a usr/lib/android/
 liblog/androidlog.pc usr/lib/android/pkgconfig

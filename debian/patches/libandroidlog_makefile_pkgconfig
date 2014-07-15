@@ -1,6 +1,6 @@
 --- /dev/null
 +++ b/liblog/Makefile
-@@ -0,0 +1,31 @@
+@@ -0,0 +1,30 @@
 +#!/bin/make
 +
 +CC = gcc
@@ -17,11 +17,10 @@
 +LDFLAGS += -fPIC -shared
 +LIBS += -lpthread
 +
-+LIBNAME = androidlog
++LIBNAME = log
 +
 +all: $(OBJECTS) $(LIBNAME).pc
-+	$(CC) $(LDFLAGS) -Wl,-soname,lib$(LIBNAME).so.1 -o lib$(LIBNAME).so.1 $(OBJECTS) $(LIBS)
-+	ln -sf lib$(LIBNAME).so.1 lib$(LIBNAME).so
++	$(CC) $(LDFLAGS) -Wl,-soname,lib$(LIBNAME).so -o lib$(LIBNAME).so $(OBJECTS) $(LIBS)
 +	ar rs lib$(LIBNAME).a $(OBJECTS)
 +
 +$(LIBNAME).pc: $(LIBNAME).pc.in
@@ -29,7 +28,7 @@
 +
 +clean:
 +	rm -f $(OBJECTS)
-+	rm -f lib$(LIBNAME).so lib$(LIBNAME).so.1 lib$(LIBNAME).a
++	rm -f lib$(LIBNAME).so lib$(LIBNAME).a
 +	rm -f $(LIBNAME).pc
 +
 --- /dev/null

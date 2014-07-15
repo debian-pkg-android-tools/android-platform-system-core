@@ -5,8 +5,8 @@ files
 android-system-dev/
 android-libcutils-dev/
 android-libcutils/
-libandroidlog-dev/
-libandroidlog1/
+android-liblog-dev/
+android-liblog/
 libandroidzipfile-dev/
 libandroidzipfile1/
 tmp/

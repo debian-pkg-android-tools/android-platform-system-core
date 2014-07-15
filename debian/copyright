@@ -30,8 +30,11 @@ License: BSD (3 clause)
 
 Files: sh/arith.c
 Copyright: 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
-           1993, The Regents of the University of California.
-License: BSD, GPL-2+ with Bison Exception
+License: GPL-2+ with Bison Exception
+
+Files: sh/arith.c
+Copyright: 1993, The Regents of the University of California.
+License: BSD (3 clause)
 
 Files: libcutils/memory.c
 Copyright: 1998, Todd C. Miller <Todd.Miller@courtesan.com>
@@ -69,7 +72,7 @@ License: GPL-2+
  On Debian systems, the full text of the GNU General Public License
  version 2 can be found in the file `/usr/share/common-licenses/GPL-2'.
 
-License: GPL-2+ Bison Exception
+License: GPL-2+ with Bison Exception
  As a special exception, when this file is copied by Bison into a Bison output
  file, you may use that output file without restriction.  This special
  exception was added by the Free Software Foundation in version 1.24 of Bison.

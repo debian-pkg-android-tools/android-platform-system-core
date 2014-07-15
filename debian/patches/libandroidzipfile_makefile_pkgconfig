@@ -12,12 +12,12 @@
 +
 +CFLAGS += -fPIC -I../include \
 +	-include ../include/arch/linux-x86/AndroidConfig.h
-+LDFLAGS += -fPIC
++LDFLAGS += -fPIC -shared -rdynamic -Wl,-rpath=/usr/lib/android
 +LIBS += -lz
 +LIBNAME = zipfile
 +
 +all: $(OBJECTS)
-+	$(CC) $(LDFLAGS) -shared \
++	$(CC) $(LDFLAGS) \
 +		-Wl,-soname,lib$(LIBNAME).so -o lib$(LIBNAME).so $(OBJECTS) $(LIBS)
 +	ar rs lib$(LIBNAME).a $(OBJECTS)
 +

@@ -49,7 +49,7 @@
 +CFLAGS += -fPIC -I../include \
 +	-DANDROID_SMP=0 \
 +	-include ../include/arch/linux-x86/AndroidConfig.h
-+LDFLAGS += -fPIC -shared
++LDFLAGS += -fPIC -shared -rdynamic -Wl,-rpath=/usr/lib/android
 +LIBS += -L../liblog -lpthread -llog -lbsd
 +
 +LIBNAME = cutils

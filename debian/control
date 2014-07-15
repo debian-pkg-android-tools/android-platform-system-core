@@ -24,8 +24,6 @@ Package: libandroidlog1
 Section: libs
 Architecture: amd64 i386
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Pre-Depends: ${misc:Pre-Depends}
-Multi-Arch: same
 Description: Android logging library
  Library providing logging capabilities to android related tools.
 
@@ -33,7 +31,6 @@ Package: libandroidlog-dev
 Section: libdevel
 Architecture: amd64 i386
 Depends: ${misc:Depends}, libc-dev, libandroidlog1 (= ${binary:Version})
-Multi-Arch: same
 Description: Android logging library - Development files
  Library providing logging capabilities to android related tools.
  .
@@ -43,8 +40,6 @@ Package: libandroidcutils1
 Section: libs
 Architecture: amd64 i386
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Pre-Depends: ${misc:Pre-Depends}
-Multi-Arch: same
 Description: Android utils library for C
  This library provides common functionalities for android related tools.
 
@@ -55,7 +50,6 @@ Depends: ${misc:Depends},
          libandroidcutils1 (= ${binary:Version}),
          libandroidlog-dev (= ${binary:Version}),
          libbsd-dev
-Multi-Arch: same
 Description: Android utils library for C - Development files
  This library provides common functionalities for android related tools.
  .
@@ -65,8 +59,6 @@ Package: libandroidzipfile1
 Section: libs
 Architecture: amd64 i386
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Pre-Depends: ${misc:Pre-Depends}
-Multi-Arch: same
 Description: Android zipfile library
  Library providing zipfile handling capabilities to android related tools.
 
@@ -74,7 +66,6 @@ Package: libandroidzipfile-dev
 Section: libdevel
 Architecture: amd64 i386
 Depends: ${misc:Depends}, zlib1g-dev
-Multi-Arch: same
 Description: Android zipfile library - Development files
  Library providing zipfile handling capabilities to android related tools.
  .

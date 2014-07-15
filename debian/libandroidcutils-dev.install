@@ -1,5 +1,3 @@
-#!/usr/bin/dh-exec
-
 include/cutils/abort_socket.h usr/include/android/cutils/
 include/cutils/android_reboot.h usr/include/android/cutils/
 include/cutils/array.h usr/include/android/cutils/
@@ -40,5 +38,5 @@ include/cutils/tztime.h usr/include/android/cutils/
 include/cutils/uevent.h usr/include/android/cutils/
 include/cutils/uio.h usr/include/android/cutils/
 include/cutils/zygote.h usr/include/android/cutils/
-libcutils/libandroidcutils.a usr/lib/${DEB_HOST_MULTIARCH}/
-libcutils/androidcutils.pc usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig
+libcutils/libandroidcutils.a usr/lib/android/
+libcutils/androidcutils.pc usr/lib/android/pkgconfig

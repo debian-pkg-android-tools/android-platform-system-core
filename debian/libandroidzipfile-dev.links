@@ -1,3 +1,1 @@
-#!/usr/bin/dh-exec
-
-usr/lib/${DEB_HOST_MULTIARCH}/libandroidzipfile.so.1 usr/lib/${DEB_HOST_MULTIARCH}/libandroidzipfile.so
+usr/lib/android/libandroidzipfile.so.1 usr/lib/android/libandroidzipfile.so

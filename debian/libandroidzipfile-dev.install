@@ -1,5 +1,3 @@
-#!/usr/bin/dh-exec
-
 include/zipfile usr/include/android/
-libzipfile/libandroidzipfile.a usr/lib/${DEB_HOST_MULTIARCH}/
-libzipfile/androidzipfile.pc usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig
+libzipfile/libandroidzipfile.a usr/lib/android/
+libzipfile/androidzipfile.pc usr/lib/android/pkgconfig

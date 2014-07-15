@@ -1,3 +1,1 @@
-#!/usr/bin/dh-exec
-
-usr/lib/${DEB_HOST_MULTIARCH}/libandroidcutils.so.1 usr/lib/${DEB_HOST_MULTIARCH}/libandroidcutils.so
+usr/lib/android/libandroidcutils.so.1 usr/lib/android/libandroidcutils.so

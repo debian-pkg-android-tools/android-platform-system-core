@@ -1,3 +1,1 @@
-#!/usr/bin/dh-exec
-
-usr/lib/${DEB_HOST_MULTIARCH}/libandroidlog.so.1 usr/lib/${DEB_HOST_MULTIARCH}/libandroidlog.so
+usr/lib/android/libandroidlog.so.1 usr/lib/android/libandroidlog.so

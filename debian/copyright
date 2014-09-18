@@ -24,16 +24,16 @@ Copyright: 1998, 2001, Ben Harris
            1994, 1996, Brini
 License: BSD-2-clause
 
-Files: sh/*
-Copyright: 1991, 1993, The Regents of the University of California.
-License: BSD-3-clause
-
 Files: sh/arith.c
 Copyright: 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
 License: GPL-2+-with-Bison-Exception
 
 Files: sh/arith.c
 Copyright: 1993, The Regents of the University of California.
+License: BSD-3-clause
+
+Files: sh/*
+Copyright: 1991, 1993, The Regents of the University of California.
 License: BSD-3-clause
 
 Files: libcutils/memory.c

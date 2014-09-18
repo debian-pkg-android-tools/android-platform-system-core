@@ -5,7 +5,7 @@ Source: https://android.googlesource.com/platform/system/core
 
 Files: *
 Copyright: 2005-2012, The Android Open Source Project
-License: Apache 2.0
+License: Apache-2.0
 
 Files: debian/*
 Copyright: 2012, Stefan Handschuh <handschuh.stefan@googlemail.com>
@@ -13,7 +13,7 @@ License: GPL-2+
 
 Files: fastboot/*
 Copyright: 2008, The Android Open Source Project
-License: BSD (2 clause)
+License: BSD-2-clause
 
 Files: libpixelflinger/codeflinger/armreg.h
        libpixelflinger/codeflinger/disassem.c
@@ -22,26 +22,26 @@ Copyright: 1998, 2001, Ben Harris
            1997, Causality Limited
            1994-1997, Mark Brinicombe
            1994, 1996, Brini
-License: BSD (2 clause)
+License: BSD-2-clause
 
 Files: sh/*
 Copyright: 1991, 1993, The Regents of the University of California.
-License: BSD (3 clause)
+License: BSD-3-clause
 
 Files: sh/arith.c
 Copyright: 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
-License: GPL-2+ with Bison Exception
+License: GPL-2+-with-Bison-Exception
 
 Files: sh/arith.c
 Copyright: 1993, The Regents of the University of California.
-License: BSD (3 clause)
+License: BSD-3-clause
 
 Files: libcutils/memory.c
 Copyright: 1998, Todd C. Miller <Todd.Miller@courtesan.com>
-License: Todd C. Miller
+License: ISC
 
 
-License: Apache 2.0
+License: Apache-2.0
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  .
@@ -72,12 +72,12 @@ License: GPL-2+
  On Debian systems, the full text of the GNU General Public License
  version 2 can be found in the file `/usr/share/common-licenses/GPL-2'.
 
-License: GPL-2+ with Bison Exception
+License: GPL-2+-with-Bison-Exception
  As a special exception, when this file is copied by Bison into a Bison output
  file, you may use that output file without restriction.  This special
  exception was added by the Free Software Foundation in version 1.24 of Bison.
 
-License: BSD (2 clause)
+License: BSD-2-clause
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
@@ -88,7 +88,7 @@ License: BSD (2 clause)
     the documentation and/or other materials provided with the
     distribution.
 
-License: BSD (3 clause)
+License: BSD-3-clause
  This code is derived from software contributed to Berkeley by
  Kenneth Almquist.
  .
@@ -104,7 +104,7 @@ License: BSD (3 clause)
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
  
-License: Todd C. Miller
+License: ISC
  Permission to use, copy, modify, and distribute this software for any
  purpose with or without fee is hereby granted, provided that the above
  copyright notice and this permission notice appear in all copies.

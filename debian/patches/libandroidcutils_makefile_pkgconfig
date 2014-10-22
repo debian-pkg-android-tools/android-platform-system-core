@@ -1,6 +1,13 @@
+Author: Hans-Christoph Steiner <hans@eds.org
+Subject: Makefile for libcutils
+Description:
+ Caveats: Lots of Android utilities link against libcutils but do not use the
+ "atomic" stuff.  The atomic stuff only works on a limited number of CPU
+ architectures, so for now, just don't include atomic on those architectures.
+
 --- /dev/null
 +++ b/libcutils/Makefile
-@@ -0,0 +1,61 @@
+@@ -0,0 +1,80 @@
 +#!/bin/make
 +
 +CC = gcc
@@ -8,7 +15,6 @@
 +commonSources := \
 +	array.c \
 +	hashmap.c \
-+	atomic.c \
 +	native_handle.c \
 +	buffer.c \
 +	socket_inaddr_any_server.c \
@@ -41,6 +47,26 @@
 +        abort_socket.c \
 +        selector.c \
 +        zygote.c
++
++# atomic-inline.h needs to be ported, so skip all that for now
++ifeq ($(shell uname -m), x86_64)
++  commonSources += atomic.c
++endif
++ifeq ($(shell uname -m), armel)
++  commonSources += atomic.c
++endif
++ifeq ($(shell uname -m), armhf)
++  commonSources += atomic.c
++endif
++ifeq ($(shell uname -m), i386)
++  commonSources += atomic.c
++endif
++ifeq ($(shell uname -m), mips)
++  commonSources += atomic.c
++endif
++ifeq ($(shell uname -m), mipsel)
++  commonSources += atomic.c
++endif
 +
 +SOURCES := $(commonSources) $(commonHostSources) dlmalloc_stubs.c
 +

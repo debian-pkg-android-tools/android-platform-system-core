@@ -12,7 +12,7 @@ Vcs-Browser: http://anonscm.debian.org/gitweb/?p=android-tools/android-platform-
 
 Package: android-system-dev
 Section: libdevel
-Architecture: any
+Architecture: linux-any
 Depends: ${misc:Depends},
          android-libcutils-dev (= ${binary:Version}) [amd64 i386],
 Description: Android system development headers

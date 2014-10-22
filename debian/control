@@ -14,7 +14,7 @@ Package: android-system-dev
 Section: libdevel
 Architecture: linux-any
 Depends: ${misc:Depends},
-         android-libcutils-dev (= ${binary:Version}) [amd64 i386],
+         android-libcutils-dev (= ${binary:Version}),
 Description: Android system development headers
  Headers that define various macros and data structures for the Android code.
  .
@@ -22,14 +22,14 @@ Description: Android system development headers
 
 Package: android-liblog
 Section: libs
-Architecture: amd64 i386
+Architecture: linux-any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android logging library
  Library providing logging capabilities to android related tools.
 
 Package: android-liblog-dev
 Section: libdevel
-Architecture: amd64 i386
+Architecture: linux-any
 Depends: ${misc:Depends},
          libc-dev,
          android-liblog (= ${binary:Version})
@@ -40,14 +40,14 @@ Description: Android logging library - Development files
 
 Package: android-libcutils
 Section: libs
-Architecture: amd64 i386
+Architecture: linux-any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android utils library for C
  This library provides common functionalities for android related tools.
 
 Package: android-libcutils-dev
 Section: libdevel
-Architecture: amd64 i386
+Architecture: linux-any
 Depends: ${misc:Depends},
          android-libcutils (= ${binary:Version}),
          android-liblog-dev (= ${binary:Version}),
@@ -59,14 +59,14 @@ Description: Android utils library for C - Development files
 
 Package: android-libzipfile
 Section: libs
-Architecture: amd64 i386
+Architecture: linux-any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android zipfile library
  Library providing zipfile handling capabilities to android related tools.
 
 Package: android-libzipfile-dev
 Section: libdevel
-Architecture: amd64 i386
+Architecture: linux-any
 Depends: ${misc:Depends},
          android-libzipfile (= ${binary:Version}),
          zlib1g-dev

@@ -1,3 +1,9 @@
+android-platform-system-core (21-3) unstable; urgency=low
+
+  * fix build to work on linux-any
+
+ -- Hans-Christoph Steiner <hans@eds.org>  Wed, 22 Oct 2014 16:00:29 -0400
+
 android-platform-system-core (21-2) unstable; urgency=low
 
   * make android-system-dev available on all archs

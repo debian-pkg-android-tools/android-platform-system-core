@@ -18,9 +18,9 @@
 +
 +all: $(OBJECTS)
 +	$(CC) $(LDFLAGS) \
-+		-Wl,-soname,lib$(LIBNAME).so -o lib$(LIBNAME).so $(OBJECTS) $(LIBS)
++		-Wl,-soname,lib$(LIBNAME).so.0 -o lib$(LIBNAME).so.0.21.0 $(OBJECTS) $(LIBS)
 +	ar rs lib$(LIBNAME).a $(OBJECTS)
 +
 +clean:
 +	rm -f $(OBJECTS)
-+	rm -f lib$(LIBNAME).so lib$(LIBNAME).a
++	rm -f lib$(LIBNAME).so* lib$(LIBNAME).a

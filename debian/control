@@ -41,7 +41,7 @@ Description: Android logging library - Development files
 Package: android-libcutils
 Section: libs
 Architecture: linux-any
-Depends: ${misc:Depends}, ${shlibs:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}, android-liblog
 Description: Android utils library for C
  This library provides common functionalities for android related tools.
 

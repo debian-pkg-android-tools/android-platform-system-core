@@ -1,3 +1,10 @@
+android-platform-system-core (21-4) unstable; urgency=low
+
+  * add versions to shared library names so dh can do auto dep detection
+  * dh_shlibdeps misses libcutils dep on liblog, so force manually
+
+ -- Hans-Christoph Steiner <hans@eds.org>  Tue, 18 Nov 2014 13:05:59 +0100
+
 android-platform-system-core (21-3) unstable; urgency=low
 
   * fix build to work on linux-any

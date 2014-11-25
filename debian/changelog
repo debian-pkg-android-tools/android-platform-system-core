@@ -1,3 +1,12 @@
+android-platform-system-core (21-5) unstable; urgency=low
+
+  [Simon McVittie]
+  * For each library where libwhatever.so moved from android-libwhatever
+    to android-libwhatever-dev, the -dev Breaks/Replaces the runtime library
+    (Closes: #770328)
+
+ -- Hans-Christoph Steiner <hans@eds.org>  Tue, 25 Nov 2014 12:43:50 +0100
+
 android-platform-system-core (21-4) unstable; urgency=low
 
   * add versions to shared library names so dh can do auto dep detection

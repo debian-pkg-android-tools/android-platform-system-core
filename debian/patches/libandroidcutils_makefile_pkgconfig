@@ -7,7 +7,7 @@ Description:
 
 --- /dev/null
 +++ b/libcutils/Makefile
-@@ -0,0 +1,80 @@
+@@ -0,0 +1,89 @@
 +#!/bin/make
 +
 +CC = gcc
@@ -59,6 +59,15 @@ Description:
 +  commonSources += atomic.c
 +endif
 +ifeq ($(shell uname -m), i386)
++  commonSources += atomic.c
++endif
++ifeq ($(shell uname -m), i486)
++  commonSources += atomic.c
++endif
++ifeq ($(shell uname -m), i586)
++  commonSources += atomic.c
++endif
++ifeq ($(shell uname -m), i686)
 +  commonSources += atomic.c
 +endif
 +ifeq ($(shell uname -m), mips)

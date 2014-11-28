@@ -1,3 +1,10 @@
+android-platform-system-core (21-6) unstable; urgency=low
+
+  [Simon McVittie]
+  * fix missing android_atomic_* symbols on i386 (Closes: #769646)
+
+ -- Hans-Christoph Steiner <hans@eds.org>  Fri, 28 Nov 2014 13:00:09 +0100
+
 android-platform-system-core (21-5) unstable; urgency=low
 
   [Simon McVittie]

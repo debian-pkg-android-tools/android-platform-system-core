@@ -1,3 +1,1 @@
-include/arch      usr/include/android/
-include/corkscrew usr/include/android/
-include/system    usr/include/android/
+include/system   usr/include/android

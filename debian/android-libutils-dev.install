@@ -1,0 +1,4 @@
+include/utils          usr/include/android
+debian/cutils_atomic.h usr/include/android
+libutils.a             usr/lib/android
+libutils.so            usr/lib/android

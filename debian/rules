@@ -37,5 +37,5 @@ override_dh_auto_clean:
 get-orig-source: $(UPSTREAM_TAG).tar.gz
 	mk-origtargz --repack --compression xz $<
 
-core.tar.gz:
+$(UPSTREAM_TAG).tar.gz:
 	wget https://android.googlesource.com/platform/system/core/+archive/$(UPSTREAM_TAG).tar.gz

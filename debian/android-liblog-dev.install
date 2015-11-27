@@ -1,7 +1,4 @@
-include/android usr/include/android/
-include/cutils/event_tag_map.h usr/include/android/cutils
-include/cutils/log.h usr/include/android/cutils
-include/cutils/logd.h usr/include/android/cutils
-include/cutils/logger.h usr/include/android/cutils
-include/cutils/logprint.h usr/include/android/cutils
-liblog/liblog.a usr/lib/android/
+include/android/log.h usr/include/android/android
+include/log           usr/include/android
+liblog.a              usr/lib/android
+liblog.so             usr/lib/android

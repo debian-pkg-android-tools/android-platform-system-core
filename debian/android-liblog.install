@@ -1,1 +1,1 @@
-liblog/liblog.so.0.21.0 usr/lib/android/
+liblog.so.*   usr/lib/android

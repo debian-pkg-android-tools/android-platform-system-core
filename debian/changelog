@@ -4,6 +4,7 @@ android-platform-system-core (1:6.0.0+r26-1) UNRELEASED; urgency=medium
   * Use traditional import-orig way to fetch source
   * Change version scheme to follow upstream
   * Makefiles independent from Quilt
+  * Add support for Build-Profiles
   * New binary packages:
       - adb
       - android-androidconfig-dev

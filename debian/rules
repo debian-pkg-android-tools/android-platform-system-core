@@ -19,9 +19,12 @@ STAGE1_COMPONENTS = liblog \
                     libziparchive \
                     libsparse \
                     libadb \
-                    adb \
-
+                    adb
 OTHER_COMPONENTS = fastboot
+COMPONENTS = $(STAGE1_COMPONENTS)
+ifneq ($(filter stage1,$(DEB_BUILD_PROFILES)),)
+  COMPONENTS += $(OTHER_COMPONENTS)
+endif
 
 %:
 	dh $@

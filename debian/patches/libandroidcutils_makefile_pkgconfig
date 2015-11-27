@@ -4,99 +4,8 @@ Description:
  Caveats: Lots of Android utilities link against libcutils but do not use the
  "atomic" stuff.  The atomic stuff only works on a limited number of CPU
  architectures, so for now, just don't include atomic on those architectures.
+Last-Update: 2015-07-13
 
---- /dev/null
-+++ b/libcutils/Makefile
-@@ -0,0 +1,89 @@
-+#!/bin/make
-+
-+CC = gcc
-+
-+commonSources := \
-+	array.c \
-+	hashmap.c \
-+	native_handle.c \
-+	buffer.c \
-+	socket_inaddr_any_server.c \
-+	socket_local_client.c \
-+	socket_local_server.c \
-+	socket_loopback_client.c \
-+	socket_loopback_server.c \
-+	socket_network_client.c \
-+	sockets.c \
-+	config_utils.c \
-+	cpu_info.c \
-+	load_file.c \
-+	list.c \
-+	open_memstream.c \
-+	strdup16to8.c \
-+	strdup8to16.c \
-+	record_stream.c \
-+	process_name.c \
-+	properties.c \
-+	qsort_r_compat.c \
-+	threads.c \
-+	sched_policy.c \
-+	iosched_policy.c \
-+	str_parms.c
-+
-+commonHostSources := \
-+        ashmem-host.c
-+
-+commonSources += \
-+        abort_socket.c \
-+        selector.c \
-+        zygote.c
-+
-+# atomic-inline.h needs to be ported, so skip all that for now
-+ifeq ($(shell uname -m), x86_64)
-+  commonSources += atomic.c
-+endif
-+ifeq ($(shell uname -m), armel)
-+  commonSources += atomic.c
-+endif
-+ifeq ($(shell uname -m), armhf)
-+  commonSources += atomic.c
-+endif
-+ifeq ($(shell uname -m), i386)
-+  commonSources += atomic.c
-+endif
-+ifeq ($(shell uname -m), i486)
-+  commonSources += atomic.c
-+endif
-+ifeq ($(shell uname -m), i586)
-+  commonSources += atomic.c
-+endif
-+ifeq ($(shell uname -m), i686)
-+  commonSources += atomic.c
-+endif
-+ifeq ($(shell uname -m), mips)
-+  commonSources += atomic.c
-+endif
-+ifeq ($(shell uname -m), mipsel)
-+  commonSources += atomic.c
-+endif
-+
-+SOURCES := $(commonSources) $(commonHostSources) dlmalloc_stubs.c
-+
-+OBJECTS = $(SOURCES:.c=.o)
-+
-+CFLAGS += -fPIC -I../include \
-+	-DANDROID_SMP=0 \
-+	-include ../include/arch/linux-x86/AndroidConfig.h
-+LDFLAGS += -fPIC -shared -rdynamic -Wl,-rpath=/usr/lib/android
-+LIBS += -L../liblog -lpthread -llog -lbsd
-+
-+LIBNAME = cutils
-+
-+all: $(OBJECTS)
-+	$(CC) $(LDFLAGS) -Wl,-soname,lib$(LIBNAME).so.0 -o lib$(LIBNAME).so.0.21.0 $(OBJECTS) $(LIBS)
-+	ar rs lib$(LIBNAME).a $(OBJECTS)
-+
-+clean:
-+	rm -f $(OBJECTS)
-+	rm -f lib$(LIBNAME).so* lib$(LIBNAME).a
-+
 --- /dev/null
 +++ b/libcutils/dlmalloc.h
 @@ -0,0 +1,35 @@
@@ -137,27 +46,26 @@ Description:
 +#endif  // LIBC_BIONIC_DLMALLOC_H_
 --- a/libcutils/dlmalloc_stubs.c
 +++ b/libcutils/dlmalloc_stubs.c
-@@ -14,7 +14,7 @@
-  * limitations under the License.
+@@ -15,6 +15,7 @@
   */
- 
--#include "../../../bionic/libc/bionic/dlmalloc.h"
+
+ #include "log/log.h"
 +#include "dlmalloc.h"
- #include "cutils/log.h"
- 
- /*
+
+ #define UNUSED __attribute__((__unused__))
+
 --- /dev/null
 +++ b/libcutils/upstream-dlmalloc/malloc.h
 @@ -0,0 +1,620 @@
 +/*
 +  Default header file for malloc-2.8.x, written by Doug Lea
 +  and released to the public domain, as explained at
-+  http://creativecommons.org/publicdomain/zero/1.0/ 
-+ 
++  http://creativecommons.org/publicdomain/zero/1.0/
++
 +  This header is for ANSI C/C++ only.  You can set any of
 +  the following #defines before including:
 +
-+  * If USE_DL_PREFIX is defined, it is assumed that malloc.c 
++  * If USE_DL_PREFIX is defined, it is assumed that malloc.c
 +    was also compiled with this option, so all routines
 +    have names starting with "dl".
 +
@@ -223,7 +131,7 @@ Description:
 +#define dlbulk_free            bulk_free
 +#endif /* USE_DL_PREFIX */
 +
-+#if !NO_MALLINFO 
++#if !NO_MALLINFO
 +#ifndef HAVE_USR_INCLUDE_MALLOC_H
 +#ifndef _MALLOC_H
 +#ifndef MALLINFO_FIELD_TYPE
@@ -404,7 +312,7 @@ Description:
 +  malloc_set_footprint_limit, or the maximum size_t value if
 +  never set. The returned value reflects a permission. There is no
 +  guarantee that this number of bytes can actually be obtained from
-+  the system.  
++  the system.
 +*/
 +size_t dlmalloc_footprint_limit(void);
 +
@@ -648,7 +556,7 @@ Description:
 +
 +  malloc_stats prints only the most commonly interesting statistics.
 +  More information can be obtained by calling mallinfo.
-+  
++
 +  malloc_stats is not compiled if NO_MALLOC_STATS is defined.
 +*/
 +void  dlmalloc_stats(void);
@@ -759,7 +667,7 @@ Description:
 +size_t mspace_max_footprint(mspace msp);
 +size_t mspace_footprint_limit(mspace msp);
 +size_t mspace_set_footprint_limit(mspace msp, size_t bytes);
-+void mspace_inspect_all(mspace msp, 
++void mspace_inspect_all(mspace msp,
 +                        void(*handler)(void *, void *, size_t, void*),
 +                        void* arg);
 +#endif  /* MSPACES */

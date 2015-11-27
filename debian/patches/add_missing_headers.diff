@@ -1,0 +1,43 @@
+Description: Various headers are missing which causes compiler errors.
+Author: Kai-Chung Yan <seamlikok@gmail.com>
+Last-Update: 2015-11-16
+--- a/include/cutils/jstring.h
++++ b/include/cutils/jstring.h
+@@ -19,6 +19,7 @@
+ 
+ #include <stdint.h>
+ #include <stddef.h>
++#include <uchar.h>
+ 
+ #ifdef __cplusplus
+ extern "C" {
+--- a/include/utils/Unicode.h
++++ b/include/utils/Unicode.h
+@@ -19,6 +19,7 @@
+ 
+ #include <sys/types.h>
+ #include <stdint.h>
++#include <uchar.h>
+ 
+ extern "C" {
+ 
+--- a/include/utils/String8.h
++++ b/include/utils/String8.h
+@@ -24,6 +24,7 @@
+ 
+ #include <string.h> // for strcmp
+ #include <stdarg.h>
++#include <uchar.h>
+ 
+ // ---------------------------------------------------------------------------
+ 
+--- a/base/file.cpp
++++ b/base/file.cpp
+@@ -22,6 +22,7 @@
+ #include <sys/types.h>
+ 
+ #include <string>
++#include <cstring>
+ 
+ #include "base/macros.h"  // For TEMP_FAILURE_RETRY on Darwin.
+ #define LOG_TAG "base.file"

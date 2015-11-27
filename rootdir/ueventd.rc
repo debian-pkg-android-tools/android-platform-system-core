@@ -1,3 +1,6 @@
+subsystem adf
+	devname uevent_devname
+
 /dev/null                 0666   root       root
 /dev/zero                 0666   root       root
 /dev/full                 0666   root       root
@@ -5,12 +8,15 @@
 /dev/tty                  0666   root       root
 /dev/random               0666   root       root
 /dev/urandom              0666   root       root
+# Make HW RNG readable by group system to let EntropyMixer read it.
+/dev/hw_random            0440   root       system
 /dev/ashmem               0666   root       root
 /dev/binder               0666   root       root
 
 # Anyone can read the logs, but if they're not in the "logs"
 # group, then they'll only see log entries for their UID.
 /dev/log/*                0666   root       log
+/dev/pmsg0                0222   root       log
 
 # the msm hw3d client device node is world writable/readable.
 /dev/msm_hw3dc            0666   root       root
@@ -27,8 +33,10 @@
 /dev/android_adb          0660   adb        adb
 /dev/android_adb_enable   0660   adb        adb
 /dev/ttyMSM0              0600   bluetooth  bluetooth
-/dev/uinput               0660   system     bluetooth
+/dev/uhid                 0660   system     net_bt_stack
+/dev/uinput               0660   system     net_bt_stack
 /dev/alarm                0664   system     radio
+/dev/rtc0                 0640   system     system
 /dev/tty0                 0660   root       system
 /dev/graphics/*           0660   root       graphics
 /dev/msm_hw3dm            0660   system     graphics
@@ -81,6 +89,12 @@
 /dev/ppp                  0660   radio      vpn
 
 # sysfs properties
+/sys/devices/platform/trusty.*      trusty_version        0440  root   log
 /sys/devices/virtual/input/input*   enable      0660  root   input
 /sys/devices/virtual/input/input*   poll_delay  0660  root   input
 /sys/devices/virtual/usb_composite/*   enable      0664  root   system
+/sys/devices/system/cpu/cpu*   cpufreq/scaling_max_freq   0664  system system
+/sys/devices/system/cpu/cpu*   cpufreq/scaling_min_freq   0664  system system
+
+# DVB API device nodes
+/dev/dvb*                 0660   root       system

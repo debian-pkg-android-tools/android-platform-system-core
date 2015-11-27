@@ -29,6 +29,10 @@
 #ifndef _USB_H_
 #define _USB_H_
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 typedef struct usb_handle usb_handle;
 
 typedef struct usb_ifc_info usb_ifc_info;
@@ -53,6 +57,7 @@ struct usb_ifc_info
     unsigned char writable;
 
     char serial_number[256];
+    char device_path[256];
 };
 
 typedef int (*ifc_match_func)(usb_ifc_info *ifc);
@@ -61,6 +66,10 @@ usb_handle *usb_open(ifc_match_func callback);
 int usb_close(usb_handle *h);
 int usb_read(usb_handle *h, void *_data, int len);
 int usb_write(usb_handle *h, const void *_data, int len);
+int usb_wait_for_disconnect(usb_handle *h);
 
+#if defined(__cplusplus)
+}
+#endif
 
 #endif

@@ -24,12 +24,18 @@
 
 #include <private/pixelflinger/ggl_context.h>
 
-#include "codeflinger/ARMAssemblerProxy.h"
+#include "ARMAssemblerProxy.h"
 
 
 namespace android {
 
 // ----------------------------------------------------------------------------
+
+#define CONTEXT_ADDR_LOAD(REG, FIELD) \
+    ADDR_LDR(AL, REG, mBuilderContext.Rctx, immed12_pre(GGL_OFFSETOF(FIELD)))
+
+#define CONTEXT_ADDR_STORE(REG, FIELD) \
+    ADDR_STR(AL, REG, mBuilderContext.Rctx, immed12_pre(GGL_OFFSETOF(FIELD)))
 
 #define CONTEXT_LOAD(REG, FIELD) \
     LDR(AL, REG, mBuilderContext.Rctx, immed12_pre(GGL_OFFSETOF(FIELD)))

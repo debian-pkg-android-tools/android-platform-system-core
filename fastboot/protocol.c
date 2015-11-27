@@ -110,7 +110,6 @@ static int _command_start(usb_handle *usb, const char *cmd, unsigned size,
                           char *response)
 {
     int cmdsize = strlen(cmd);
-    int r;
 
     if(response) {
         response[0] = 0;
@@ -189,8 +188,6 @@ static int _command_send(usb_handle *usb, const char *cmd,
 static int _command_send_no_data(usb_handle *usb, const char *cmd,
                                  char *response)
 {
-    int r;
-
     return _command_start(usb, cmd, 0, response);
 }
 
@@ -219,7 +216,7 @@ int fb_download_data(usb_handle *usb, const void *data, unsigned size)
     }
 }
 
-#define USB_BUF_SIZE 512
+#define USB_BUF_SIZE 1024
 static char usb_buf[USB_BUF_SIZE];
 static int usb_buf_len;
 
@@ -308,7 +305,10 @@ int fb_download_data_sparse(usb_handle *usb, struct sparse_file *s)
         return -1;
     }
 
-    fb_download_data_sparse_flush(usb);
+    r = fb_download_data_sparse_flush(usb);
+    if (r < 0) {
+        return -1;
+    }
 
     return _command_end(usb);
 }

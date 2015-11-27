@@ -108,7 +108,6 @@ Package: android-libutils-dev
 Section: libdevel
 Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
 Depends: android-libcutils-dev (>= ${binary:Version}),
-         android-libnativehelper-dev (>= ${binary:Version}),
          android-libutils (= ${binary:Version}),
          android-system-dev (>= ${source:Version}),
          ${misc:Depends}
@@ -129,22 +128,6 @@ Section: libdevel
 Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
 Depends: android-libziparchive (= ${binary:Version}), ${misc:Depends}
 Description: Android zip archive library - Development files
- This library is only used by Android SDK currently.
- .
- This package contains the development files.
-
-Package: android-libnativehelper
-Section: libs
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Android native helper library
- This library is only used by Android SDK currently.
-
-Package: android-libnativehelper-dev
-Section: libdevel
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
-Depends: android-libnativehelper (= ${binary:Version}), ${misc:Depends}
-Description: Android native helper library - Development files
  This library is only used by Android SDK currently.
  .
  This package contains the development files.

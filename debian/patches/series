@@ -2,3 +2,4 @@ libandroidcutils_makefile_pkgconfig
 disable_android_set_abort_message.diff
 add_missing_headers.diff
 use_separated_cutils_atomic.diff
+libutils_use_unique_ptr.diff

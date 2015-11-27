@@ -7,7 +7,6 @@ android-platform-system-core (1:6.0.0+r26-1) UNRELEASED; urgency=medium
   * Add support for Build-Profiles
   * New binary packages:
       - adb
-      - android-androidconfig-dev
       - android-libadb(-dev)
       - android-libbacktrace(-dev)
       - android-libbase(-dev)
@@ -23,6 +22,7 @@ android-platform-system-core (1:6.0.0+r26-1) UNRELEASED; urgency=medium
       compiler errors
     - use_separated_cutils_atomic.diff: cutils/atomic.h uses stdatomic.h which
       is not supported by C++11
+    - libutils_use_unique_ptr: Use std::unique_ptr instead of Bionic's one
   * d/control:
     - Add (Build-)Depends: android-libunwind(-dev)
     - Change architecture to x86, ARM and MIPS (Linux only)

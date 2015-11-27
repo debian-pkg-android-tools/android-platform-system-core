@@ -8,7 +8,6 @@ Build-Depends: android-libext4-utils-dev <!stage1>,
                android-libf2fs-utils-dev <!stage1>,
                android-libunwind-dev,
                debhelper (>= 9.20141010),
-               dh-exec,
                dpkg-dev (>= 1.17.14),
                libssl-dev,
                zlib1g-dev

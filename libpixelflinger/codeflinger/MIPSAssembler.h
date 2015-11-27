@@ -21,12 +21,12 @@
 #include <stdint.h>
 #include <sys/types.h>
 
-#include <utils/Vector.h>
-#include <utils/KeyedVector.h>
-
 #include "tinyutils/smartpointer.h"
-#include "codeflinger/ARMAssemblerInterface.h"
-#include "codeflinger/CodeCache.h"
+#include "utils/KeyedVector.h"
+#include "utils/Vector.h"
+
+#include "ARMAssemblerInterface.h"
+#include "CodeCache.h"
 
 namespace android {
 

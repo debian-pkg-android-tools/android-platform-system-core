@@ -16,9 +16,12 @@
 */
 #include <errno.h>
 #include <fcntl.h>
-#include <unistd.h>
-#include <sys/stat.h>
+#include <stdio.h>
+#include <string.h>
 #include <sys/mman.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 #include <private/android_filesystem_config.h>
 #include "package.h"
 
@@ -47,15 +50,18 @@
 /* Copy 'srclen' string bytes from 'src' into buffer 'dst' of size 'dstlen'
  * This function always zero-terminate the destination buffer unless
  * 'dstlen' is 0, even in case of overflow.
+ * Returns a pointer into the src string, leaving off where the copy
+ * has stopped. The copy will stop when dstlen, srclen or a null
+ * character on src has been reached.
  */
-static void
+static const char*
 string_copy(char* dst, size_t dstlen, const char* src, size_t srclen)
 {
     const char* srcend = src + srclen;
     const char* dstend = dst + dstlen;
 
     if (dstlen == 0)
-        return;
+        return src;
 
     dstend--; /* make room for terminating zero */
 
@@ -63,6 +69,7 @@ string_copy(char* dst, size_t dstlen, const char* src, size_t srclen)
         *dst++ = *src++;
 
     *dst = '\0'; /* zero-terminate result */
+    return src;
 }
 
 /* Open 'filename' and map it into our address-space.
@@ -76,13 +83,30 @@ map_file(const char* filename, size_t* filesize)
     struct stat  st;
     size_t  length = 0;
     void*   address = NULL;
+    gid_t   oldegid;
 
     *filesize = 0;
 
+    /*
+     * Temporarily switch effective GID to allow us to read
+     * the packages file
+     */
+
+    oldegid = getegid();
+    if (setegid(AID_PACKAGE_INFO) < 0) {
+        return NULL;
+    }
+
     /* open the file for reading */
     fd = TEMP_FAILURE_RETRY(open(filename, O_RDONLY));
-    if (fd < 0)
+    if (fd < 0) {
         return NULL;
+    }
+
+    /* restore back to our old egid */
+    if (setegid(oldegid) < 0) {
+        goto EXIT;
+    }
 
     /* get its size */
     ret = TEMP_FAILURE_RETRY(fstat(fd, &st));
@@ -90,7 +114,7 @@ map_file(const char* filename, size_t* filesize)
         goto EXIT;
 
     /* Ensure that the file is owned by the system user */
-    if ((st.st_uid != AID_SYSTEM) || (st.st_gid != AID_SYSTEM)) {
+    if ((st.st_uid != AID_SYSTEM) || (st.st_gid != AID_PACKAGE_INFO)) {
         goto EXIT;
     }
 
@@ -107,7 +131,9 @@ map_file(const char* filename, size_t* filesize)
     }
 
     /* Memory-map the file now */
-    address = TEMP_FAILURE_RETRY(mmap(NULL, length, PROT_READ, MAP_PRIVATE, fd, 0));
+    do {
+        address = mmap(NULL, length, PROT_READ, MAP_PRIVATE, fd, 0);
+    } while (address == MAP_FAILED && errno == EINTR);
     if (address == MAP_FAILED) {
         address = NULL;
         goto EXIT;
@@ -387,10 +413,6 @@ parse_positive_decimal(const char** pp, const char* end)
         value = -1;
     }
     return value;
-
-BAD:
-    *pp = p;
-    return -1;
 }
 
 /* Read the system's package database and extract information about
@@ -400,7 +422,7 @@ BAD:
  * If the package database is corrupted, return -1 and set errno to EINVAL
  */
 int
-get_package_info(const char* pkgName, PackageInfo *info)
+get_package_info(const char* pkgName, uid_t userId, PackageInfo *info)
 {
     char*        buffer;
     size_t       buffer_len;
@@ -411,6 +433,7 @@ get_package_info(const char* pkgName, PackageInfo *info)
     info->uid          = 0;
     info->isDebuggable = 0;
     info->dataDir[0]   = '\0';
+    info->seinfo[0]    = '\0';
 
     buffer = map_file(PACKAGES_LIST_FILE, &buffer_len);
     if (buffer == NULL)
@@ -421,13 +444,14 @@ get_package_info(const char* pkgName, PackageInfo *info)
 
     /* expect the following format on each line of the control file:
      *
-     *  <pkgName> <uid> <debugFlag> <dataDir>
+     *  <pkgName> <uid> <debugFlag> <dataDir> <seinfo>
      *
      * where:
      *  <pkgName>    is the package's name
      *  <uid>        is the application-specific user Id (decimal)
      *  <debugFlag>  is 1 if the package is debuggable, or 0 otherwise
      *  <dataDir>    is the path to the package's data directory (e.g. /data/data/com.example.foo)
+     *  <seinfo>     is the seinfo label associated with the package
      *
      * The file is generated in com.android.server.PackageManagerService.Settings.writeLP()
      */
@@ -483,7 +507,31 @@ get_package_info(const char* pkgName, PackageInfo *info)
         if (q == p)
             goto BAD_FORMAT;
 
-        string_copy(info->dataDir, sizeof info->dataDir, p, q - p);
+        /* If userId == 0 (i.e. user is device owner) we can use dataDir value
+         * from packages.list, otherwise compose data directory as
+         * /data/user/$uid/$packageId
+         */
+        if (userId == 0) {
+            p = string_copy(info->dataDir, sizeof info->dataDir, p, q - p);
+        } else {
+            snprintf(info->dataDir,
+                     sizeof info->dataDir,
+                     "/data/user/%d/%s",
+                     userId,
+                     pkgName);
+            p = q;
+        }
+
+        /* skip spaces */
+        if (parse_spaces(&p, end) < 0)
+            goto BAD_FORMAT;
+
+        /* fifth field is the seinfo string */
+        q = skip_non_spaces(p, end);
+        if (q == p)
+            goto BAD_FORMAT;
+
+        string_copy(info->seinfo, sizeof info->seinfo, p, q - p);
 
         /* Ignore the rest */
         result = 0;

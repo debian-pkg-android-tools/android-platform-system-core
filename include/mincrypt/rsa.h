@@ -13,20 +13,20 @@
 **       be used to endorse or promote products derived from this software
 **       without specific prior written permission.
 **
-** THIS SOFTWARE IS PROVIDED BY Google Inc. ``AS IS'' AND ANY EXPRESS OR 
+** THIS SOFTWARE IS PROVIDED BY Google Inc. ``AS IS'' AND ANY EXPRESS OR
 ** IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-** MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO 
+** MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
 ** EVENT SHALL Google Inc. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
 ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-** PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; 
-** OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
-** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR 
+** PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+** OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 ** OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ** ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef _EMBEDDED_RSA_H_
-#define _EMBEDDED_RSA_H_
+#ifndef SYSTEM_CORE_INCLUDE_MINCRYPT_RSA_H_
+#define SYSTEM_CORE_INCLUDE_MINCRYPT_RSA_H_
 
 #include <inttypes.h>
 
@@ -42,15 +42,17 @@ typedef struct RSAPublicKey {
     uint32_t n0inv;           /* -1 / n[0] mod 2^32 */
     uint32_t n[RSANUMWORDS];  /* modulus as little endian array */
     uint32_t rr[RSANUMWORDS]; /* R^2 as little endian array */
+    int exponent;             /* 3 or 65537 */
 } RSAPublicKey;
 
 int RSA_verify(const RSAPublicKey *key,
                const uint8_t* signature,
                const int len,
-               const uint8_t* sha);
+               const uint8_t* hash,
+               const int hash_len);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif // SYSTEM_CORE_INCLUDE_MINCRYPT_RSA_H_

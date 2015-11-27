@@ -17,11 +17,21 @@
 #ifndef SYSTEM_CORE_INCLUDE_ANDROID_WINDOW_H
 #define SYSTEM_CORE_INCLUDE_ANDROID_WINDOW_H
 
+#include <cutils/native_handle.h>
+#include <errno.h>
+#include <limits.h>
 #include <stdint.h>
 #include <string.h>
 #include <sys/cdefs.h>
 #include <system/graphics.h>
-#include <cutils/native_handle.h>
+#include <unistd.h>
+
+#ifndef __UNUSED
+#define __UNUSED __attribute__((__unused__))
+#endif
+#ifndef __deprecated
+#define __deprecated __attribute__((__deprecated__))
+#endif
 
 __BEGIN_DECLS
 
@@ -35,6 +45,14 @@ __BEGIN_DECLS
 
 #define ANDROID_NATIVE_BUFFER_MAGIC \
     ANDROID_NATIVE_MAKE_CONSTANT('_','b','f','r')
+
+// ---------------------------------------------------------------------------
+
+// This #define may be used to conditionally compile device-specific code to
+// support either the prior ANativeWindow interface, which did not pass libsync
+// fences around, or the new interface that does.  This #define is only present
+// when the ANativeWindow interface does include libsync support.
+#define ANDROID_NATIVE_WINDOW_HAS_SYNC 1
 
 // ---------------------------------------------------------------------------
 
@@ -78,10 +96,10 @@ typedef struct ANativeWindowBuffer
 
     // Implement the methods that sp<ANativeWindowBuffer> expects so that it
     // can be used to automatically refcount ANativeWindowBuffer's.
-    void incStrong(const void* id) const {
+    void incStrong(const void* /*id*/) const {
         common.incRef(const_cast<android_native_base_t*>(&common));
     }
-    void decStrong(const void* id) const {
+    void decStrong(const void* /*id*/) const {
         common.decRef(const_cast<android_native_base_t*>(&common));
     }
 #endif
@@ -218,7 +236,47 @@ enum {
      * Boolean that indicates whether the consumer is running more than
      * one buffer behind the producer.
      */
-    NATIVE_WINDOW_CONSUMER_RUNNING_BEHIND = 9
+    NATIVE_WINDOW_CONSUMER_RUNNING_BEHIND = 9,
+
+    /*
+     * The consumer gralloc usage bits currently set by the consumer.
+     * The values are defined in hardware/libhardware/include/gralloc.h.
+     */
+    NATIVE_WINDOW_CONSUMER_USAGE_BITS = 10,
+
+    /**
+     * Transformation that will by applied to buffers by the hwcomposer.
+     * This must not be set or checked by producer endpoints, and will
+     * disable the transform hint set in SurfaceFlinger (see
+     * NATIVE_WINDOW_TRANSFORM_HINT).
+     *
+     * INTENDED USE:
+     * Temporary - Please do not use this.  This is intended only to be used
+     * by the camera's LEGACY mode.
+     *
+     * In situations where a SurfaceFlinger client wishes to set a transform
+     * that is not visible to the producer, and will always be applied in the
+     * hardware composer, the client can set this flag with
+     * native_window_set_buffers_sticky_transform.  This can be used to rotate
+     * and flip buffers consumed by hardware composer without actually changing
+     * the aspect ratio of the buffers produced.
+     */
+    NATIVE_WINDOW_STICKY_TRANSFORM = 11,
+
+    /**
+     * The default data space for the buffers as set by the consumer.
+     * The values are defined in graphics.h.
+     */
+    NATIVE_WINDOW_DEFAULT_DATASPACE = 12,
+
+    /*
+     * Returns the age of the contents of the most recently dequeued buffer as
+     * the number of frames that have elapsed since it was last queued. For
+     * example, if the window is double-buffered, the age of any given buffer in
+     * steady state will be 2. If the dequeued buffer has never been queued, its
+     * age will be 0.
+     */
+    NATIVE_WINDOW_BUFFER_AGE = 13,
 };
 
 /* Valid operations for the (*perform)() hook.
@@ -249,6 +307,10 @@ enum {
     NATIVE_WINDOW_API_DISCONNECT            = 14,   /* private */
     NATIVE_WINDOW_SET_BUFFERS_USER_DIMENSIONS = 15, /* private */
     NATIVE_WINDOW_SET_POST_TRANSFORM_CROP   = 16,   /* private */
+    NATIVE_WINDOW_SET_BUFFERS_STICKY_TRANSFORM = 17,/* private */
+    NATIVE_WINDOW_SET_SIDEBAND_STREAM       = 18,
+    NATIVE_WINDOW_SET_BUFFERS_DATASPACE     = 19,
+    NATIVE_WINDOW_SET_SURFACE_DAMAGE        = 20,   /* private */
 };
 
 /* parameter for NATIVE_WINDOW_[API_][DIS]CONNECT */
@@ -278,12 +340,15 @@ enum {
     NATIVE_WINDOW_TRANSFORM_FLIP_H = HAL_TRANSFORM_FLIP_H ,
     /* flip source image vertically */
     NATIVE_WINDOW_TRANSFORM_FLIP_V = HAL_TRANSFORM_FLIP_V,
-    /* rotate source image 90 degrees clock-wise */
+    /* rotate source image 90 degrees clock-wise, and is applied after TRANSFORM_FLIP_{H|V} */
     NATIVE_WINDOW_TRANSFORM_ROT_90 = HAL_TRANSFORM_ROT_90,
     /* rotate source image 180 degrees */
     NATIVE_WINDOW_TRANSFORM_ROT_180 = HAL_TRANSFORM_ROT_180,
     /* rotate source image 270 degrees clock-wise */
     NATIVE_WINDOW_TRANSFORM_ROT_270 = HAL_TRANSFORM_ROT_270,
+    /* transforms source by the inverse transform of the screen it is displayed onto. This
+     * transform is applied last */
+    NATIVE_WINDOW_TRANSFORM_INVERSE_DISPLAY = 0x08
 };
 
 /* parameter for NATIVE_WINDOW_SET_SCALING_MODE */
@@ -309,7 +374,6 @@ enum {
 enum {
     NATIVE_WINDOW_FRAMEBUFFER               = 0, /* FramebufferNativeWindow */
     NATIVE_WINDOW_SURFACE                   = 1, /* Surface */
-    NATIVE_WINDOW_SURFACE_TEXTURE_CLIENT    = 2, /* SurfaceTextureClient */
 };
 
 /* parameter for NATIVE_WINDOW_SET_BUFFERS_TIMESTAMP
@@ -333,10 +397,10 @@ struct ANativeWindow
 
     /* Implement the methods that sp<ANativeWindow> expects so that it
        can be used to automatically refcount ANativeWindow's. */
-    void incStrong(const void* id) const {
+    void incStrong(const void* /*id*/) const {
         common.incRef(const_cast<android_native_base_t*>(&common));
     }
-    void decStrong(const void* id) const {
+    void decStrong(const void* /*id*/) const {
         common.decRef(const_cast<android_native_base_t*>(&common));
     }
 #endif
@@ -379,8 +443,12 @@ struct ANativeWindow
      * allowed if a specific buffer count has been set.
      *
      * Returns 0 on success or -errno on error.
+     *
+     * XXX: This function is deprecated.  It will continue to work for some
+     * time for binary compatibility, but the new dequeueBuffer function that
+     * outputs a fence file descriptor should be used in its place.
      */
-    int     (*dequeueBuffer)(struct ANativeWindow* window,
+    int     (*dequeueBuffer_DEPRECATED)(struct ANativeWindow* window,
                 struct ANativeWindowBuffer** buffer);
 
     /*
@@ -389,9 +457,14 @@ struct ANativeWindow
      * dequeueBuffer first.
      *
      * Returns 0 on success or -errno on error.
+     *
+     * XXX: This function is deprecated.  It will continue to work for some
+     * time for binary compatibility, but it is essentially a no-op, and calls
+     * to it should be removed.
      */
-    int     (*lockBuffer)(struct ANativeWindow* window,
+    int     (*lockBuffer_DEPRECATED)(struct ANativeWindow* window,
                 struct ANativeWindowBuffer* buffer);
+
     /*
      * Hook called by EGL when modifications to the render buffer are done.
      * This unlocks and post the buffer.
@@ -405,8 +478,13 @@ struct ANativeWindow
      * Buffers MUST be queued in the same order than they were dequeued.
      *
      * Returns 0 on success or -errno on error.
+     *
+     * XXX: This function is deprecated.  It will continue to work for some
+     * time for binary compatibility, but the new queueBuffer function that
+     * takes a fence file descriptor should be used in its place (pass a value
+     * of -1 for the fence file descriptor if there is no valid one to pass).
      */
-    int     (*queueBuffer)(struct ANativeWindow* window,
+    int     (*queueBuffer_DEPRECATED)(struct ANativeWindow* window,
                 struct ANativeWindowBuffer* buffer);
 
     /*
@@ -425,30 +503,12 @@ struct ANativeWindow
      * DO NOT CALL THIS HOOK DIRECTLY.  Instead, use the helper functions
      * defined below.
      *
-     *  (*perform)() returns -ENOENT if the 'what' parameter is not supported
-     *  by the surface's implementation.
+     * (*perform)() returns -ENOENT if the 'what' parameter is not supported
+     * by the surface's implementation.
      *
-     * The valid operations are:
-     *     NATIVE_WINDOW_SET_USAGE
-     *     NATIVE_WINDOW_CONNECT               (deprecated)
-     *     NATIVE_WINDOW_DISCONNECT            (deprecated)
-     *     NATIVE_WINDOW_SET_CROP              (private)
-     *     NATIVE_WINDOW_SET_BUFFER_COUNT
-     *     NATIVE_WINDOW_SET_BUFFERS_GEOMETRY  (deprecated)
-     *     NATIVE_WINDOW_SET_BUFFERS_TRANSFORM
-     *     NATIVE_WINDOW_SET_BUFFERS_TIMESTAMP
-     *     NATIVE_WINDOW_SET_BUFFERS_DIMENSIONS
-     *     NATIVE_WINDOW_SET_BUFFERS_FORMAT
-     *     NATIVE_WINDOW_SET_SCALING_MODE       (private)
-     *     NATIVE_WINDOW_LOCK                   (private)
-     *     NATIVE_WINDOW_UNLOCK_AND_POST        (private)
-     *     NATIVE_WINDOW_API_CONNECT            (private)
-     *     NATIVE_WINDOW_API_DISCONNECT         (private)
-     *     NATIVE_WINDOW_SET_BUFFERS_USER_DIMENSIONS (private)
-     *     NATIVE_WINDOW_SET_POST_TRANSFORM_CROP (private)
-     *
+     * See above for a list of valid operations, such as
+     * NATIVE_WINDOW_SET_USAGE or NATIVE_WINDOW_CONNECT
      */
-
     int     (*perform)(struct ANativeWindow* window,
                 int operation, ... );
 
@@ -463,19 +523,93 @@ struct ANativeWindow
      * reference if they might use the buffer after queueing or canceling it.
      * Holding a reference to a buffer after queueing or canceling it is only
      * allowed if a specific buffer count has been set.
+     *
+     * XXX: This function is deprecated.  It will continue to work for some
+     * time for binary compatibility, but the new cancelBuffer function that
+     * takes a fence file descriptor should be used in its place (pass a value
+     * of -1 for the fence file descriptor if there is no valid one to pass).
      */
-    int     (*cancelBuffer)(struct ANativeWindow* window,
+    int     (*cancelBuffer_DEPRECATED)(struct ANativeWindow* window,
                 struct ANativeWindowBuffer* buffer);
 
+    /*
+     * Hook called by EGL to acquire a buffer. This call may block if no
+     * buffers are available.
+     *
+     * The window holds a reference to the buffer between dequeueBuffer and
+     * either queueBuffer or cancelBuffer, so clients only need their own
+     * reference if they might use the buffer after queueing or canceling it.
+     * Holding a reference to a buffer after queueing or canceling it is only
+     * allowed if a specific buffer count has been set.
+     *
+     * The libsync fence file descriptor returned in the int pointed to by the
+     * fenceFd argument will refer to the fence that must signal before the
+     * dequeued buffer may be written to.  A value of -1 indicates that the
+     * caller may access the buffer immediately without waiting on a fence.  If
+     * a valid file descriptor is returned (i.e. any value except -1) then the
+     * caller is responsible for closing the file descriptor.
+     *
+     * Returns 0 on success or -errno on error.
+     */
+    int     (*dequeueBuffer)(struct ANativeWindow* window,
+                struct ANativeWindowBuffer** buffer, int* fenceFd);
 
-    void* reserved_proc[2];
+    /*
+     * Hook called by EGL when modifications to the render buffer are done.
+     * This unlocks and post the buffer.
+     *
+     * The window holds a reference to the buffer between dequeueBuffer and
+     * either queueBuffer or cancelBuffer, so clients only need their own
+     * reference if they might use the buffer after queueing or canceling it.
+     * Holding a reference to a buffer after queueing or canceling it is only
+     * allowed if a specific buffer count has been set.
+     *
+     * The fenceFd argument specifies a libsync fence file descriptor for a
+     * fence that must signal before the buffer can be accessed.  If the buffer
+     * can be accessed immediately then a value of -1 should be used.  The
+     * caller must not use the file descriptor after it is passed to
+     * queueBuffer, and the ANativeWindow implementation is responsible for
+     * closing it.
+     *
+     * Returns 0 on success or -errno on error.
+     */
+    int     (*queueBuffer)(struct ANativeWindow* window,
+                struct ANativeWindowBuffer* buffer, int fenceFd);
+
+    /*
+     * Hook used to cancel a buffer that has been dequeued.
+     * No synchronization is performed between dequeue() and cancel(), so
+     * either external synchronization is needed, or these functions must be
+     * called from the same thread.
+     *
+     * The window holds a reference to the buffer between dequeueBuffer and
+     * either queueBuffer or cancelBuffer, so clients only need their own
+     * reference if they might use the buffer after queueing or canceling it.
+     * Holding a reference to a buffer after queueing or canceling it is only
+     * allowed if a specific buffer count has been set.
+     *
+     * The fenceFd argument specifies a libsync fence file decsriptor for a
+     * fence that must signal before the buffer can be accessed.  If the buffer
+     * can be accessed immediately then a value of -1 should be used.
+     *
+     * Note that if the client has not waited on the fence that was returned
+     * from dequeueBuffer, that same fence should be passed to cancelBuffer to
+     * ensure that future uses of the buffer are preceded by a wait on that
+     * fence.  The caller must not use the file descriptor after it is passed
+     * to cancelBuffer, and the ANativeWindow implementation is responsible for
+     * closing it.
+     *
+     * Returns 0 on success or -errno on error.
+     */
+    int     (*cancelBuffer)(struct ANativeWindow* window,
+                struct ANativeWindowBuffer* buffer, int fenceFd);
 };
 
  /* Backwards compatibility: use ANativeWindow (struct ANativeWindow in C).
   * android_native_window_t is deprecated.
   */
 typedef struct ANativeWindow ANativeWindow;
-typedef struct ANativeWindow android_native_window_t;
+typedef struct ANativeWindow android_native_window_t __deprecated;
 
 /*
  *  native_window_set_usage(..., usage)
@@ -496,13 +630,19 @@ static inline int native_window_set_usage(
 
 /* deprecated. Always returns 0. Don't call. */
 static inline int native_window_connect(
-        struct ANativeWindow* window, int api) {
+        struct ANativeWindow* window __UNUSED, int api __UNUSED) __deprecated;
+
+static inline int native_window_connect(
+        struct ANativeWindow* window __UNUSED, int api __UNUSED) {
     return 0;
 }
 
 /* deprecated. Always returns 0. Don't call. */
 static inline int native_window_disconnect(
-        struct ANativeWindow* window, int api) {
+        struct ANativeWindow* window __UNUSED, int api __UNUSED) __deprecated;
+
+static inline int native_window_disconnect(
+        struct ANativeWindow* window __UNUSED, int api __UNUSED) {
     return 0;
 }
 
@@ -551,10 +691,14 @@ static inline int native_window_set_post_transform_crop(
 /*
  * native_window_set_active_rect(..., active_rect)
  *
- * This function is deprectated and will be removed soon.  For now it simply
+ * This function is deprecated and will be removed soon.  For now it simply
  * sets the post-transform crop for compatibility while multi-project commits
  * get checked.
  */
+static inline int native_window_set_active_rect(
+        struct ANativeWindow* window,
+        android_native_rect_t const * active_rect) __deprecated;
+
 static inline int native_window_set_active_rect(
         struct ANativeWindow* window,
         android_native_rect_t const * active_rect)
@@ -582,6 +726,10 @@ static inline int native_window_set_buffer_count(
  * XXX: This function is deprecated.  The native_window_set_buffers_dimensions
  * and native_window_set_buffers_format functions should be used instead.
  */
+static inline int native_window_set_buffers_geometry(
+        struct ANativeWindow* window,
+        int w, int h, int format) __deprecated;
+
 static inline int native_window_set_buffers_geometry(
         struct ANativeWindow* window,
         int w, int h, int format)
@@ -650,6 +798,26 @@ static inline int native_window_set_buffers_format(
 }
 
 /*
+ * native_window_set_buffers_data_space(..., int dataSpace)
+ * All buffers queued after this call will be associated with the dataSpace
+ * parameter specified.
+ *
+ * dataSpace specifies additional information about the buffer that's dependent
+ * on the buffer format and the endpoints. For example, it can be used to convey
+ * the color space of the image data in the buffer, or it can be used to
+ * indicate that the buffers contain depth measurement data instead of color
+ * images.  The default dataSpace is 0, HAL_DATASPACE_UNKNOWN, unless it has been
+ * overridden by the consumer.
+ */
+static inline int native_window_set_buffers_data_space(
+        struct ANativeWindow* window,
+        android_dataspace_t dataSpace)
+{
+    return window->perform(window, NATIVE_WINDOW_SET_BUFFERS_DATASPACE,
+            dataSpace);
+}
+
+/*
  * native_window_set_buffers_transform(..., int transform)
  * All buffers queued after this call will be displayed transformed according
  * to the transform parameter specified.
@@ -659,6 +827,23 @@ static inline int native_window_set_buffers_transform(
         int transform)
 {
     return window->perform(window, NATIVE_WINDOW_SET_BUFFERS_TRANSFORM,
+            transform);
+}
+
+/*
+ * native_window_set_buffers_sticky_transform(..., int transform)
+ * All buffers queued after this call will be displayed transformed according
+ * to the transform parameter specified applied on top of the regular buffer
+ * transform.  Setting this transform will disable the transform hint.
+ *
+ * Temporary - This is only intended to be used by the LEGACY camera mode, do
+ *   not use this for anything else.
+ */
+static inline int native_window_set_buffers_sticky_transform(
+        struct ANativeWindow* window,
+        int transform)
+{
+    return window->perform(window, NATIVE_WINDOW_SET_BUFFERS_STICKY_TRANSFORM,
             transform);
 }
 
@@ -717,6 +902,52 @@ static inline int native_window_api_disconnect(
     return window->perform(window, NATIVE_WINDOW_API_DISCONNECT, api);
 }
 
+/*
+ * native_window_dequeue_buffer_and_wait(...)
+ * Dequeue a buffer and wait on the fence associated with that buffer.  The
+ * buffer may safely be accessed immediately upon this function returning.  An
+ * error is returned if either of the dequeue or the wait operations fail.
+ */
+static inline int native_window_dequeue_buffer_and_wait(ANativeWindow *anw,
+        struct ANativeWindowBuffer** anb) {
+    return anw->dequeueBuffer_DEPRECATED(anw, anb);
+}
+
+/*
+ * native_window_set_sideband_stream(..., native_handle_t*)
+ * Attach a sideband buffer stream to a native window.
+ */
+static inline int native_window_set_sideband_stream(
+        struct ANativeWindow* window,
+        native_handle_t* sidebandHandle)
+{
+    return window->perform(window, NATIVE_WINDOW_SET_SIDEBAND_STREAM,
+            sidebandHandle);
+}
+
+/*
+ * native_window_set_surface_damage(..., android_native_rect_t* rects, int numRects)
+ * Set the surface damage (i.e., the region of the surface that has changed
+ * since the previous frame). The damage set by this call will be reset (to the
+ * default of full-surface damage) after calling queue, so this must be called
+ * prior to every frame with damage that does not cover the whole surface if the
+ * caller desires downstream consumers to use this optimization.
+ *
+ * The damage region is specified as an array of rectangles, with the important
+ * caveat that the origin of the surface is considered to be the bottom-left
+ * corner, as in OpenGL ES.
+ *
+ * If numRects is set to 0, rects may be NULL, and the surface damage will be
+ * set to the full surface (the same as if this function had not been called for
+ * this frame).
+ */
+static inline int native_window_set_surface_damage(
+        struct ANativeWindow* window,
+        const android_native_rect_t* rects, size_t numRects)
+{
+    return window->perform(window, NATIVE_WINDOW_SET_SURFACE_DAMAGE,
+            rects, numRects);
+}
 
 __END_DECLS
 

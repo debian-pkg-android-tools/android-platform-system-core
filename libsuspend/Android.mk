@@ -12,12 +12,22 @@ libsuspend_libraries := \
 	liblog libcutils
 
 include $(CLEAR_VARS)
-
 LOCAL_SRC_FILES := $(libsuspend_src_files)
 LOCAL_MODULE := libsuspend
 LOCAL_MODULE_TAGS := optional
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
 LOCAL_SHARED_LIBRARIES := $(libsuspend_libraries)
+LOCAL_CFLAGS := -Werror
 #LOCAL_CFLAGS += -DLOG_NDEBUG=0
 include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := $(libsuspend_src_files)
+LOCAL_MODULE := libsuspend
+LOCAL_MODULE_TAGS := optional
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
+LOCAL_CFLAGS := -Werror
+#LOCAL_CFLAGS += -DLOG_NDEBUG=0
+include $(BUILD_STATIC_LIBRARY)

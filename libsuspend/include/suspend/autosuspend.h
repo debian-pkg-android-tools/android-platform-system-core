@@ -18,6 +18,7 @@
 #define _LIBSUSPEND_AUTOSUSPEND_H_
 
 #include <sys/cdefs.h>
+#include <stdbool.h>
 
 __BEGIN_DECLS
 
@@ -42,6 +43,15 @@ int autosuspend_enable(void);
  * Returns 0 on success, -1 if autosuspend was not disabled.
  */
 int autosuspend_disable(void);
+
+/*
+ * set_wakeup_callback
+ *
+ * Set a function to be called each time the device returns from suspend.
+ * success is true if the suspend was sucessful and false if the suspend
+ * aborted due to some reason.
+ */
+void set_wakeup_callback(void (*func)(bool success));
 
 __END_DECLS
 

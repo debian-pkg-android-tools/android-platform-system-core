@@ -33,6 +33,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <stddef.h>
 
 #include <sys/ioctl.h>
 #include <sys/types.h>
@@ -49,16 +50,29 @@
 
 #include "usbhost/usbhost.h"
 
-#define USB_FS_DIR "/dev/bus/usb"
-#define USB_FS_ID_SCANNER   "/dev/bus/usb/%d/%d"
-#define USB_FS_ID_FORMAT    "/dev/bus/usb/%03d/%03d"
+#define DEV_DIR             "/dev"
+#define DEV_BUS_DIR         DEV_DIR "/bus"
+#define USB_FS_DIR          DEV_BUS_DIR "/usb"
+#define USB_FS_ID_SCANNER   USB_FS_DIR "/%d/%d"
+#define USB_FS_ID_FORMAT    USB_FS_DIR "/%03d/%03d"
+
+// Some devices fail to send string descriptors if we attempt reading > 255 bytes
+#define MAX_STRING_DESCRIPTOR_LENGTH    255
 
 // From drivers/usb/core/devio.c
 // I don't know why this isn't in a kernel header
 #define MAX_USBFS_BUFFER_SIZE   16384
 
+#define MAX_USBFS_WD_COUNT      10
+
 struct usb_host_context {
-    int fd;
+    int                         fd;
+    usb_device_added_cb         cb_added;
+    usb_device_removed_cb       cb_removed;
+    void                        *data;
+    int                         wds[MAX_USBFS_WD_COUNT];
+    int                         wdd;
+    int                         wddbus;
 };
 
 struct usb_device {
@@ -77,37 +91,70 @@ static inline int badname(const char *name)
     return 0;
 }
 
+static int find_existing_devices_bus(char *busname,
+                                     usb_device_added_cb added_cb,
+                                     void *client_data)
+{
+    char devname[32];
+    DIR *devdir;
+    struct dirent *de;
+    int done = 0;
+
+    devdir = opendir(busname);
+    if(devdir == 0) return 0;
+
+    while ((de = readdir(devdir)) && !done) {
+        if(badname(de->d_name)) continue;
+
+        snprintf(devname, sizeof(devname), "%s/%s", busname, de->d_name);
+        done = added_cb(devname, client_data);
+    } // end of devdir while
+    closedir(devdir);
+
+    return done;
+}
+
 /* returns true if one of the callbacks indicates we are done */
 static int find_existing_devices(usb_device_added_cb added_cb,
-                                  usb_device_removed_cb removed_cb,
                                   void *client_data)
 {
-    char busname[32], devname[32];
-    DIR *busdir , *devdir ;
+    char busname[32];
+    DIR *busdir;
     struct dirent *de;
     int done = 0;
 
     busdir = opendir(USB_FS_DIR);
-    if(busdir == 0) return 1;
+    if(busdir == 0) return 0;
 
     while ((de = readdir(busdir)) != 0 && !done) {
         if(badname(de->d_name)) continue;
 
-        snprintf(busname, sizeof busname, "%s/%s", USB_FS_DIR, de->d_name);
-        devdir = opendir(busname);
-        if(devdir == 0) continue;
-
-        while ((de = readdir(devdir)) && !done) {
-            if(badname(de->d_name)) continue;
-
-            snprintf(devname, sizeof devname, "%s/%s", busname, de->d_name);
-            done = added_cb(devname, client_data);
-        } // end of devdir while
-        closedir(devdir);
+        snprintf(busname, sizeof(busname), USB_FS_DIR "/%s", de->d_name);
+        done = find_existing_devices_bus(busname, added_cb,
+                                         client_data);
     } //end of busdir while
     closedir(busdir);
 
     return done;
+}
+
+static void watch_existing_subdirs(struct usb_host_context *context,
+                                   int *wds, int wd_count)
+{
+    char path[100];
+    int i, ret;
+
+    wds[0] = inotify_add_watch(context->fd, USB_FS_DIR, IN_CREATE | IN_DELETE);
+    if (wds[0] < 0)
+        return;
+
+    /* watch existing subdirectories of USB_FS_DIR */
+    for (i = 1; i < wd_count; i++) {
+        snprintf(path, sizeof(path), USB_FS_DIR "/%03d", i);
+        ret = inotify_add_watch(context->fd, path, IN_CREATE | IN_DELETE);
+        if (ret >= 0)
+            wds[i] = ret;
+    }
 }
 
 struct usb_host_context *usb_host_init()
@@ -132,76 +179,143 @@ void usb_host_cleanup(struct usb_host_context *context)
     free(context);
 }
 
+int usb_host_get_fd(struct usb_host_context *context)
+{
+    return context->fd;
+} /* usb_host_get_fd() */
+
+int usb_host_load(struct usb_host_context *context,
+                  usb_device_added_cb added_cb,
+                  usb_device_removed_cb removed_cb,
+                  usb_discovery_done_cb discovery_done_cb,
+                  void *client_data)
+{
+    int done = 0;
+    int i;
+
+    context->cb_added = added_cb;
+    context->cb_removed = removed_cb;
+    context->data = client_data;
+
+    D("Created device discovery thread\n");
+
+    /* watch for files added and deleted within USB_FS_DIR */
+    context->wddbus = -1;
+    for (i = 0; i < MAX_USBFS_WD_COUNT; i++)
+        context->wds[i] = -1;
+
+    /* watch the root for new subdirectories */
+    context->wdd = inotify_add_watch(context->fd, DEV_DIR, IN_CREATE | IN_DELETE);
+    if (context->wdd < 0) {
+        fprintf(stderr, "inotify_add_watch failed\n");
+        if (discovery_done_cb)
+            discovery_done_cb(client_data);
+        return done;
+    }
+
+    watch_existing_subdirs(context, context->wds, MAX_USBFS_WD_COUNT);
+
+    /* check for existing devices first, after we have inotify set up */
+    done = find_existing_devices(added_cb, client_data);
+    if (discovery_done_cb)
+        done |= discovery_done_cb(client_data);
+
+    return done;
+} /* usb_host_load() */
+
+int usb_host_read_event(struct usb_host_context *context)
+{
+    struct inotify_event* event;
+    char event_buf[512];
+    char path[100];
+    int i, ret, done = 0;
+    int offset = 0;
+    int wd;
+
+    ret = read(context->fd, event_buf, sizeof(event_buf));
+    if (ret >= (int)sizeof(struct inotify_event)) {
+        while (offset < ret && !done) {
+            event = (struct inotify_event*)&event_buf[offset];
+            done = 0;
+            wd = event->wd;
+            if (wd == context->wdd) {
+                if ((event->mask & IN_CREATE) && !strcmp(event->name, "bus")) {
+                    context->wddbus = inotify_add_watch(context->fd, DEV_BUS_DIR, IN_CREATE | IN_DELETE);
+                    if (context->wddbus < 0) {
+                        done = 1;
+                    } else {
+                        watch_existing_subdirs(context, context->wds, MAX_USBFS_WD_COUNT);
+                        done = find_existing_devices(context->cb_added, context->data);
+                    }
+                }
+            } else if (wd == context->wddbus) {
+                if ((event->mask & IN_CREATE) && !strcmp(event->name, "usb")) {
+                    watch_existing_subdirs(context, context->wds, MAX_USBFS_WD_COUNT);
+                    done = find_existing_devices(context->cb_added, context->data);
+                } else if ((event->mask & IN_DELETE) && !strcmp(event->name, "usb")) {
+                    for (i = 0; i < MAX_USBFS_WD_COUNT; i++) {
+                        if (context->wds[i] >= 0) {
+                            inotify_rm_watch(context->fd, context->wds[i]);
+                            context->wds[i] = -1;
+                        }
+                    }
+                }
+            } else if (wd == context->wds[0]) {
+                i = atoi(event->name);
+                snprintf(path, sizeof(path), USB_FS_DIR "/%s", event->name);
+                D("%s subdirectory %s: index: %d\n", (event->mask & IN_CREATE) ?
+                        "new" : "gone", path, i);
+                if (i > 0 && i < MAX_USBFS_WD_COUNT) {
+                    int local_ret = 0;
+                    if (event->mask & IN_CREATE) {
+                        local_ret = inotify_add_watch(context->fd, path,
+                                IN_CREATE | IN_DELETE);
+                        if (local_ret >= 0)
+                            context->wds[i] = local_ret;
+                        done = find_existing_devices_bus(path, context->cb_added,
+                                context->data);
+                    } else if (event->mask & IN_DELETE) {
+                        inotify_rm_watch(context->fd, context->wds[i]);
+                        context->wds[i] = -1;
+                    }
+                }
+            } else {
+                for (i = 1; (i < MAX_USBFS_WD_COUNT) && !done; i++) {
+                    if (wd == context->wds[i]) {
+                        snprintf(path, sizeof(path), USB_FS_DIR "/%03d/%s", i, event->name);
+                        if (event->mask == IN_CREATE) {
+                            D("new device %s\n", path);
+                            done = context->cb_added(path, context->data);
+                        } else if (event->mask == IN_DELETE) {
+                            D("gone device %s\n", path);
+                            done = context->cb_removed(path, context->data);
+                        }
+                    }
+                }
+            }
+
+            offset += sizeof(struct inotify_event) + event->len;
+        }
+    }
+
+    return done;
+} /* usb_host_read_event() */
+
 void usb_host_run(struct usb_host_context *context,
                   usb_device_added_cb added_cb,
                   usb_device_removed_cb removed_cb,
                   usb_discovery_done_cb discovery_done_cb,
                   void *client_data)
 {
-    struct inotify_event* event;
-    char event_buf[512];
-    char path[100];
-    int i, ret, done = 0;
-    int wd, wds[10];
-    int wd_count = sizeof(wds) / sizeof(wds[0]);
+    int done;
 
-    D("Created device discovery thread\n");
-
-    /* watch for files added and deleted within USB_FS_DIR */
-    memset(wds, 0, sizeof(wds));
-    /* watch the root for new subdirectories */
-    wds[0] = inotify_add_watch(context->fd, USB_FS_DIR, IN_CREATE | IN_DELETE);
-    if (wds[0] < 0) {
-        fprintf(stderr, "inotify_add_watch failed\n");
-        if (discovery_done_cb)
-            discovery_done_cb(client_data);
-        return;
-    }
-
-    /* watch existing subdirectories of USB_FS_DIR */
-    for (i = 1; i < wd_count; i++) {
-        snprintf(path, sizeof(path), "%s/%03d", USB_FS_DIR, i);
-        ret = inotify_add_watch(context->fd, path, IN_CREATE | IN_DELETE);
-        if (ret > 0)
-            wds[i] = ret;
-    }
-
-    /* check for existing devices first, after we have inotify set up */
-    done = find_existing_devices(added_cb, removed_cb, client_data);
-    if (discovery_done_cb)
-        done |= discovery_done_cb(client_data);
+    done = usb_host_load(context, added_cb, removed_cb, discovery_done_cb, client_data);
 
     while (!done) {
-        ret = read(context->fd, event_buf, sizeof(event_buf));
-        if (ret >= (int)sizeof(struct inotify_event)) {
-            event = (struct inotify_event *)event_buf;
-            wd = event->wd;
-            if (wd == wds[0]) {
-                i = atoi(event->name);
-                snprintf(path, sizeof(path), "%s/%s", USB_FS_DIR, event->name);
-                D("new subdirectory %s: index: %d\n", path, i);
-                if (i > 0 && i < wd_count) {
-                ret = inotify_add_watch(context->fd, path, IN_CREATE | IN_DELETE);
-                if (ret > 0)
-                    wds[i] = ret;
-                }
-            } else {
-                for (i = 1; i < wd_count && !done; i++) {
-                    if (wd == wds[i]) {
-                        snprintf(path, sizeof(path), "%s/%03d/%s", USB_FS_DIR, i, event->name);
-                        if (event->mask == IN_CREATE) {
-                            D("new device %s\n", path);
-                            done = added_cb(path, client_data);
-                        } else if (event->mask == IN_DELETE) {
-                            D("gone device %s\n", path);
-                            done = removed_cb(path, client_data);
-                        }
-                    }
-                }
-            }
-        }
+
+        done = usb_host_read_event(context);
     }
-}
+} /* usb_host_run() */
 
 struct usb_device *usb_device_open(const char *dev_name)
 {
@@ -338,10 +452,12 @@ const struct usb_device_descriptor* usb_device_get_device_descriptor(struct usb_
 char* usb_device_get_string(struct usb_device *device, int id)
 {
     char string[256];
-    __u16 buffer[128];
-    __u16 languages[128];
+    __u16 buffer[MAX_STRING_DESCRIPTOR_LENGTH / sizeof(__u16)];
+    __u16 languages[MAX_STRING_DESCRIPTOR_LENGTH / sizeof(__u16)];
     int i, result;
     int languageCount = 0;
+
+    if (id == 0) return NULL;
 
     string[0] = 0;
     memset(languages, 0, sizeof(languages));
@@ -376,31 +492,25 @@ char* usb_device_get_string(struct usb_device *device, int id)
 char* usb_device_get_manufacturer_name(struct usb_device *device)
 {
     struct usb_device_descriptor *desc = (struct usb_device_descriptor *)device->desc;
-
-    if (desc->iManufacturer)
-        return usb_device_get_string(device, desc->iManufacturer);
-    else
-        return NULL;
+    return usb_device_get_string(device, desc->iManufacturer);
 }
 
 char* usb_device_get_product_name(struct usb_device *device)
 {
     struct usb_device_descriptor *desc = (struct usb_device_descriptor *)device->desc;
+    return usb_device_get_string(device, desc->iProduct);
+}
 
-    if (desc->iProduct)
-        return usb_device_get_string(device, desc->iProduct);
-    else
-        return NULL;
+int usb_device_get_version(struct usb_device *device)
+{
+    struct usb_device_descriptor *desc = (struct usb_device_descriptor *)device->desc;
+    return desc->bcdUSB;
 }
 
 char* usb_device_get_serial(struct usb_device *device)
 {
     struct usb_device_descriptor *desc = (struct usb_device_descriptor *)device->desc;
-
-    if (desc->iSerialNumber)
-        return usb_device_get_string(device, desc->iSerialNumber);
-    else
-        return NULL;
+    return usb_device_get_string(device, desc->iSerialNumber);
 }
 
 int usb_device_is_writeable(struct usb_device *device)
@@ -444,6 +554,21 @@ int usb_device_connect_kernel_driver(struct usb_device *device,
     ctl.ioctl_code = (connect ? USBDEVFS_CONNECT : USBDEVFS_DISCONNECT);
     ctl.data = NULL;
     return ioctl(device->fd, USBDEVFS_IOCTL, &ctl);
+}
+
+int usb_device_set_configuration(struct usb_device *device, int configuration)
+{
+    return ioctl(device->fd, USBDEVFS_SETCONFIGURATION, &configuration);
+}
+
+int usb_device_set_interface(struct usb_device *device, unsigned int interface,
+                            unsigned int alt_setting)
+{
+    struct usbdevfs_setinterface ctl;
+
+    ctl.interface = interface;
+    ctl.altsetting = alt_setting;
+    return ioctl(device->fd, USBDEVFS_SETINTERFACE, &ctl);
 }
 
 int usb_device_control_transfer(struct usb_device *device,
@@ -555,7 +680,6 @@ struct usb_request *usb_request_wait(struct usb_device *dev)
 {
     struct usbdevfs_urb *urb = NULL;
     struct usb_request *req = NULL;
-    int res;
 
     while (1) {
         int res = ioctl(dev->fd, USBDEVFS_REAPURB, &urb);
@@ -580,6 +704,6 @@ struct usb_request *usb_request_wait(struct usb_device *dev)
 int usb_request_cancel(struct usb_request *req)
 {
     struct usbdevfs_urb *urb = ((struct usbdevfs_urb*)req->private_data);
-    return ioctl(req->dev->fd, USBDEVFS_DISCARDURB, &urb);
+    return ioctl(req->dev->fd, USBDEVFS_DISCARDURB, urb);
 }
 

@@ -3,7 +3,7 @@ SOURCES = zip_archive.cc
 SOURCES := $(foreach source, $(SOURCES), libziparchive/$(source))
 OBJECTS = $(SOURCES:.cc=.o)
 CXXFLAGS += -fPIC -c -std=gnu++11
-CPPFLAGS += -include include/arch/linux-$(CPU)/AndroidConfig.h \
+CPPFLAGS += -include android/arch/AndroidConfig.h \
             -Iinclude -Ibase/include
 LDFLAGS += -fPIC -shared  -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/android -lz -L. -lutils -llog -lbase

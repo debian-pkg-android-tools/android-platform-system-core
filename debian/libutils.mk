@@ -26,7 +26,7 @@ SOURCES = BasicHashtable.cpp \
 SOURCES := $(foreach source, $(SOURCES), libutils/$(source))
 OBJECTS = $(SOURCES:.cpp=.o)
 CXXFLAGS += -fPIC -c -std=gnu++11
-CPPFLAGS += -include include/arch/linux-$(CPU)/AndroidConfig.h \
+CPPFLAGS += -include android/arch/AndroidConfig.h \
             -Iinclude -Idebian \
             -DLIBUTILS_NATIVE=1
 LDFLAGS += -fPIC -shared -Wl,-soname,$(NAME).so.0 \

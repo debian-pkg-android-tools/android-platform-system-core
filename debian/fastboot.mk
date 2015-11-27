@@ -15,7 +15,8 @@ CPPFLAGS += -DUSE_F2FS -DFASTBOOT_REVISION='"debian"' \
             -I/usr/include/openssl \
             -Ilibsparse/include
 LDFLAGS += -fPIC -Wl,-rpath=/usr/lib/android -Wl,-rpath-link=. \
-           -L. -lziparchive -lext4_utils -lsparse -lf2fs_utils
+           -L. -lziparchive -lsparse \
+           -L/usr/lib/android -lext4_utils  -lf2fs_utils
 
 build: $(COBJECTS) $(CXXOBJECTS)
 	$(CC) $^ -o $(NAME) $(LDFLAGS)

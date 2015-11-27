@@ -16,18 +16,17 @@ CFLAGS += -fPIC -c
 CXXFLAGS += -fPIC -c -std=gnu++11
 CPPFLAGS += -include android/arch/AndroidConfig.h \
             -Iinclude -Ibase/include -I/usr/include/android/unwind
-LDFLAGS += -fPIC -shared -Wl,-soname,$(NAME).so.0 \
+LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/android -lrt -lpthread \
            -L/usr/lib/android -lunwind -L. -lbase -llog -lcutils
 
 build: $(COBJECTS) $(CXXOBJECTS)
 	$(CXX) $^ -o $(NAME).so.$(ANDROID_LIBVERSION) $(LDFLAGS)
-	$(AR) rs $(NAME).a $^
 	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so
 	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so.0
 
 clean:
-	$(RM) $(COBJECTS) $(CXXOBJECTS)
+	$(RM) $(COBJECTS) $(CXXOBJECTS) $(NAME).so*
 
 $(CXXOBJECTS): %.o: %.cpp
 	$(CXX) $< -o $@ $(CXXFLAGS) $(CPPFLAGS)

@@ -1,3 +1,2 @@
 include/ziparchive usr/include/android
-libziparchive.a    usr/lib/android
 libziparchive.so   usr/lib/android

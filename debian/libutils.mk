@@ -24,23 +24,18 @@ SOURCES = BasicHashtable.cpp \
           misc.cpp \
           Looper.cpp
 SOURCES := $(foreach source, $(SOURCES), libutils/$(source))
-OBJECTS = $(SOURCES:.cpp=.o)
-CXXFLAGS += -fPIC -c -std=gnu++11
+CXXFLAGS += -fPIC -std=gnu++11
 CPPFLAGS += -include android/arch/AndroidConfig.h \
             -Iinclude -Idebian \
             -DLIBUTILS_NATIVE=1
-LDFLAGS += -fPIC -shared -Wl,-soname,$(NAME).so.0 \
+LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/android \
            -lpthread -L. -llog -lcutils -lbacktrace
 
-build: $(OBJECTS)
-	$(CXX) $(OBJECTS) -o $(NAME).so.$(ANDROID_LIBVERSION) $(LDFLAGS)
-	$(AR) rs $(NAME).a $(OBJECTS)
+build: $(SOURCES)
+	$(CXX) $^ -o $(NAME).so.$(ANDROID_LIBVERSION) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
 	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so
 	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so.0
 
 clean:
-	$(RM) $(OBJECTS)
-
-$(OBJECTS): %.o: %.cpp
-	$(CXX) $< -o $@ $(CXXFLAGS) $(CPPFLAGS)
+	$(RM) $(NAME).so*

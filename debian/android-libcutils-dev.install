@@ -1,3 +1,2 @@
 include/cutils usr/include/android
-libcutils.a         usr/lib/android
-libcutils.so        usr/lib/android
+libcutils.so   usr/lib/android

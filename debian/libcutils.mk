@@ -28,20 +28,15 @@ SOURCES = hashmap.c \
           trace-host.c \
           dlmalloc_stubs.c
 SOURCES := $(foreach source, $(SOURCES), libcutils/$(source))
-OBJECTS = $(SOURCES:.c=.o)
-CFLAGS += -fPIC -c
+CFLAGS += -fPIC
 CPPFLAGS += -include android/arch/AndroidConfig.h -Iinclude
-LDFLAGS += -fPIC -shared -Wl,-soname,$(NAME).so.0 \
+LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/android -lpthread -L. -llog
 
-build: $(OBJECTS)
-	$(CC) $^ -o $(NAME).so.$(ANDROID_LIBVERSION) $(LDFLAGS)
-	$(AR) rs $(NAME).a $^
+build: $(SOURCES)
+	$(CC) $^ -o $(NAME).so.$(ANDROID_LIBVERSION) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so
 	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so.0
 
 clean:
-	$(RM) $(OBJECTS)
-
-$(OBJECTS): %.o: %.c
-	$(CC) $< -o $@ $(CFLAGS) $(CPPFLAGS)
+	$(RM) $(NAME).so*

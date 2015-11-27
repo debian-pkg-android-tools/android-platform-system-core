@@ -1,3 +1,2 @@
 libsparse/include/* usr/include/android
-libsparse.a         usr/lib/android
 libsparse.so        usr/lib/android

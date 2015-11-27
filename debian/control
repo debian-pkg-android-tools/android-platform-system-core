@@ -26,9 +26,9 @@ Section: libs
 Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android NDK logger interfaces
- liblog  represents  an interface to the volatile Android Logging system for NDK
- (Native) applications  and  libraries.  Interfaces  for  either writing  or
- reading logs.  The log buffers are divided up in Main, System, Radio and Events
+ liblog represents an interface to the volatile Android Logging system for NDK
+ (Native) applications and libraries. Interfaces for either writing or reading
+ logs. The log buffers are divided up in Main, System, Radio and Events
  sub-logs.
 
 Package: android-liblog-dev
@@ -39,9 +39,9 @@ Depends: android-liblog (= ${binary:Version}),
 Breaks: android-liblog (<< 21-4~)
 Replaces: android-liblog (<< 21-4~)
 Description: Android NDK logger interfaces - Development files
- liblog  represents  an interface to the volatile Android Logging system for NDK
- (Native) applications  and  libraries.  Interfaces  for  either writing  or
- reading logs.  The log buffers are divided up in Main, System, Radio and Events
+ liblog represents an interface to the volatile Android Logging system for NDK
+ (Native) applications and libraries. Interfaces for either writing or reading
+ logs. The log buffers are divided up in Main, System, Radio and Events
  sub-logs.
  .
  This package contains the development files.

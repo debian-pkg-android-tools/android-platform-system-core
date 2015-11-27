@@ -78,6 +78,7 @@ Description: Android Debug Bridge
 
 Package: fastboot
 Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Build-Profiles: <!stage1>
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Breaks: android-tools-fastboot
 Replaces: android-tools-fastboot

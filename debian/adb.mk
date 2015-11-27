@@ -14,7 +14,7 @@ LDFLAGS += -fPIC -Wl,-rpath=/usr/lib/android -Wl,-rpath-link=. \
            -lpthread -L. -ladb -lbase -lcutils
 
 build: $(SOURCES)
-	$(CXX) $^ -o $(NAME) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
+	$(CXX) $^ -o adb/$(NAME) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
 
 clean:
-	$(RM) $(NAME)
+	$(RM) adb/$(NAME)

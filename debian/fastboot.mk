@@ -19,10 +19,10 @@ LDFLAGS += -fPIC -Wl,-rpath=/usr/lib/android -Wl,-rpath-link=. \
            -L/usr/lib/android -lext4_utils  -lf2fs_utils
 
 build: $(COBJECTS) $(CXXOBJECTS)
-	$(CC) $^ -o $(NAME) $(LDFLAGS)
+	$(CC) $^ -o fastboot/$(NAME) $(LDFLAGS)
 
 clean:
-	$(RM) $(NAME) $(COBJECTS) $(CXXOBJECTS)
+	$(RM) fastboot/$(NAME) $(COBJECTS) $(CXXOBJECTS)
 
 $(CXXOBJECTS): %.o: %.cpp
 	$(CXX) $< -o $@ $(CXXFLAGS) $(CPPFLAGS)

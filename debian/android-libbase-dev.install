@@ -1,2 +1,2 @@
-base/include/* usr/include/android/base
-libbase.so     usr/lib/android
+base/include/base/* usr/include/android/base
+libbase.so          usr/lib/android

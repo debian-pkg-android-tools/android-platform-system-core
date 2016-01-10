@@ -16,7 +16,7 @@ CPPFLAGS += -DUSE_F2FS -DFASTBOOT_REVISION='"debian"' \
             -Ilibsparse/include
 LDFLAGS += -fPIC -Wl,-rpath=/usr/lib/android -Wl,-rpath-link=. \
            -L. -lziparchive -lsparse \
-           -L/usr/lib/android -lext4_utils  -lf2fs_utils
+           -L/usr/lib/android -lext4_utils -lf2fs_utils
 
 build: $(COBJECTS) $(CXXOBJECTS)
 	$(CC) $^ -o fastboot/$(NAME) $(LDFLAGS)

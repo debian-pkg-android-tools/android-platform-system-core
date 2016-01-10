@@ -144,6 +144,8 @@ Description: Shared headers in AOSP repository platform/system/core
  This package contains header files in AOSP repository platform/system/core that
  do not belong to any specific libraries but used by other programs.
 
+ This package currently contains headers in include/private and include/system.
+
 Package: android-libbacktrace
 Section: libs
 Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el

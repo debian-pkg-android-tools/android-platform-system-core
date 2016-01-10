@@ -1,3 +1,6 @@
+Description: cutils/atomic.h uses stdatomic.h which is not supported by C++11
+Author: Kai-Chung Yan <seamlikok@gmail.com>
+Last-Update: 2015-11-17
 --- a/include/utils/RefBase.h
 +++ b/include/utils/RefBase.h
 @@ -17,7 +17,9 @@

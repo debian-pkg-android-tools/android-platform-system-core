@@ -33,9 +33,8 @@ LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -lpthread -L. -llog -lcutils -lbacktrace
 
 build: $(SOURCES)
-	$(CXX) $^ -o $(NAME).so.$(ANDROID_LIBVERSION) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
-	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so
-	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so.0
+	$(CXX) $^ -o $(NAME).so.0 $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
+	ln -s $(NAME).so.0 $(NAME).so
 
 clean:
 	$(RM) $(NAME).so*

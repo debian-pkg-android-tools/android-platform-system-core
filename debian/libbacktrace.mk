@@ -21,9 +21,8 @@ LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -L/usr/lib/android -lunwind -L. -lbase -llog -lcutils
 
 build: $(COBJECTS) $(CXXOBJECTS)
-	$(CXX) $^ -o $(NAME).so.$(ANDROID_LIBVERSION) $(LDFLAGS)
-	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so
-	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so.0
+	$(CXX) $^ -o $(NAME).so.0 $(LDFLAGS)
+	ln -s $(NAME).so.0 $(NAME).so
 
 clean:
 	$(RM) $(COBJECTS) $(CXXOBJECTS) $(NAME).so*

@@ -7,9 +7,8 @@ LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/android
 
 build: $(SOURCES)
-	$(CC) $^ -o $(NAME).so.$(ANDROID_LIBVERSION) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
-	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so
-	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so.0
+	$(CC) $^ -o $(NAME).so.0 $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
+	ln -s $(NAME).so.0 $(NAME).so
 
 clean:
 	$(RM) $(NAME).so*

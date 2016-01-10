@@ -8,9 +8,8 @@ LDFLAGS += -fPIC -shared  -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/android -lz -L. -lutils -llog -lbase
 
 build: $(SOURCES)
-	$(CXX) $^ -o $(NAME).so.$(ANDROID_LIBVERSION) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
-	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so
-	ln -s $(NAME).so.$(ANDROID_LIBVERSION) $(NAME).so.0
+	$(CXX) $^ -o $(NAME).so.0 $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
+	ln -s $(NAME).so.0 $(NAME).so
 
 clean:
 	$(RM) $(NAME).so*

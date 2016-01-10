@@ -3,7 +3,8 @@ Section: devel
 Priority: optional
 Maintainer: Android tools Maintainer <android-tools-devel@lists.alioth.debian.org>
 Uploaders: Stefan Handschuh <handschuh.stefan@googlemail.com>,
-           Hans-Christoph Steiner <hans@eds.org>
+           Hans-Christoph Steiner <hans@eds.org>,
+           Kai-Chung Yan <seamlikok@gmail.com>
 Build-Depends: android-libext4-utils-dev <!stage1>,
                android-libf2fs-utils-dev <!stage1>,
                android-libunwind-dev,
@@ -111,7 +112,7 @@ Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
 Depends: android-libbacktrace-dev (>= ${binary:Version}),
          android-libcutils-dev (>= ${binary:Version}),
          android-libutils (= ${binary:Version}),
-         android-system-dev (>= ${source:Version}),
+         android-platform-system-core-headers (>= ${source:Version}),
          ${misc:Depends}
 Description: Android Utility Function Library - Development files
  This library is only used by Android SDK currently.
@@ -142,12 +143,13 @@ Description: Android config headers for all Android codes
  This package contains AndroidConfig.h for x86, misp(64) and arm(64) which must
  be included in all source files of Android SDK componnets.
 
-Package: android-system-dev
+Package: android-platform-system-core-headers
 Section: libdevel
 Architecture: all
 Depends: ${misc:Depends}
-Description: Android system headers
- This package contains header files in core/inlcude/system.
+Description: Shared headers in AOSP repository platform/system/core
+ This package contains header files in AOSP repository platform/system/core that
+ do not belong to any specific libraries but used by other programs.
 
 Package: android-libbacktrace
 Section: libs

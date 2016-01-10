@@ -13,6 +13,7 @@ android-platform-system-core (1:6.0.0+r26-1) UNRELEASED; urgency=medium
       - android-libsparse(-dev)
       - android-libutils(-dev)
       - android-libziparchive(-dev)
+      - android-platform-system-core-headers
       - fastboot
   * Remove android-libzipfile(-dev): Removed from upstream
   * Add myself to Uploaders

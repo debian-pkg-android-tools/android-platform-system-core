@@ -136,14 +136,6 @@ Description: Android zip archive library - Development files
  .
  This package contains the development files.
 
-Package: android-androidconfig-dev
-Section: libdevel
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
-Depends: ${misc:Depends}
-Description: Android config headers for all Android codes
- This package contains AndroidConfig.h for x86, misp(64) and arm(64) which must
- be included in all source files of Android SDK componnets.
-
 Package: android-platform-system-core-headers
 Section: libdevel
 Architecture: all

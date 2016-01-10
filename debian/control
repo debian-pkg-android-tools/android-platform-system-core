@@ -9,6 +9,7 @@ Build-Depends: android-libext4-utils-dev <!stage1>,
                android-libunwind-dev,
                debhelper (>= 9.20141010),
                dpkg-dev (>= 1.17.14),
+               libsafe-iop-dev,
                libssl-dev,
                zlib1g-dev
 Standards-Version: 3.9.6
@@ -107,7 +108,8 @@ Description: Android Utility Function Library
 Package: android-libutils-dev
 Section: libdevel
 Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
-Depends: android-libcutils-dev (>= ${binary:Version}),
+Depends: android-libbacktrace-dev (>= ${binary:Version}),
+         android-libcutils-dev (>= ${binary:Version}),
          android-libutils (= ${binary:Version}),
          android-system-dev (>= ${source:Version}),
          ${misc:Depends}

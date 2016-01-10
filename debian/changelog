@@ -16,7 +16,6 @@ android-platform-system-core (1:6.0.0+r26-1) UNRELEASED; urgency=medium
       - android-platform-system-core-headers
       - fastboot
   * Remove android-libzipfile(-dev): Removed from upstream
-  * Add myself to Uploaders
   * New patches:
     - disable_android_set_abort_message.diff
     - add_missing_headers.diff: Various headers are missing which causes
@@ -29,6 +28,7 @@ android-platform-system-core (1:6.0.0+r26-1) UNRELEASED; urgency=medium
       - android-libunwind(-dev)
       - libsafe-iop-dev
       - android-platform-build-headers
+    - Add myself to Uploaders
     - Change architecture to x86, ARM and MIPS (Linux only)
     - Fix Vcs-Git typo
     - Update android-liblog(-dev) package description

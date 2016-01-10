@@ -24,7 +24,10 @@ android-platform-system-core (1:6.0.0+r26-1) UNRELEASED; urgency=medium
       is not supported by C++11
     - libutils_use_unique_ptr: Use std::unique_ptr instead of Bionic's one
   * d/control:
-    - Add (Build-)Depends: android-libunwind(-dev), libsafe-iop-dev
+    - Add (Build-)Depends:
+      - android-libunwind(-dev)
+      - libsafe-iop-dev
+      - android-platform-build-headers
     - Change architecture to x86, ARM and MIPS (Linux only)
     - Fix Vcs-Git typo
     - Update android-liblog(-dev) package description

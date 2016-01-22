@@ -5,9 +5,7 @@ Maintainer: Android tools Maintainer <android-tools-devel@lists.alioth.debian.or
 Uploaders: Stefan Handschuh <handschuh.stefan@googlemail.com>,
            Hans-Christoph Steiner <hans@eds.org>,
            Kai-Chung Yan <seamlikok@gmail.com>
-Build-Depends: android-libext4-utils-dev <!stage1>,
-               android-libf2fs-utils-dev <!stage1>,
-               android-libunwind-dev,
+Build-Depends: android-libunwind-dev,
                android-platform-build-headers,
                debhelper (>= 9.20141010),
                dpkg-dev (>= 1.17.14),
@@ -73,16 +71,6 @@ Replaces: android-tools-adb
 Description: Android Debug Bridge
  A versatile command line tool that lets you communicate with an emulator
  instance or connected Android-powered device.
-
-Package: fastboot
-Architecture: amd64 i386
-Build-Profiles: <!stage1>
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Breaks: android-tools-fastboot
-Replaces: android-tools-fastboot
-Description: Android fastboot tool
- A command line tool for flashing an Android device, boot an Android device to
- fastboot mode, etc..
 
 Package: android-libsparse
 Section: libs

@@ -21,7 +21,7 @@ Vcs-Browser: http://anonscm.debian.org/cgit/android-tools/android-platform-syste
 
 Package: android-liblog
 Section: libs
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android NDK logger interfaces
  liblog represents an interface to the volatile Android Logging system for NDK
@@ -31,7 +31,7 @@ Description: Android NDK logger interfaces
 
 Package: android-liblog-dev
 Section: libdevel
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: android-liblog (= ${binary:Version}),
          ${misc:Depends}
 Breaks: android-liblog (<< 21-4~)
@@ -46,14 +46,14 @@ Description: Android NDK logger interfaces - Development files
 
 Package: android-libcutils
 Section: libs
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: libbsd0, ${shlibs:Depends}, ${misc:Depends}
 Description: Android utils library for C
  This library provides common functionalities for android related tools.
 
 Package: android-libcutils-dev
 Section: libdevel
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: ${misc:Depends},
          android-libcutils (= ${binary:Version}),
          android-liblog-dev (= ${binary:Version}),
@@ -66,7 +66,7 @@ Description: Android utils library for C - Development files
  This package contains the development files.
 
 Package: adb
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Breaks: android-tools-adb
 Replaces: android-tools-adb
@@ -75,7 +75,7 @@ Description: Android Debug Bridge
  instance or connected Android-powered device.
 
 Package: fastboot
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Build-Profiles: <!stage1>
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Breaks: android-tools-fastboot
@@ -86,14 +86,14 @@ Description: Android fastboot tool
 
 Package: android-libsparse
 Section: libs
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android Sparse library
  This library is only used by Android SDK currently.
 
 Package: android-libsparse-dev
 Section: libdevel
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: android-libsparse (= ${binary:Version}), ${misc:Depends}
 Description: Android Sparse library - Development files
  This library is only used by Android SDK currently.
@@ -102,14 +102,14 @@ Description: Android Sparse library - Development files
 
 Package: android-libutils
 Section: libs
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Android Utility Function Library
  This library is only used by Android SDK currently.
 
 Package: android-libutils-dev
 Section: libdevel
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: android-libbacktrace-dev (>= ${binary:Version}),
          android-libcutils-dev (>= ${binary:Version}),
          android-libutils (= ${binary:Version}),
@@ -122,14 +122,14 @@ Description: Android Utility Function Library - Development files
 
 Package: android-libziparchive
 Section: libs
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Android zip archive library
  This library is only used by Android SDK currently.
 
 Package: android-libziparchive-dev
 Section: libdevel
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: android-libziparchive (= ${binary:Version}), ${misc:Depends}
 Description: Android zip archive library - Development files
  This library is only used by Android SDK currently.
@@ -148,14 +148,14 @@ Description: Shared headers in AOSP repository platform/system/core
 
 Package: android-libbacktrace
 Section: libs
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Android backtrace library
  This library is only used by Android SDK currently.
 
 Package: android-libbacktrace-dev
 Section: libdevel
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: android-libbacktrace (= ${binary:Version}), ${misc:Depends}
 Description: Android backtrace library - Development files
  This library is only used by Android SDK currently.
@@ -164,14 +164,14 @@ Description: Android backtrace library - Development files
 
 Package: android-libadb
 Section: libs
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Library for Android Debug Bridge
  This library is only used by Android SDK currently.
 
 Package: android-libadb-dev
 Section: libdevel
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: android-libadb (= ${binary:Version}),
          android-liblog-dev (= ${binary:Version}),
          ${misc:Depends}
@@ -182,14 +182,14 @@ Description: Library for Android Debug Bridge - Development files
 
 Package: android-libbase
 Section: libs
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Android base library
  This library is only used by Android SDK currently.
 
 Package: android-libbase-dev
 Section: libdevel
-Architecture: amd64 i386 arm arm64 armeb mips mipsel mips64 mips64el
+Architecture: amd64 i386
 Depends: android-libbase (= ${binary:Version}), ${misc:Depends}
 Description: Android base library - Development files
  This library is only used by Android SDK currently.

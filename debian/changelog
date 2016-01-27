@@ -1,4 +1,4 @@
-android-platform-system-core (1:6.0.0+r26-1~stage1) UNRELEASED; urgency=medium
+android-platform-system-core (1:6.0.0+r26-1~stage1) experimental; urgency=low
 
   * New upstream release
   * stage1 upload

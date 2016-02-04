@@ -12,7 +12,7 @@ Build-Depends: android-libunwind-dev (>= 6),
                libsafe-iop-dev,
                libssl-dev,
                zlib1g-dev
-Standards-Version: 3.9.6
+Standards-Version: 3.9.7
 Homepage: https://android.googlesource.com/platform/system/core
 Vcs-Git: https://anonscm.debian.org/git/android-tools/android-platform-system-core.git
 Vcs-Browser: https://anonscm.debian.org/cgit/android-tools/android-platform-system-core.git
@@ -58,7 +58,7 @@ Depends: ${misc:Depends},
          libbsd-dev
 Breaks: android-libcutils (<< 21-4~),
         android-liblog-dev (<< 1:6)
-Replaces: android-libcutils (<< 21-4~)
+Replaces: android-libcutils (<< 21-4~),
           android-liblog-dev (<< 1:6)
 Description: Android utils library for C - Development files
  This library provides common functionalities for android related tools.

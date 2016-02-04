@@ -5,6 +5,7 @@ android-platform-system-core (1:6.0.0+r26-1~stage1.1) UNRELEASED; urgency=medium
     - Restrict AOSP packages to above 6.0.0
     - Breaks & Replaces: android-system-dev, android-liblog-dev (<< 1:6)
       (Closes: #813085, #813183)
+    - Update Standards-Version to 3.9.7 (No change)
 
  -- Kai-Chung Yan <seamlikok@gmail.com>  Fri, 29 Jan 2016 00:15:35 +0800
 

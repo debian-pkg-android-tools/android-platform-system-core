@@ -5,8 +5,8 @@ Maintainer: Android tools Maintainer <android-tools-devel@lists.alioth.debian.or
 Uploaders: Stefan Handschuh <handschuh.stefan@googlemail.com>,
            Hans-Christoph Steiner <hans@eds.org>,
            Kai-Chung Yan <seamlikok@gmail.com>
-Build-Depends: android-libunwind-dev,
-               android-platform-build-headers,
+Build-Depends: android-libunwind-dev (>= 6),
+               android-platform-build-headers (>= 1:6),
                debhelper (>= 9.20141010),
                dpkg-dev (>= 1.17.14),
                libsafe-iop-dev,
@@ -56,8 +56,10 @@ Depends: ${misc:Depends},
          android-libcutils (= ${binary:Version}),
          android-liblog-dev (= ${binary:Version}),
          libbsd-dev
-Breaks: android-libcutils (<< 21-4~)
+Breaks: android-libcutils (<< 21-4~),
+        android-liblog-dev (<< 1:6)
 Replaces: android-libcutils (<< 21-4~)
+          android-liblog-dev (<< 1:6)
 Description: Android utils library for C - Development files
  This library provides common functionalities for android related tools.
  .
@@ -128,6 +130,8 @@ Package: android-platform-system-core-headers
 Section: libdevel
 Architecture: all
 Depends: ${misc:Depends}
+Breaks: android-system-dev
+Replaces: android-system-dev
 Description: Shared headers in AOSP repository platform/system/core
  This package contains header files in AOSP repository platform/system/core that
  do not belong to any specific libraries but used by other programs.

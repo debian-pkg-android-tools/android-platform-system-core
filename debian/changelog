@@ -1,3 +1,9 @@
+android-platform-system-core (1:6.0.0+r26-1~stage1.2) unstable; urgency=medium
+
+  * upload to unstable
+
+ -- Hans-Christoph Steiner <hans@eds.org>  Sun, 07 Feb 2016 22:55:25 +0100
+
 android-platform-system-core (1:6.0.0+r26-1~stage1.1) experimental; urgency=medium
 
   * d/control:

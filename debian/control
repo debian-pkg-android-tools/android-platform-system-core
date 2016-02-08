@@ -2,8 +2,7 @@ Source: android-platform-system-core
 Section: devel
 Priority: optional
 Maintainer: Android tools Maintainer <android-tools-devel@lists.alioth.debian.org>
-Uploaders: Stefan Handschuh <handschuh.stefan@googlemail.com>,
-           Hans-Christoph Steiner <hans@eds.org>,
+Uploaders: Hans-Christoph Steiner <hans@eds.org>,
            Kai-Chung Yan <seamlikok@gmail.com>
 Build-Depends: android-libext4-utils-dev <!stage1>,
                android-libf2fs-utils-dev <!stage1>,

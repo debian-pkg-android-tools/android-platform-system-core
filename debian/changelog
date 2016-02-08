@@ -3,6 +3,7 @@ android-platform-system-core (1:6.0.0+r26-1) UNRELEASED; urgency=medium
   * Built without any build-profiles
     - Restore <!stage1> sections in d/control
     - Remove DEB_BUILD_PROFILES in d/rules
+  * New fastboot_typo.diff: Fix typo
 
  -- Kai-Chung Yan <seamlikok@gmail.com>  Mon, 08 Feb 2016 16:16:59 +0800
 

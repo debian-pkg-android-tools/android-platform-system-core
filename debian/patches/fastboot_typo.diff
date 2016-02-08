@@ -1,0 +1,23 @@
+Description: "formating" => "formatting"
+Author: Kai-Chung Yan <seamlikok@gmail.com>
+Last-Update: 2016-02-08
+--- a/fastboot/fastboot.cpp
++++ b/fastboot/fastboot.cpp
+@@ -943,7 +943,7 @@
+     if (type_override) {
+         if (strcmp(type_override, pType)) {
+             fprintf(stderr,
+-                    "Warning: %s type is %s, but %s was requested for formating.\n",
++                    "Warning: %s type is %s, but %s was requested for formatting.\n",
+                     partition, pType, type_override);
+         }
+         pType = (char *)type_override;
+@@ -957,7 +957,7 @@
+     if (size_override) {
+         if (strcmp(size_override, pSize)) {
+             fprintf(stderr,
+-                    "Warning: %s size is %s, but %s was requested for formating.\n",
++                    "Warning: %s size is %s, but %s was requested for formatting.\n",
+                     partition, pSize, size_override);
+         }
+         pSize = (char *)size_override;

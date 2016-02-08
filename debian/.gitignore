@@ -6,3 +6,4 @@ android-*/
 fastboot/
 files
 tmp/
+debhelper-build-stamp

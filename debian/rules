@@ -19,16 +19,20 @@ COMPONENTS = $(STAGE1_COMPONENTS)
 ifeq ($(filter stage1,$(DEB_BUILD_PROFILES)),)
   COMPONENTS += $(OTHER_COMPONENTS)
 endif
+ifneq ($(filter amd64 i386,$(DEB_HOST_ARCH_CPU)),)
+  BUILD_COMMANDS = $(foreach makefile, $(COMPONENTS), make -f debian/$(makefile).mk;)
+  CLEAN_COMMANDS = $(foreach makefile, $(COMPONENTS), make clean -f debian/$(makefile).mk;)
+endif
 
 %:
 	dh $@
 
 override_dh_auto_build:
-	$(foreach makefile, $(COMPONENTS), make -f debian/$(makefile).mk;)
+	$(BUILD_COMMANDS)
 
 override_dh_auto_clean:
 	dh_auto_clean
-	$(foreach makefile, $(COMPONENTS), make clean -f debian/$(makefile).mk;)
+	$(CLEAN_COMMANDS)
 
 get-orig-source: $(UPSTREAM_TAG).tar.gz
 	mk-origtargz --repack --compression xz $<

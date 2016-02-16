@@ -1,4 +1,4 @@
-android-platform-system-core (1:6.0.1+r16-1) UNRELEASED; urgency=medium
+android-platform-system-core (1:6.0.1+r16-1) unstable; urgency=medium
 
   * New upstream release (Closes: #806375)
   * Only execute build commands on amd64 & i386

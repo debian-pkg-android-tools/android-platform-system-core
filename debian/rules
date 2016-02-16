@@ -22,7 +22,10 @@ ifeq ($(filter stage1,$(DEB_BUILD_PROFILES)),)
 endif
 ifneq ($(filter amd64 i386,$(DEB_HOST_ARCH_CPU)),)
   BUILD_COMMANDS = $(foreach makefile, $(COMPONENTS), make -f debian/$(makefile).mk;)
+  BUILD_COMMANDS += pandoc -s -o debian/adb.1 debian/adb.1.md;
+  BUILD_COMMANDS += pandoc -s -o debian/fastboot.1 debian/fastboot.1.md
   CLEAN_COMMANDS = $(foreach makefile, $(COMPONENTS), make clean -f debian/$(makefile).mk;)
+  CLEAN_COMMANDS += $(RM) debian/*.1
 endif
 
 %:

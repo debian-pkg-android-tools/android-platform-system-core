@@ -69,7 +69,7 @@ Description: Android utils library for C - Development files
 
 Package: adb
 Architecture: amd64 i386
-Depends: android-platform-system-core-common, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Breaks: android-tools-adb
 Replaces: android-tools-adb
 Provides: android-tools-adb
@@ -194,17 +194,10 @@ Description: Android base library - Development files
 Package: fastboot
 Architecture: amd64 i386
 Build-Profiles: <!stage1>
-Depends: android-platform-system-core-common, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Breaks: android-tools-fastboot
 Replaces: android-tools-fastboot
 Provides: android-tools-fastboot
 Description: Android fastboot tool
  A command line tool for flashing an Android device, boot an Android device to
  fastboot mode, etc..
-
-Package: android-platform-system-core-common
-Architecture: all
-Depends: ${misc:Depends}
-Description: Common files of android-platform-system-core
- This package contains 51-android.rules that lets adb and fastboot access an USB
- device without root access (to the host machine).

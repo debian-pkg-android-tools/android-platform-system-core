@@ -135,6 +135,7 @@ Architecture: all
 Depends: ${misc:Depends}
 Breaks: android-system-dev
 Replaces: android-system-dev
+Provides: android-system-dev
 Description: Shared headers in AOSP repository platform/system/core
  This package contains header files in AOSP repository platform/system/core that
  do not belong to any specific libraries but used by other programs.
@@ -201,3 +202,15 @@ Provides: android-tools-fastboot
 Description: Android fastboot tool
  A command line tool for flashing an Android device, boot an Android device to
  fastboot mode, etc..
+
+Package: android-zipfile
+Architecture: amd64 i386
+Depends: ${misc:Depends}
+Description: Transitional dummy package
+ Upstream had already removed this library.
+
+Package: android-zipfile-dev
+Architecture: amd64 i386
+Depends: ${misc:Depends}
+Description: Transitional dummy package
+ Upstream had already removed this library.

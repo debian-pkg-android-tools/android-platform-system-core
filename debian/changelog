@@ -1,4 +1,4 @@
-android-platform-system-core (1:6.0.1+r16-2) UNRELEASED; urgency=medium
+android-platform-system-core (1:6.0.1+r16-2) unstable; urgency=medium
 
   * android-platform-system-core-header Provides android-system-dev
   * android-libzipfile(-dev) returns as transisional dummy packages

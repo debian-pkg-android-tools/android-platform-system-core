@@ -203,13 +203,13 @@ Description: Android fastboot tool
  A command line tool for flashing an Android device, boot an Android device to
  fastboot mode, etc..
 
-Package: android-zipfile
+Package: android-libzipfile
 Architecture: amd64 i386
 Depends: ${misc:Depends}
 Description: Transitional dummy package
  Upstream had already removed this library.
 
-Package: android-zipfile-dev
+Package: android-libzipfile-dev
 Architecture: amd64 i386
 Depends: ${misc:Depends}
 Description: Transitional dummy package

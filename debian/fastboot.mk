@@ -4,8 +4,8 @@ CSOURCES = $(foreach source, $(filter %.c, $(SOURCES)), fastboot/$(source))
 CXXSOURCES = $(foreach source, $(filter %.cpp, $(SOURCES)), fastboot/$(source))
 COBJECTS = $(CSOURCES:.c=.o)
 CXXOBJECTS = $(CXXSOURCES:.cpp=.o)
-CFLAGS += -c -fPIC
-CXXFLAGS += -c -fPIC -fpermissive
+CFLAGS += -c
+CXXFLAGS += -c -fpermissive
 CPPFLAGS += -DUSE_F2FS -DFASTBOOT_REVISION='"debian"' \
             -include android/arch/AndroidConfig.h \
             -Iinclude \
@@ -14,7 +14,7 @@ CPPFLAGS += -DUSE_F2FS -DFASTBOOT_REVISION='"debian"' \
             -I/usr/include/android/f2fs_utils \
             -I/usr/include/boringssl/openssl \
             -Ilibsparse/include
-LDFLAGS += -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android:/usr/lib/android -Wl,-rpath-link=. \
+LDFLAGS += -fPIC -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android:/usr/lib/android -Wl,-rpath-link=. \
            -L. -lziparchive -lsparse \
            -L/usr/lib/android -L/usr/lib/$(DEB_HOST_MULTIARCH)/android -lext4_utils -lf2fs_utils
 

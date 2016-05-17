@@ -14,10 +14,10 @@ SOURCES = adb.cpp \
           adb_auth_host.cpp \
           services.cpp
 SOURCES := $(foreach source, $(SOURCES), adb/$(source))
-CXXFLAGS += -fPIC -fpermissive -std=gnu++11
+CXXFLAGS += -fpermissive -std=gnu++11
 CPPFLAGS += -include android/arch/AndroidConfig.h \
             -Iinclude -Ibase/include -DADB_HOST=1 -DADB_REVISION='"debian"'
-LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
+LDFLAGS += -fPIC -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android \
            -lcrypto -lpthread -L. -lbase -lcutils
 

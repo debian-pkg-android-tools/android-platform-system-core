@@ -16,7 +16,7 @@ CFLAGS += -fPIC -c
 CXXFLAGS += -fPIC -c -std=gnu++11
 CPPFLAGS += -include android/arch/AndroidConfig.h \
             -Iinclude -Ibase/include -I/usr/include/android/unwind
-LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
+LDFLAGS += -fPIC -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android -lrt -lpthread \
            -L/usr/lib/$(DEB_HOST_MULTIARCH)/android -lunwind \
            -L. -lbase -llog -lcutils

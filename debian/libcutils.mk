@@ -28,9 +28,8 @@ SOURCES = hashmap.c \
           trace-host.c \
           dlmalloc_stubs.c
 SOURCES := $(foreach source, $(SOURCES), libcutils/$(source))
-CFLAGS += -fPIC
 CPPFLAGS += -include android/arch/AndroidConfig.h -Iinclude
-LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
+LDFLAGS += -fPIC -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android -lpthread -L. -llog
 
 build: $(SOURCES)

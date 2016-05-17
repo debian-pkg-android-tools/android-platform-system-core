@@ -2,6 +2,7 @@ android-platform-system-core (1:6.0.1+r16-4) UNRELEASED; urgency=medium
 
   * Install libraries to DEB_HOST_MULTIARCH path
   * Update Standards-Version to 3.9.8 (no changes)
+  * Switch from using OpenSSL to BoringSSL
 
  -- Kai-Chung Yan <seamlikok@gmail.com>  Tue, 17 May 2016 23:22:21 +0800
 

@@ -7,38 +7,62 @@ UPSTREAM_TAG = android-$(subst +,_,$(DEB_VERSION_UPSTREAM))
 export DEB_HOST_MULTIARCH
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
-# ORDER IS IMPORTANT!
-STAGE1_COMPONENTS = liblog \
-                    libcutils \
-                    libbase \
-                    libbacktrace \
-                    libutils \
-                    libziparchive \
-                    libsparse \
-                    libadb \
-                    adb
+STAGE1_COMPONENTS = adb \
+                    libadb.so \
+                    libbacktrace.so \
+                    libbase.so \
+                    libcutils.so \
+                    liblog.so \
+                    libsparse.so \
+                    libutils.so \
+                    libziparchive.so
 OTHER_COMPONENTS = fastboot
 COMPONENTS = $(STAGE1_COMPONENTS)
 ifeq ($(filter stage1,$(DEB_BUILD_PROFILES)),)
   COMPONENTS += $(OTHER_COMPONENTS)
 endif
-ifneq ($(filter amd64 i386,$(DEB_HOST_ARCH_CPU)),)
-  BUILD_COMMANDS = $(foreach makefile, $(COMPONENTS), make -f debian/$(makefile).mk;)
-  BUILD_COMMANDS += pandoc -s -o debian/adb.1 debian/adb.1.md;
-  BUILD_COMMANDS += pandoc -s -o debian/fastboot.1 debian/fastboot.1.md
-  CLEAN_COMMANDS = $(foreach makefile, $(COMPONENTS), make clean -f debian/$(makefile).mk;)
-  CLEAN_COMMANDS += $(RM) debian/*.1
+ifeq ($(filter amd64 i386,$(DEB_HOST_ARCH_CPU)),)
+  COMPONENTS =
 endif
+
+lib%.so: debian/lib%.mk
+	make -f $<
+
+libadb.so: debian/libadb.mk libcutils.so libbase.so
+	make -f $<
+
+libbacktrace.so: debian/libbacktrace.mk libcutils.so libbase.so liblog.so
+	make -f $<
+
+libbase.so: debian/libbase.mk liblog.so
+	make -f $<
+
+libcutils.so: debian/libcutils.mk liblog.so
+	make -f $<
+
+libutils.so: debian/libutils.mk liblog.so libcutils.so libbacktrace.so
+	make -f $<
+
+libziparchive: debian/libziparchive.mk libutils.so liblog.so libbase.so
+	make -f $<
+
+adb: debian/adb.mk libadb.so libcutils.so libbase.so
+	make -f $<
+
+fastboot: debian/fastboot.mk libziparchive.so libsparse.so
+	make -f $<
 
 %:
 	dh $@
 
-override_dh_auto_build:
-	$(BUILD_COMMANDS)
+override_dh_auto_build: $(COMPONENTS)
+	pandoc -s -o debian/adb.1 debian/adb.1.md
+	pandoc -s -o debian/fastboot.1 debian/fastboot.1.md
 
 override_dh_auto_clean:
 	dh_auto_clean
-	$(CLEAN_COMMANDS)
+	$(foreach component, $(COMPONENTS), make clean -f debian/$(subst .so,,$(component)).mk;)
+	$(RM) debian/*.1
 
 override_dh_shlibdeps:
 	dh_shlibdeps -l/usr/lib/$(DEB_HOST_MULTIARCH)/android

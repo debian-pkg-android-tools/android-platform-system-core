@@ -1,4 +1,6 @@
+#!/usr/bin/dh-exec
+
 adb/adb_trace.h usr/include/android/adb
 adb/adb.h       usr/include/android/adb
 adb/fdevent.h   usr/include/android/adb
-libadb.so       usr/lib/android
+libadb.so       usr/lib/${DEB_HOST_MULTIARCH}/android

@@ -4,6 +4,7 @@ include /usr/share/dpkg/architecture.mk
 include /usr/share/dpkg/pkg-info.mk
 
 UPSTREAM_TAG = android-$(subst +,_,$(DEB_VERSION_UPSTREAM))
+export DEB_HOST_MULTIARCH
 
 # ORDER IS IMPORTANT!
 STAGE1_COMPONENTS = liblog \

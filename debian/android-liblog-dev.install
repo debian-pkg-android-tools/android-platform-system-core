@@ -1,3 +1,5 @@
+#!/usr/bin/dh-exec
+
 include/android/log.h usr/include/android/android
 include/log           usr/include/android
-liblog.so             usr/lib/android
+liblog.so             usr/lib/${DEB_HOST_MULTIARCH}/android

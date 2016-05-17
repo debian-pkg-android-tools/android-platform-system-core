@@ -1,2 +1,4 @@
+#!/usr/bin/dh-exec
+
 include/cutils usr/include/android
-libcutils.so   usr/lib/android
+libcutils.so   usr/lib/${DEB_HOST_MULTIARCH}/android

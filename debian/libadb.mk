@@ -18,7 +18,8 @@ CXXFLAGS += -fPIC -fpermissive -std=gnu++11
 CPPFLAGS += -include android/arch/AndroidConfig.h \
             -Iinclude -Ibase/include -DADB_HOST=1 -DADB_REVISION='"debian"'
 LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
-           -Wl,-rpath=/usr/lib/android -lcrypto -lpthread -L. -lbase -lcutils
+           -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android \
+           -lcrypto -lpthread -L. -lbase -lcutils
 
 build: $(SOURCES)
 	$(CXX) $^ -o $(NAME).so.0 $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)

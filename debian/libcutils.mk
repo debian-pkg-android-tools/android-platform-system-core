@@ -31,7 +31,7 @@ SOURCES := $(foreach source, $(SOURCES), libcutils/$(source))
 CFLAGS += -fPIC
 CPPFLAGS += -include android/arch/AndroidConfig.h -Iinclude
 LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
-           -Wl,-rpath=/usr/lib/android -lpthread -L. -llog
+           -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android -lpthread -L. -llog
 
 build: $(SOURCES)
 	$(CC) $^ -o $(NAME).so.0 $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)

@@ -1,3 +1,9 @@
+android-platform-system-core (1:6.0.1+r16-4) UNRELEASED; urgency=medium
+
+  * Install libraries to DEB_HOST_MULTIARCH path
+
+ -- Kai-Chung Yan <seamlikok@gmail.com>  Tue, 17 May 2016 23:22:21 +0800
+
 android-platform-system-core (1:6.0.1+r16-3) unstable; urgency=medium
 
   * Fix package name typo: android-{zipfile=>libzipfile}(-dev)

@@ -1,9 +1,10 @@
+*.1
 *.debhelper
 *.log
 *.substvars
 adb/
 android-*/
+debhelper-build-stamp
 fastboot/
 files
 tmp/
-debhelper-build-stamp

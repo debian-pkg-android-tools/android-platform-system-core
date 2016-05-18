@@ -4,6 +4,8 @@ android-platform-system-core (1:6.0.1+r16-4) UNRELEASED; urgency=medium
   * Update Standards-Version to 3.9.8 (no changes)
   * Switch from using OpenSSL to BoringSSL
   * d/rules: export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+  * Depends on android-platform-external-libunwind (>= 6.0.1+r16-2) to ensure
+    linking libraires in DEB_HOST_MULTIARCH path
 
  -- Kai-Chung Yan <seamlikok@gmail.com>  Tue, 17 May 2016 23:22:21 +0800
 

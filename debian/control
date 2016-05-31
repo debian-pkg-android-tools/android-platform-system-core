@@ -6,7 +6,7 @@ Uploaders: Hans-Christoph Steiner <hans@eds.org>,
            Kai-Chung Yan <seamlikok@gmail.com>
 Build-Depends: android-libext4-utils-dev (>= 6.0.1+r16~) [amd64 i386] <!stage1>,
                android-libf2fs-utils-dev (>= 6.0.1+r16~) [amd64 i386]  <!stage1>,
-               android-libunwind-dev (>= 6.0.1+r16-2) [amd64 i386] <!stage1>,
+               android-libunwind-dev (>= 6.0.1+r16-3) [amd64 i386] <!stage1>,
                android-platform-build-headers (>= 1:6.0.1+r16~),
                debhelper (>= 9.20141010),
                dh-exec,

@@ -1,4 +1,4 @@
-android-platform-system-core (1:6.0.1+r16-4) UNRELEASED; urgency=medium
+android-platform-system-core (1:6.0.1+r43-1) UNRELEASED; urgency=medium
 
   * Install libraries to DEB_HOST_MULTIARCH path
   * Switch from using OpenSSL to BoringSSL

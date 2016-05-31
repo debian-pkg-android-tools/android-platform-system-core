@@ -61,11 +61,11 @@ override_dh_auto_build: $(COMPONENTS)
 
 override_dh_auto_clean:
 	dh_auto_clean
-	$(foreach component, $(COMPONENTS), make clean -f debian/$(subst .so,,$(component)).mk;)
+	$(foreach component,$(COMPONENTS),make clean -f debian/$(component:.so=).mk;)
 	$(RM) debian/*.1
 
 override_dh_shlibdeps:
-	dh_shlibdeps -l/usr/lib/$(DEB_HOST_MULTIARCH)/android
+	dh_shlibdeps -l/usr/lib/$(DEB_HOST_MULTIARCH)/android -l/usr/lib/android
 
 get-orig-source: $(UPSTREAM_TAG).tar.gz
 	mk-origtargz --repack --compression xz $<

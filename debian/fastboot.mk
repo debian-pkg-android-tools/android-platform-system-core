@@ -14,9 +14,10 @@ CPPFLAGS += -DUSE_F2FS -DFASTBOOT_REVISION='"debian"' \
             -I/usr/include/android/f2fs_utils \
             -I/usr/include/openssl \
             -Ilibsparse/include
-LDFLAGS += -fPIC -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android:/usr/lib/android -Wl,-rpath-link=. \
+LDFLAGS += -fPIC -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android \
+           -Wl,-rpath-link=. \
            -L. -lziparchive -lsparse \
-           -L/usr/lib/android -L/usr/lib/$(DEB_HOST_MULTIARCH)/android -lext4_utils -lf2fs_utils
+           -L/usr/lib/$(DEB_HOST_MULTIARCH)/android -lext4_utils -lf2fs_utils
 
 build: $(COBJECTS) $(CXXOBJECTS)
 	$(CC) $^ -o fastboot/$(NAME) $(LDFLAGS)

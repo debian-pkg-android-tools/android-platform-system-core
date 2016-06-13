@@ -4,7 +4,7 @@ SOURCES := $(foreach source, $(SOURCES), libziparchive/$(source))
 CXXFLAGS += -std=gnu++11
 CPPFLAGS += -include android/arch/AndroidConfig.h \
             -Iinclude -Ibase/include
-LDFLAGS += -fPIC -shared -Wl,-soname,$(NAME).so.0 \
+LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android \
            -lz -L. -lutils -llog -lbase
 

@@ -5,7 +5,7 @@ SOURCES = adb_main.cpp \
           adb_client.cpp \
           file_sync_client.cpp
 SOURCES := $(foreach source, $(SOURCES), adb/$(source))
-CXXFLAGS += -fPIC -std=gnu++11 -fpermissive
+CXXFLAGS += -std=gnu++11 -fpermissive
 CPPFLAGS += -include android/arch/AndroidConfig.h \
             -Iinclude -Ibase/include \
             -DADB_REVISION='"debian"' -DWORKAROUND_BUG6558362 -DADB_HOST=1 \

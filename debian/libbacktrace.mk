@@ -12,11 +12,11 @@ CSOURCES = $(foreach source, $(filter %.c, $(SOURCES)), libbacktrace/$(source))
 CXXSOURCES = $(foreach source, $(filter %.cpp, $(SOURCES)), libbacktrace/$(source))
 COBJECTS = $(CSOURCES:.c=.o)
 CXXOBJECTS = $(CXXSOURCES:.cpp=.o)
-CFLAGS += -fPIC -c
-CXXFLAGS += -fPIC -c -std=gnu++11
+CFLAGS += -c
+CXXFLAGS += -c -std=gnu++11
 CPPFLAGS += -include android/arch/AndroidConfig.h \
             -Iinclude -Ibase/include -I/usr/include/android/unwind
-LDFLAGS += -fPIC -shared -Wl,-soname,$(NAME).so.0 \
+LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android -lrt -lpthread \
            -L/usr/lib/$(DEB_HOST_MULTIARCH)/android -lunwind \
            -L. -lbase -llog -lcutils

@@ -17,7 +17,7 @@ SOURCES := $(foreach source, $(SOURCES), adb/$(source))
 CXXFLAGS += -fpermissive -std=gnu++11
 CPPFLAGS += -include android/arch/AndroidConfig.h \
             -Iinclude -Ibase/include -DADB_HOST=1 -DADB_REVISION='"debian"'
-LDFLAGS += -fPIC -shared -Wl,-soname,$(NAME).so.0 \
+LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android \
            -lcrypto -lpthread -L. -lbase -lcutils
 

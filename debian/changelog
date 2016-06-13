@@ -1,11 +1,11 @@
-android-platform-system-core (1:6.0.1+r43-1) UNRELEASED; urgency=medium
+android-platform-system-core (1:6.0.1+r43-1) unstable; urgency=medium
 
   * New upstream release
   * Install libraries to DEB_HOST_MULTIARCH path (Closes: #826655, #826991)
-  * d/control: 
+  * d/control:
     - Standards-Version => 3.9.8 (no changes)
     - Drop transitional packages for libzipfile
-    - Depends on the following to ensure linking libraires in multiarch path:
+    - Depends on the following to ensure linking libraries in multiarch path:
       - android-libext4-utils-dev (>= 6.0.1+r16-2)
       - android-libf2fs-utils-dev (>= 6.0.1+r16-2)
       - android-libunwind-dev (>= 6.0.1+r16-3)

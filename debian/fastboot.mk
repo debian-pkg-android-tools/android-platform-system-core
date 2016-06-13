@@ -12,7 +12,7 @@ CPPFLAGS += -DUSE_F2FS -DFASTBOOT_REVISION='"debian"' \
             -Imkbootimg \
             -I/usr/include/android/ext4_utils \
             -I/usr/include/android/f2fs_utils \
-            -I/usr/include/boringssl/openssl \
+            -I/usr/include/openssl \
             -Ilibsparse/include
 LDFLAGS += -fPIC -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android:/usr/lib/android -Wl,-rpath-link=. \
            -L. -lziparchive -lsparse \

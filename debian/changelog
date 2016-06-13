@@ -2,7 +2,6 @@ android-platform-system-core (1:6.0.1+r43-1) UNRELEASED; urgency=medium
 
   * Install libraries to DEB_HOST_MULTIARCH path
   * Switch from using OpenSSL to BoringSSL
-  * d/rules: export DEB_BUILD_MAINT_OPTIONS = hardening=+all
   * d/control: 
     - Standards-Version => 3.9.8 (no changes)
     - Drop transitional packages for libzipfile

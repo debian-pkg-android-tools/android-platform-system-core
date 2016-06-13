@@ -5,7 +5,6 @@ include /usr/share/dpkg/pkg-info.mk
 
 UPSTREAM_TAG = android-$(subst +,_,$(DEB_VERSION_UPSTREAM))
 export DEB_HOST_MULTIARCH
-export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 STAGE1_COMPONENTS = adb \
                     libadb.so \

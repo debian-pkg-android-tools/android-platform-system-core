@@ -9,7 +9,7 @@ android-platform-system-core (1:6.0.1+r43-1) UNRELEASED; urgency=medium
       - android-libf2fs-utils-dev (>= 6.0.1+r16-2)
       - android-libunwind-dev (>= 6.0.1+r16-3)
 
- -- Kai-Chung Yan <seamlikok@gmail.com>  Tue, 17 May 2016 23:22:21 +0800
+ -- Kai-Chung Yan <seamlikok@gmail.com>  Tue, 14 Jun 2016 00:11:38 +0800
 
 android-platform-system-core (1:6.0.1+r16-3) unstable; urgency=medium
 

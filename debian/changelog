@@ -2,7 +2,8 @@ android-platform-system-core (1:6.0.1+r55-1) UNRELEASED; urgency=medium
 
   * New upstream release.
   * debian: Add watch file for usage with uscan
-  * debian/watch: recompress using xz  * 
+  * debian/watch: recompress using xz
+  * Define NDEBUG for c/cpp files. (Closes: #827216)
 
  -- Chirayu Desai <chirayudesai1@gmail.com>  Fri, 22 Jul 2016 00:37:25 +0530
 

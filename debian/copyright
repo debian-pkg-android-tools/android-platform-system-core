@@ -12,27 +12,37 @@ Copyright: 2012, Stefan Handschuh <handschuh.stefan@googlemail.com>
            2015, Kai-Chung Yan <seamlikok@gmail.com>
 License: GPL-2
 
-Files: fastboot/*.c
+Files: debian/bash-completion/*
+Copyright: 2009, Matt Brubeck
+License: MIT
+
+Files: fastboot/*.cpp
        fastboot/*.h
+       libcutils/arch-mips/android_memset.c
+       libcutils/socket_inaddr_any_server_windows.c
+       libcutils/socket_network_client_windows.c
+       libcutils/sockets.cpp
+       libcutils/sockets_windows.cpp
+       libpixelflinger/arch-arm64/col32cb16blend.S
+       libpixelflinger/arch-arm64/t32cb16blend.S
        libpixelflinger/codeflinger/Arm64Assembler.cpp
        libpixelflinger/codeflinger/Arm64Assembler.h
        libpixelflinger/codeflinger/Arm64Disassembler.cpp
        libpixelflinger/codeflinger/Arm64Disassembler.h
        libpixelflinger/tests/arch-arm64/*
-       libpixelflinger/tests/gglmul/*
+       libpixelflinger/tests/arch-mips/*
+       libpixelflinger/tests/arch-mips64/*
+       libpixelflinger/tests/gglmul/gglmul_test.cpp
        toolbox/bsd-compatibility.h
-Copyright: 2008-2014, The Android Open Source Project
+Copyright: 2008-2016, The Android Open Source Project
 License: BSD-2-clause
 
-Files: include/mincrypt/*
+Files: include/mincrypt/*.h
        libmincrypt/*.c
        toolbox/iftop.c
        toolbox/log.c
-       toolbox/lsof.c
        toolbox/prlimit.c
-       toolbox/renice.c
        toolbox/top.c
-       toolbox/uptime.c
 Copyright: 2008-2014, The Android Open Source Project
 License: BSD-3-clause
 
@@ -48,33 +58,28 @@ Copyright: 2011, Google, Inc. <google.com>
 License: GPL-2
 
 Files: libpixelflinger/codeflinger/armreg.h
+       libpixelflinger/codeflinger/disassem.c
+       libpixelflinger/codeflinger/disassem.h
 Copyright: 1998-2001, Ben Harris
            1994-1996, Mark Brinicombe
            1994, Brini
+           1997, Causality Limited
 License: BSD-4-clause
 
 Files: libpixelflinger/codeflinger/disassem.c
+       libpixelflinger/codeflinger/disassem.h
 Copyright: 1996, Mark Brinicombe
            1996, Brini
-License: BSD-4-clause
-
-Files: libpixelflinger/codeflinger/disassem.h
-Copyright: 1997, Mark Brinicombe
            1997, Causality Limited
 License: BSD-4-clause
-
-Files: libpixelflinger/codeflinger/mips_disassem.c
-Copyright: 1996, Mark Brinicombe
-           1996, Brini
-License: BSD-3-clause
-
-Files: libpixelflinger/codeflinger/mips_disassem.h
-Copyright: 1997, Mark Brinicombe
-           1997, Causality Limited
-License: BSD-3-clause
 
 Files: libpixelflinger/codeflinger/mips_opcode.h
-       toolbox/upstream-netbsd/*
+       libpixelflinger/codeflinger/mips_disassem.c
+       libpixelflinger/codeflinger/mips_disassem.h
+       libpixelflinger/codeflinger/mips64_disassem.c
+       libpixelflinger/codeflinger/mips64_disassem.h
+       toolbox/upstream-netbsd/bin/dd/*
+       toolbox/upstream-netbsd/lib/libc/*
 Copyright: 1987-1994, The Regents of the University of California
 License: BSD-3-clause
 
@@ -106,6 +111,22 @@ License: BSD-2-clause
 Files: toolbox/newfs_msdos.c
 Copyright: 1998, Robert Nordier
 License: BSD-2-clause
+
+Files: crash_reporter/init/*.conf
+Copyright: 2011-2014, The Chromium OS Authors
+License: BSD-3-clause
+
+Files: debuggerd/test/sys/system_properties.h
+Copyright: 2015, The Android Open Source Project
+License: BSD-2-clause
+
+Files: libcutils/arch-arm64/android_memset.S
+Copyright: 2012, Linaro Limited
+License: BSD-3-clause
+
+Files: libcutils/strlcpy.c
+Copyright: 1998, Todd C. Miller <Todd.Miller@courtesan.com>
+License: MIT
 
 License: Apache-2.0
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -148,6 +169,18 @@ License: BSD-2-clause
     notice, this list of conditions and the following disclaimer in
     the documentation and/or other materials provided with the
     distribution.
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+ OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+ AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
 
 License: BSD-3-clause
  Redistribution and use in source and binary forms, with or without
@@ -158,9 +191,21 @@ License: BSD-3-clause
  2. Redistributions in binary form must reproduce the above copyright
     notice, this list of conditions and the following disclaimer in the
     documentation and/or other materials provided with the distribution.
- 3. Neither the name of the University nor the names of its contributors
+ 3. Neither the name of the <software author> nor the names of its contributors
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
+ .
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 License: BSD-4-clause
  Redistribution and use in source and binary forms, with or without
@@ -177,3 +222,22 @@ License: BSD-4-clause
  4. The name of the company nor the name of the author may be used to
     endorse or promote products derived from this software without specific
     prior written permission.
+
+License: MIT
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ .
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.

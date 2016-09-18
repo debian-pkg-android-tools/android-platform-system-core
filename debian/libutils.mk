@@ -24,7 +24,7 @@ SOURCES = CallStack.cpp \
           ProcessCallStack.cpp
 SOURCES := $(foreach source, $(SOURCES), libutils/$(source))
 CXXFLAGS += -std=gnu++11
-CPPFLAGS += -Iinclude -Idebian \
+CPPFLAGS += -Iinclude -Idebian/include \
             -DLIBUTILS_NATIVE=1
 LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android \

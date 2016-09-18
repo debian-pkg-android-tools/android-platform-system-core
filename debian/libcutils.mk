@@ -30,7 +30,7 @@ SOURCES = atomic.c \
           trace-host.c \
           dlmalloc_stubs.c
 SOURCES := $(foreach source, $(SOURCES), libcutils/$(source))
-CPPFLAGS += -Iinclude
+CPPFLAGS += -Iinclude -Idebian/include
 LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android -lpthread -L. -llog
 

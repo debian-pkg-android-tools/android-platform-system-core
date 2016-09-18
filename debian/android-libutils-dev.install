@@ -1,5 +1,5 @@
 #!/usr/bin/dh-exec
 
-include/utils          usr/include/android
-debian/cutils_atomic.h usr/include/android
-libutils.so            usr/lib/${DEB_HOST_MULTIARCH}/android
+include/utils                  usr/include/android
+debian/include/cutils_atomic.h usr/include/android
+libutils.so                    usr/lib/${DEB_HOST_MULTIARCH}/android

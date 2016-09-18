@@ -1,19 +1,6 @@
 Description: cutils/atomic.h uses stdatomic.h which is not supported by C++11
 Author: Kai-Chung Yan <seamlikok@gmail.com>
-Last-Update: 2015-11-17
---- a/include/utils/RefBase.h
-+++ b/include/utils/RefBase.h
-@@ -17,7 +17,9 @@
- #ifndef ANDROID_REF_BASE_H
- #define ANDROID_REF_BASE_H
- 
--#include <cutils/atomic.h>
-+extern "C" {
-+#include "cutils_atomic.h"
-+}
- 
- #include <stdint.h>
- #include <sys/types.h>
+Last-Update: 2016-09-18
 --- a/include/utils/StrongPointer.h
 +++ b/include/utils/StrongPointer.h
 @@ -17,7 +17,9 @@

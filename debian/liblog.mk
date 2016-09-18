@@ -1,8 +1,15 @@
 NAME = liblog
-SOURCES = fake_log_device.c logd_write_kern.c logprint.c uio.c event_tag_map.c
+SOURCES = log_event_list.c log_event_write.c logger_write.c \
+          config_write.c logger_name.c logger_lock.c \
+          fake_log_device.c fake_writer.c \
+          event_tag_map.c
 SOURCES := $(foreach source, $(SOURCES), liblog/$(source))
-CPPFLAGS += -include android/arch/AndroidConfig.h -Iinclude -DLIBLOG_LOG_TAG=1005
-LDFLAGS += -shared -Wl,-soname,$(NAME).so.0
+CFLAGS += -fvisibility=hidden
+CPPFLAGS += -Iinclude \
+            -DLIBLOG_LOG_TAG=1005 \
+            -DFAKE_LOG_DEVICE=1 \
+            -DSNET_EVENT_LOG_TAG=1397638484
+LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 -lpthread
 
 build: $(SOURCES)
 	$(CC) $^ -o $(NAME).so.0 $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)

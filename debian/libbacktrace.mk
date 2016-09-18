@@ -12,14 +12,13 @@ CSOURCES = $(foreach source, $(filter %.c, $(SOURCES)), libbacktrace/$(source))
 CXXSOURCES = $(foreach source, $(filter %.cpp, $(SOURCES)), libbacktrace/$(source))
 COBJECTS = $(CSOURCES:.c=.o)
 CXXOBJECTS = $(CXXSOURCES:.cpp=.o)
-CFLAGS += -c
-CXXFLAGS += -c -std=gnu++11
-CPPFLAGS += -include android/arch/AndroidConfig.h \
-            -Iinclude -Ibase/include -I/usr/include/android/unwind
+CFLAGS += -c -fno-omit-frame-pointer
+CXXFLAGS += -c -std=gnu++11 -fno-omit-frame-pointer
+CPPFLAGS += -Iinclude -Ibase/include -I/usr/include/android/unwind
 LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
-           -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android -lrt -lpthread \
+           -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android \
            -L/usr/lib/$(DEB_HOST_MULTIARCH)/android -lunwind \
-           -L. -lbase -llog -lcutils
+           -L. -lbase -llog -lcutils -lpthread
 
 build: $(COBJECTS) $(CXXOBJECTS)
 	$(CXX) $^ -o $(NAME).so.0 $(LDFLAGS)

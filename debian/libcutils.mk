@@ -1,34 +1,36 @@
 NAME = libcutils
-SOURCES = hashmap.c \
-          atomic.c \
-          native_handle.c \
+SOURCES = atomic.c \
           config_utils.c \
+          fs_config.c \
+          canned_fs_config.c \
+          hashmap.c \
+          iosched_policy.c \
           load_file.c \
-          strlcpy.c \
+          native_handle.c \
           open_memstream.c \
+          process_name.c \
+          record_stream.c \
+          sched_policy.c \
+          sockets.cpp \
           strdup16to8.c \
           strdup8to16.c \
-          record_stream.c \
-          process_name.c \
+          strlcpy.c \
           threads.c \
-          sched_policy.c \
-          iosched_policy.c \
-          str_parms.c \
-          fs_config.c \
           fs.c \
           multiuser.c \
-          socket_inaddr_any_server.c \
-          socket_local_client.c \
-          socket_local_server.c \
-          socket_loopback_client.c \
-          socket_loopback_server.c \
-          socket_network_client.c \
-          sockets.c \
+          socket_inaddr_any_server_unix.c \
+          socket_local_client_unix.c \
+          socket_local_server_unix.c \
+          socket_loopback_client_unix.c \
+          socket_loopback_server_unix.c \
+          socket_network_client_unix.c \
+          sockets_unix.cpp \
+          str_parms.c \
           ashmem-host.c \
           trace-host.c \
           dlmalloc_stubs.c
 SOURCES := $(foreach source, $(SOURCES), libcutils/$(source))
-CPPFLAGS += -include android/arch/AndroidConfig.h -Iinclude
+CPPFLAGS += -Iinclude
 LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android -lpthread -L. -llog
 

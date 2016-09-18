@@ -1,13 +1,11 @@
 NAME = libutils
-SOURCES = BasicHashtable.cpp \
-          CallStack.cpp \
+SOURCES = CallStack.cpp \
           FileMap.cpp \
           JenkinsHash.cpp \
           LinearTransform.cpp \
           Log.cpp \
           NativeHandle.cpp \
           Printer.cpp \
-          ProcessCallStack.cpp \
           PropertyMap.cpp \
           RefBase.cpp \
           SharedBuffer.cpp \
@@ -22,11 +20,11 @@ SOURCES = BasicHashtable.cpp \
           Unicode.cpp \
           VectorImpl.cpp \
           misc.cpp \
-          Looper.cpp
+          Looper.cpp \
+          ProcessCallStack.cpp
 SOURCES := $(foreach source, $(SOURCES), libutils/$(source))
 CXXFLAGS += -std=gnu++11
-CPPFLAGS += -include android/arch/AndroidConfig.h \
-            -Iinclude -Idebian \
+CPPFLAGS += -Iinclude -Idebian \
             -DLIBUTILS_NATIVE=1
 LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android \

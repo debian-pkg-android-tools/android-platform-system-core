@@ -52,6 +52,8 @@ Architecture: amd64 i386
 Depends: libbsd0, ${shlibs:Depends}, ${misc:Depends}
 Description: Android utils library for C
  This library provides common functionalities for android related tools.
+ .
+ This library is only used by Android SDK currently.
 
 Package: android-libcutils-dev
 Section: libdevel
@@ -66,6 +68,8 @@ Replaces: android-libcutils (<< 21-4~),
           android-liblog-dev (<< 1:6)
 Description: Android utils library for C - Development files
  This library provides common functionalities for android related tools.
+ .
+ This library is only used by Android SDK currently.
  .
  This package contains the development files.
 
@@ -83,14 +87,20 @@ Package: android-libsparse
 Section: libs
 Architecture: amd64 i386
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: Android Sparse library
+Description: Library for sparse files
+ This library provides APIs for creating, manipulating and destroying sparse
+ files.
+ .
  This library is only used by Android SDK currently.
 
 Package: android-libsparse-dev
 Section: libdevel
 Architecture: amd64 i386
 Depends: android-libsparse (= ${binary:Version}), ${misc:Depends}
-Description: Android Sparse library - Development files
+Description: Library for sparse files - Development files
+ This library provides APIs for creating, manipulating and destroying sparse
+ files.
+ .
  This library is only used by Android SDK currently.
  .
  This package contains the development files.
@@ -100,6 +110,8 @@ Section: libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Android Utility Function Library
+ This library provides miscellaneous utility functions.
+ .
  This library is only used by Android SDK currently.
 
 Package: android-libutils-dev
@@ -111,6 +123,8 @@ Depends: android-libbacktrace-dev (>= ${binary:Version}),
          android-platform-system-core-headers (>= ${source:Version}),
          ${misc:Depends}
 Description: Android Utility Function Library - Development files
+ This library provides miscellaneous utility functions.
+ .
  This library is only used by Android SDK currently.
  .
  This package contains the development files.
@@ -119,14 +133,18 @@ Package: android-libziparchive
 Section: libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Android zip archive library
+Description: Library for ZIP archives
+ This library provides APIs for creating and manipulating ZIP archives.
+ .
  This library is only used by Android SDK currently.
 
 Package: android-libziparchive-dev
 Section: libdevel
 Architecture: amd64 i386
 Depends: android-libziparchive (= ${binary:Version}), ${misc:Depends}
-Description: Android zip archive library - Development files
+Description: Library for ZIP archives - Development files
+ This library provides APIs for creating and manipulating ZIP archives.
+ .
  This library is only used by Android SDK currently.
  .
  This package contains the development files.
@@ -165,6 +183,8 @@ Section: libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Library for Android Debug Bridge
+ This library provides APIs for accessing and controlling Android devices.
+ .
  This library is only used by Android SDK currently.
 
 Package: android-libadb-dev
@@ -174,6 +194,8 @@ Depends: android-libadb (= ${binary:Version}),
          android-liblog-dev (= ${binary:Version}),
          ${misc:Depends}
 Description: Library for Android Debug Bridge - Development files
+ This library provides APIs for accessing and controlling Android devices.
+ .
  This library is only used by Android SDK currently.
  .
  This package contains the development files.
@@ -183,6 +205,9 @@ Section: libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Android base library
+ This library provides APIs for basic tasks like handling files, Unicode
+ strings, logging, memory allocation, integer parsing, etc..
+ .
  This library is only used by Android SDK currently.
 
 Package: android-libbase-dev
@@ -190,6 +215,9 @@ Section: libdevel
 Architecture: amd64 i386
 Depends: android-libbase (= ${binary:Version}), ${misc:Depends}
 Description: Android base library - Development files
+ This library provides APIs for basic tasks like handling files, Unicode
+ strings, logging, memory allocation, integer parsing, etc..
+ .
  This library is only used by Android SDK currently.
  .
  This package contains the development files.

@@ -68,12 +68,17 @@ Description: Android utils library for C - Development files
 Package: adb
 Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: android-sdk-platform-tools-common
 Breaks: android-tools-adb
 Replaces: android-tools-adb
 Provides: android-tools-adb
 Description: Android Debug Bridge
  A versatile command line tool that lets you communicate with an emulator
  instance or connected Android-powered device.
+ .
+ This package recommends "android-sdk-platform-tools-common" which contains
+ the udev rules for Android devices. Without this package, adb and fastboot need
+ to be running with root permission.
 
 Package: android-libsparse
 Section: libs

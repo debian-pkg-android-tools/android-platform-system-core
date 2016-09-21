@@ -24,7 +24,10 @@ COMPONENTS = $(STAGE1_COMPONENTS)
 ifeq ($(filter stage1,$(DEB_BUILD_PROFILES)),)
   COMPONENTS += $(OTHER_COMPONENTS)
 endif
-ifeq ($(filter amd64 i386,$(DEB_HOST_ARCH_CPU)),)
+
+# If building on architectures other than the supported ones, only build the
+# architecture independent "android-platform-system-core-headers"
+ifeq ($(filter amd64 i386 armel armhf arm64 mips mipsel mips64el,$(DEB_HOST_ARCH)),)
   COMPONENTS =
 endif
 

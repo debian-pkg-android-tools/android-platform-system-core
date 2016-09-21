@@ -2,6 +2,20 @@ android-platform-system-core (1:7.0.0+r1-1~stage1) UNRELEASED; urgency=medium
 
   * New upstream release
   * Stage 1 release (without fastboot)
+  * New patches:
+    - fs_prepare_path_impl_open_mode_missing.patch
+    - Clang_nullability_type_qualifier.patch
+  * Drop obsolete patches:
+    - disable_android_set_abort_message.diff
+    - fastboot_typo.diff
+    - libutils_use_unique_ptr.diff
+  * Update to debhelper 10
+  * Enable builds for ARM & MIPS
+  * d/control:
+    - Improve package descriptions
+    - adb recommends android-sdk-platform-tools-common for udev rules
+  * Install documentations into /usr/share/doc/<package> instead of
+    /usr/share/doc/<package>-doc
 
  -- Kai-Chung Yan <seamlikok@gmail.com>  Sat, 17 Sep 2016 20:34:15 +0800
 

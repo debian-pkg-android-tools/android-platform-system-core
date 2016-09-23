@@ -1,4 +1,4 @@
-android-platform-system-core (1:6.0.1+r55-2) UNRELEASED; urgency=medium
+android-platform-system-core (1:6.0.1+r55-2) unstable; urgency=medium
 
   * Pick from experimental:
     - Update to debhelper 10

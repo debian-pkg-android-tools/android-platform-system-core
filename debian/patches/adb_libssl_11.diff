@@ -7,7 +7,7 @@ Last-Update: 2016-11-10
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 --- a/adb/adb_auth_host.cpp
 +++ b/adb/adb_auth_host.cpp
-@@ -80,6 +80,7 @@
+@@ -71,6 +71,7 @@
      BIGNUM* rem = BN_new();
      BIGNUM* n = BN_new();
      BIGNUM* n0inv = BN_new();
@@ -15,7 +15,7 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
  
      if (RSA_size(rsa) != RSANUMBYTES) {
          ret = 0;
-@@ -87,7 +88,7 @@
+@@ -78,7 +79,7 @@
      }
  
      BN_set_bit(r32, 32);
@@ -24,7 +24,7 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
      BN_set_bit(r, RSANUMWORDS * 32);
      BN_mod_sqr(rr, r, n, ctx);
      BN_div(NULL, rem, n, r32, ctx);
-@@ -101,7 +102,7 @@
+@@ -92,7 +93,7 @@
          BN_div(n, rem, n, r32, ctx);
          pkey->n[i] = BN_get_word(rem);
      }

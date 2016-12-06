@@ -5,9 +5,7 @@ Maintainer: Android tools Maintainer <android-tools-devel@lists.alioth.debian.or
 Uploaders: Hans-Christoph Steiner <hans@eds.org>,
            Kai-Chung Yan <seamlikok@gmail.com>,
            Chirayu Desai <chirayudesai1@gmail.com>
-Build-Depends: android-libext4-utils-dev (>= 7.0.0+r1~) [amd64 i386 armel armhf arm64 mips mipsel mips64el] <!stage1>,
-               android-libf2fs-utils-dev (>= 7.0.0+r1~) [amd64 i386 armel armhf arm64 mips mipsel mips64el] <!stage1>,
-               android-libunwind-dev (>= 7.0.0+r1~) [amd64 i386 armel armhf arm64 mips mipsel mips64el],
+Build-Depends: android-libunwind-dev (>= 7.0.0+r1~) [amd64 i386 armel armhf arm64 mips mipsel mips64el],
                android-platform-build-headers (>= 7.0.0+r1~),
                debhelper (>= 10),
                dh-exec,
@@ -15,7 +13,7 @@ Build-Depends: android-libext4-utils-dev (>= 7.0.0+r1~) [amd64 i386 armel armhf 
                libsafe-iop-dev [amd64 i386 armel armhf arm64 mips mipsel mips64el],
                libssl-dev [amd64 i386 armel armhf arm64 mips mipsel mips64el],
                pandoc [amd64 i386 armel armhf arm64 mips mipsel mips64el],
-               zlib1g-dev [amd64 i386 armel armhf arm64 mips mipsel mips64el] <!stage1>
+               zlib1g-dev [amd64 i386 armel armhf arm64 mips mipsel mips64el]
 Standards-Version: 3.9.8
 Homepage: https://android.googlesource.com/platform/system/core
 Vcs-Git: https://anonscm.debian.org/git/android-tools/android-platform-system-core.git

@@ -3,11 +3,12 @@
 include /usr/share/dpkg/architecture.mk
 include /usr/share/dpkg/pkg-info.mk
 
-UPSTREAM_TAG = android-$(subst +,_,$(DEB_VERSION_UPSTREAM))
 export DEB_HOST_MULTIARCH
-export DEB_CFLAGS_MAINT_APPEND = -fPIC -DNDEBUG
-export DEB_CXXFLAGS_MAINT_APPEND = -fPIC -DNDEBUG
+export DEB_CFLAGS_MAINT_APPEND = -fPIC
+export DEB_CXXFLAGS_MAINT_APPEND = -fPIC
+export DEB_CPPFLAGS_MAINT_APPEND = -DNDEBUG
 export DEB_LDFLAGS_MAINT_APPEND = -fPIC
+DEB_BUILD_PROFILES = stage1
 
 STAGE1_COMPONENTS = adb \
                     libadb.so \
@@ -23,7 +24,10 @@ COMPONENTS = $(STAGE1_COMPONENTS)
 ifeq ($(filter stage1,$(DEB_BUILD_PROFILES)),)
   COMPONENTS += $(OTHER_COMPONENTS)
 endif
-ifeq ($(filter amd64 i386,$(DEB_HOST_ARCH_CPU)),)
+
+# If building on architectures other than the supported ones, only build the
+# architecture independent "android-platform-system-core-headers"
+ifeq ($(filter amd64 i386 armel armhf arm64 mips mipsel mips64el,$(DEB_HOST_ARCH)),)
   COMPONENTS =
 endif
 
@@ -69,8 +73,5 @@ override_dh_auto_clean:
 override_dh_shlibdeps:
 	dh_shlibdeps -l/usr/lib/$(DEB_HOST_MULTIARCH)/android
 
-get-orig-source: $(UPSTREAM_TAG).tar.gz
-	mk-origtargz --repack --compression xz $<
-
-$(UPSTREAM_TAG).tar.gz:
-	wget https://android.googlesource.com/platform/system/core/+archive/$(UPSTREAM_TAG).tar.gz
+get-orig-source:
+	uscan --download-current-version --force-download --rename

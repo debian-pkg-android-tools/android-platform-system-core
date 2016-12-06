@@ -1,8 +1,10 @@
 NAME = libziparchive
-SOURCES = zip_archive.cc
+SOURCES = zip_archive.cc \
+          zip_archive_stream_entry.cc\
+          zip_writer.cc
 SOURCES := $(foreach source, $(SOURCES), libziparchive/$(source))
 CXXFLAGS += -std=gnu++11
-CPPFLAGS += -include android/arch/AndroidConfig.h \
+CPPFLAGS += -DZLIB_CONST \
             -Iinclude -Ibase/include
 LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android \

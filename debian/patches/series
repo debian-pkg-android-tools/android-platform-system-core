@@ -1,8 +1,7 @@
 libandroidcutils_makefile_pkgconfig
-disable_android_set_abort_message.diff
 add_missing_headers.diff
 use_separated_cutils_atomic.diff
-libutils_use_unique_ptr.diff
-fastboot_typo.diff
+Clang_nullability_type_qualifier.patch
+fs_prepare_path_impl_open_mode_missing.patch
 adb_libssl_11.diff
 adb_libssl_bc.diff

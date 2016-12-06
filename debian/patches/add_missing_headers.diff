@@ -1,6 +1,7 @@
 Description: Various headers are missing which causes compiler errors.
-Author: Kai-Chung Yan <seamlikok@gmail.com>
-Last-Update: 2015-11-16
+Author: Kai-Chung Yan (殷啟聰)
+Last-Update: 2016-09-17
+Forwarded: no
 --- a/include/cutils/jstring.h
 +++ b/include/cutils/jstring.h
 @@ -19,6 +19,7 @@
@@ -23,7 +24,7 @@ Last-Update: 2015-11-16
  
 --- a/include/utils/String8.h
 +++ b/include/utils/String8.h
-@@ -24,6 +24,7 @@
+@@ -23,6 +23,7 @@
  
  #include <string.h> // for strcmp
  #include <stdarg.h>
@@ -39,5 +40,45 @@ Last-Update: 2015-11-16
  #include <string>
 +#include <cstring>
  
- #include "base/macros.h"  // For TEMP_FAILURE_RETRY on Darwin.
- #define LOG_TAG "base.file"
+ #include "android-base/macros.h"  // For TEMP_FAILURE_RETRY on Darwin.
+ #include "android-base/utf8.h"
+--- a/base/logging.cpp
++++ b/base/logging.cpp
+@@ -35,6 +35,7 @@
+ #include <string>
+ #include <utility>
+ #include <vector>
++#include <cstring>
+ 
+ #ifndef _WIN32
+ #include <mutex>
+--- a/base/errors_unix.cpp
++++ b/base/errors_unix.cpp
+@@ -17,6 +17,7 @@
+ #include "android-base/errors.h"
+ 
+ #include <errno.h>
++#include <cstring>
+ 
+ namespace android {
+ namespace base {
+--- a/libbacktrace/BacktraceMap.cpp
++++ b/libbacktrace/BacktraceMap.cpp
+@@ -14,6 +14,7 @@
+  * limitations under the License.
+  */
+ 
++#include <algorithm>
+ #include <ctype.h>
+ #include <stdint.h>
+ #include <sys/types.h>
+--- a/libziparchive/zip_writer.cc
++++ b/libziparchive/zip_writer.cc
+@@ -24,6 +24,7 @@
+ 
+ #include <cassert>
+ #include <cstdio>
++#include <cstring>
+ #include <memory>
+ #include <vector>
+ #include <zlib.h>

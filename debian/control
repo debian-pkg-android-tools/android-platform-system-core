@@ -5,17 +5,17 @@ Maintainer: Android tools Maintainer <android-tools-devel@lists.alioth.debian.or
 Uploaders: Hans-Christoph Steiner <hans@eds.org>,
            Kai-Chung Yan <seamlikok@gmail.com>,
            Chirayu Desai <chirayudesai1@gmail.com>
-Build-Depends: android-libext4-utils-dev (>= 6.0.1+r55~) [amd64 i386] <!stage1>,
-               android-libf2fs-utils-dev (>= 6.0.1+r55~) [amd64 i386] <!stage1>,
-               android-libunwind-dev (>= 6.0.1+r55~) [amd64 i386],
-               android-platform-build-headers (>= 1:6.0.1+r55~),
+Build-Depends: android-libext4-utils-dev (>= 7.0.0+r1~) [amd64 i386 armel armhf arm64 mips mipsel mips64el] <!stage1>,
+               android-libf2fs-utils-dev (>= 7.0.0+r1~) [amd64 i386 armel armhf arm64 mips mipsel mips64el] <!stage1>,
+               android-libunwind-dev (>= 7.0.0+r1~) [amd64 i386 armel armhf arm64 mips mipsel mips64el],
+               android-platform-build-headers (>= 7.0.0+r1~),
                debhelper (>= 10),
                dh-exec,
                dpkg-dev (>= 1.17.14),
-               libsafe-iop-dev [amd64 i386],
-               libssl-dev [amd64 i386],
-               pandoc [amd64 i386],
-               zlib1g-dev [amd64 i386] <!stage1>
+               libsafe-iop-dev [amd64 i386 armel armhf arm64 mips mipsel mips64el],
+               libssl-dev [amd64 i386 armel armhf arm64 mips mipsel mips64el],
+               pandoc [amd64 i386 armel armhf arm64 mips mipsel mips64el],
+               zlib1g-dev [amd64 i386 armel armhf arm64 mips mipsel mips64el] <!stage1>
 Standards-Version: 3.9.8
 Homepage: https://android.googlesource.com/platform/system/core
 Vcs-Git: https://anonscm.debian.org/git/android-tools/android-platform-system-core.git
@@ -23,7 +23,7 @@ Vcs-Browser: https://anonscm.debian.org/cgit/android-tools/android-platform-syst
 
 Package: android-liblog
 Section: libs
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android NDK logger interfaces
  liblog represents an interface to the volatile Android Logging system for NDK
@@ -33,7 +33,7 @@ Description: Android NDK logger interfaces
 
 Package: android-liblog-dev
 Section: libdevel
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: android-liblog (= ${binary:Version}),
          ${misc:Depends}
 Breaks: android-liblog (<< 21-4~)
@@ -48,7 +48,7 @@ Description: Android NDK logger interfaces - Development files
 
 Package: android-libcutils
 Section: libs
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: libbsd0, ${shlibs:Depends}, ${misc:Depends}
 Description: Android utils library for C
  This library provides common functionalities for android related tools.
@@ -57,7 +57,7 @@ Description: Android utils library for C
 
 Package: android-libcutils-dev
 Section: libdevel
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: ${misc:Depends},
          android-libcutils (= ${binary:Version}),
          android-liblog-dev (= ${binary:Version}),
@@ -74,18 +74,23 @@ Description: Android utils library for C - Development files
  This package contains the development files.
 
 Package: adb
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: android-sdk-platform-tools-common
 Breaks: android-tools-adb
 Replaces: android-tools-adb
 Provides: android-tools-adb
 Description: Android Debug Bridge
  A versatile command line tool that lets you communicate with an emulator
  instance or connected Android-powered device.
+ .
+ This package recommends "android-sdk-platform-tools-common" which contains
+ the udev rules for Android devices. Without this package, adb and fastboot need
+ to be running with root permission.
 
 Package: android-libsparse
 Section: libs
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Library for sparse files
  This library provides APIs for creating, manipulating and destroying sparse
@@ -95,7 +100,7 @@ Description: Library for sparse files
 
 Package: android-libsparse-dev
 Section: libdevel
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: android-libsparse (= ${binary:Version}), ${misc:Depends}
 Description: Library for sparse files - Development files
  This library provides APIs for creating, manipulating and destroying sparse
@@ -107,7 +112,7 @@ Description: Library for sparse files - Development files
 
 Package: android-libutils
 Section: libs
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Android Utility Function Library
  This library provides miscellaneous utility functions.
@@ -116,7 +121,7 @@ Description: Android Utility Function Library
 
 Package: android-libutils-dev
 Section: libdevel
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: android-libbacktrace-dev (>= ${binary:Version}),
          android-libcutils-dev (>= ${binary:Version}),
          android-libutils (= ${binary:Version}),
@@ -131,7 +136,7 @@ Description: Android Utility Function Library - Development files
 
 Package: android-libziparchive
 Section: libs
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Library for ZIP archives
  This library provides APIs for creating and manipulating ZIP archives.
@@ -140,7 +145,7 @@ Description: Library for ZIP archives
 
 Package: android-libziparchive-dev
 Section: libdevel
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: android-libziparchive (= ${binary:Version}), ${misc:Depends}
 Description: Library for ZIP archives - Development files
  This library provides APIs for creating and manipulating ZIP archives.
@@ -164,14 +169,14 @@ Description: Shared headers in AOSP repository platform/system/core
 
 Package: android-libbacktrace
 Section: libs
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Android backtrace library
  This library is only used by Android SDK currently.
 
 Package: android-libbacktrace-dev
 Section: libdevel
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: android-libbacktrace (= ${binary:Version}), ${misc:Depends}
 Description: Android backtrace library - Development files
  This library is only used by Android SDK currently.
@@ -180,7 +185,7 @@ Description: Android backtrace library - Development files
 
 Package: android-libadb
 Section: libs
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Library for Android Debug Bridge
  This library provides APIs for accessing and controlling Android devices.
@@ -189,7 +194,7 @@ Description: Library for Android Debug Bridge
 
 Package: android-libadb-dev
 Section: libdevel
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: android-libadb (= ${binary:Version}),
          android-liblog-dev (= ${binary:Version}),
          ${misc:Depends}
@@ -202,7 +207,7 @@ Description: Library for Android Debug Bridge - Development files
 
 Package: android-libbase
 Section: libs
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Android base library
  This library provides APIs for basic tasks like handling files, Unicode
@@ -212,7 +217,7 @@ Description: Android base library
 
 Package: android-libbase-dev
 Section: libdevel
-Architecture: amd64 i386
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Depends: android-libbase (= ${binary:Version}), ${misc:Depends}
 Description: Android base library - Development files
  This library provides APIs for basic tasks like handling files, Unicode
@@ -221,14 +226,3 @@ Description: Android base library - Development files
  This library is only used by Android SDK currently.
  .
  This package contains the development files.
-
-Package: fastboot
-Architecture: amd64 i386
-Build-Profiles: <!stage1>
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Breaks: android-tools-fastboot
-Replaces: android-tools-fastboot
-Provides: android-tools-fastboot
-Description: Android fastboot tool
- A command line tool for flashing an Android device, boot an Android device to
- fastboot mode, etc..

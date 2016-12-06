@@ -1,6 +1,6 @@
 % ADB(1) android-platform-system-core | adb Manuals
 % The Android Open Source Project
-% 6.0.1_r16 (1.0.32)
+% 7.0.0_r1 (1.0.36)
 
 # NAME
 
@@ -13,7 +13,16 @@ adb - Android Debug Bridge
 # DESCRIPTION
 
 Android Debug Bridge (**adb**) is a versatile command line tool that lets you
-communicate with an emulator instance or connected Android-powered device.
+communicate with an emulator instance or connected Android-powered device. It is
+a client-server program that includes three components:
+
+  * **A client**, which sends commands. The client runs on your development
+    machine. You can invoke a client from a shell by issuing an **adb** command.
+    Other Android tools such as DDMS also create **adb** clients.
+  * **A daemon**, which runs commands on a device. The daemon runs as a
+    background process on each emulator or device instance.
+  * **A server**, which manages communication between the client and the daemon.
+    The server runs as a background process on your development machine.
 
 If there's only one emulator running or only one device connected, the **adb**
 command is sent to that device by default. If multiple emulators are running
@@ -65,14 +74,14 @@ adb disconnect [_host_[:_port_]]
   disconnect from all connected TCP/IP devices.
 
 ## Device commands
-adb push [-p] _local_ _remote_
-: Copy file/dir to device. **-p** to display the transfer progress.
 
-adb pull [-p] [-a] _remote_ [_local_]
-: Copy file/dir from device. **-p** to display the transfer progress, **-a**
-  means copy timestamp and mode.
+adb push _local_... _remote_
+: Copy file/dir to device.
 
-adb sync [_directory_]
+adb pull [-a] _remote_ [_local_]
+: Copy file/dir from device. **-a** means copy timestamp and mode.
+
+adb sync [-l] [_directory_]
 : Copy host->device only if changed. **-l** means list but don't copy.
 
 If _directory_ is not specified, **/system**, **/vendor** (if present), **/oem**
@@ -81,11 +90,14 @@ If _directory_ is not specified, **/system**, **/vendor** (if present), **/oem**
 If it is **system**, **vendor**, **oem** or **data**, only the corresponding
 partition is updated.
 
-adb shell
-: Run remote shell interactively.
+adb shell [-e _escape_] [-n] [-T|-t] [-x] [_command_]
+: Run remote shell command (interactive shell if no command given)
 
-adb shell _command_
-: Run remote shell command.
+  * -e: Choose escape character, or **none**; default **~**
+  * -n: Don't read from stdin
+  * -T: Disable PTY allocation
+  * -t: Force PTY allocation
+  * -x: Disable remote exit codes and stdout/stderr separation
 
 adb emu _command_
 : Run emulator console command
@@ -95,19 +107,19 @@ adb logcat [_filter-spec_]
 
 adb forward --list
 : List all forward socket connections. The format is a list of lines with the
-  following format: **_serial_ " " _local_ " " _remote_ "\\n"**
+  following format: **_serial_ " " _local_ " " _remote_ "\n"**
 
 adb forward _local_ _remote_
 : Forward socket connections.
 
 Forward specs are one of:
 
-* tcp:_port_
-* localabstract:_unix domain socket name_
-* localreserved:_unix domain socket name_
-* localfilesystem:_unix domain socket name_
-* dev:_character device name_
-* jdwp:_process pid_ (remote only)
+  * tcp:_port_
+  * localabstract:_unix domain socket name_
+  * localreserved:_unix domain socket name_
+  * localfilesystem:_unix domain socket name_
+  * dev:_character device name_
+  * jdwp:_process pid_ (remote only)
 
 adb forward --no-rebind _local_ _remote_
 : Same as "adb forward _local_ _remote_" but fails if _local_ is already
@@ -127,12 +139,12 @@ adb reverse _remote_ _local_
 
 Reverse specs are one of:
 
-* tcp:_port_
-* localabstract:_unix domain socket name_
-* localreserved:_unix domain socket name_
-* localfilesystem:_unix domain socket name_
+  * tcp:_port_
+  * localabstract:_unix domain socket name_
+  * localreserved:_unix domain socket name_
+  * localfilesystem:_unix domain socket name_
 
-adb reverse --norebind _remote_ _local_
+adb reverse --no-rebind _remote_ _local_
 : Same as 'adb reverse _remote_ _local_' but fails if _remote_ is already
   reversed.
 
@@ -148,30 +160,31 @@ adb jdwp
 adb install [-lrtsdg] _file_
 : Push this package file to the device and install it.
 
-* **-l**: Forward lock application.
-* **-r**: Replace existing application.
-* **-t**: Allow test packages.
-* **-s**: Install application on sdcard.
-* **-d**: Allow version code downgrade.
-* **-g**: Grant all runtime permissions.
+  * **-l**: Forward lock application.
+  * **-r**: Replace existing application.
+  * **-t**: Allow test packages.
+  * **-s**: Install application on sdcard.
+  * **-d**: Allow version code downgrade (debuggable packages only).
+  * **-g**: Grant all runtime permissions.
 
 adb install-multiple [-lrtsdpg] _file..._
 : Push this package file to the device and install it.
 
-* **-l**: Forward lock application.
-* **-r**: Replace existing application.
-* **-t**: Allow test packages.
-* **-s**: Install application on sdcard.
-* **-d**: Allow version code downgrade.
-* **-p**: Partial application install.
-* **-g**: Grant all runtime permissions.
+  * **-l**: Forward lock application.
+  * **-r**: Replace existing application.
+  * **-t**: Allow test packages.
+  * **-s**: Install application on sdcard.
+  * **-d**: Allow version code downgrade (debuggable packages only).
+  * **-p**: Partial application install.
+  * **-g**: Grant all runtime permissions.
 
 adb uninstall [-k] _package_
 : Remove this app package from the device. **-k** means keep the data and cache
   directories.
 
-adb bugreport
+adb bugreport [_zipfile_]
 : Return all information from the device that should be included in a bug report
+  that should be included in a bug report.
 
 adb backup [-f _file_] [-apk|-noapk] [-obb|-noobb] [-shared|-noshared] [-all] [-system|-nosystem] [_packages..._]
 : Write an archive of the device's data to _file_. If no **-f** option is
@@ -217,8 +230,11 @@ adb version
 : Show version number.
 
 ## Scripting
-adb wait-for-device
-: Block until device is online.
+
+adb wait-for-[-_transport_]-_state_
+: Wait for device to be in the given state: **device**, **recovery**,
+  **sideload**, or **bootloader**. _transport_ is: **usb**, **local** or **any**
+  (default = **any**)
 
 adb start-server
 : Ensure that there is a server running.
@@ -266,13 +282,22 @@ adb tcpip _port_
 : Restarts the adbd daemon listening on TCP on the specified port.
 
 ## Networking
+
 adb ppp _tty_ [_parameters_]
 : Run PPP over USB.
 
-_parameters_: Eg. **defaultroute debug dump local notty usepeerdns**
+_parameters_: E.g. **defaultroute debug dump local notty usepeerdns**
 
 Note: you should not automatically start a PPP connection. _tty_ refers to the
-tty for PPP stream. Eg. **dev:/dev/omap_csmi_tty1**
+tty for PPP stream. E.g. **dev:/dev/omap_csmi_tty1**
+
+# Internal Debugging
+
+adb reconnect
+: Kick current connection from host side and make it reconnect.
+
+adb reconnect device
+: Kick current connection from device side and make it reconnect.
 
 # ENVIRONMENT VARIABLES
 

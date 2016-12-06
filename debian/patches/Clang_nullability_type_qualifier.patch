@@ -1,0 +1,21 @@
+Description: Disable nullability type specifiers
+ Nullability type specifiers "_Nonnull" & "_Nullable" are a Clang-specific
+ feature. This patch lets the preprocessor expands this 2 macros to empty
+ if not using Clang.
+Author: Kai-Chung Yan (殷啟聰)
+Last-Update: 2016-09-18
+Forwarded: not-needed
+--- a/adb/adb_client.h
++++ b/adb/adb_client.h
+@@ -22,6 +22,11 @@
+ 
+ #include <string>
+ 
++#ifndef __clang__
++#define _Nonnull
++#define _Nullable
++#endif
++
+ // Connect to adb, connect to the named service, and return a valid fd for
+ // interacting with that service upon success or a negative number on failure.
+ int adb_connect(const std::string& service, std::string* _Nonnull error);

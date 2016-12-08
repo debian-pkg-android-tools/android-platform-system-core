@@ -1,3 +1,12 @@
+android-platform-system-core (1:7.0.0+r1-1) UNRELEASED; urgency=medium
+
+  * Full stage release (with fastboot)
+  * d/control:
+    * Add googletest to <!stage1> BDs
+    * Unify the maintainer name to "Android Tools Maintainers"
+
+ -- Kai-Chung Yan <seamlikok@gmail.com>  Thu, 08 Dec 2016 12:54:10 +0800
+
 android-platform-system-core (1:7.0.0+r1-1~stage1.1) unstable; urgency=medium
 
   * Upload to unstable

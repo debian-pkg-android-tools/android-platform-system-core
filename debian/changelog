@@ -1,4 +1,4 @@
-android-platform-system-core (1:7.0.0+r1-1) UNRELEASED; urgency=medium
+android-platform-system-core (1:7.0.0+r1-1) unstable; urgency=medium
 
   * Full stage release (with fastboot)
   * d/control:

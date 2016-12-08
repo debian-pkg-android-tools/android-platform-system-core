@@ -12,7 +12,10 @@ Build-Depends: android-libunwind-dev (>= 7.0.0+r1~) [amd64 i386 armel armhf arm6
                libsafe-iop-dev [amd64 i386 armel armhf arm64 mips mipsel mips64el],
                libssl-dev [amd64 i386 armel armhf arm64 mips mipsel mips64el],
                pandoc [amd64 i386 armel armhf arm64 mips mipsel mips64el],
-               zlib1g-dev [amd64 i386 armel armhf arm64 mips mipsel mips64el]
+               zlib1g-dev [amd64 i386 armel armhf arm64 mips mipsel mips64el],
+               android-libext4-utils-dev (>= 7.0.0+r1~) [amd64 i386 armel armhf arm64 mips mipsel mips64el] <!stage1>,
+               android-libf2fs-utils-dev (>= 7.0.0+r1~) [amd64 i386 armel armhf arm64 mips mipsel mips64el] <!stage1>,
+               googletest [amd64 i386 armel armhf arm64 mips mipsel mips64el] <!stage1>
 Standards-Version: 3.9.8
 Homepage: https://android.googlesource.com/platform/system/core
 Vcs-Git: https://anonscm.debian.org/git/android-tools/android-platform-system-core.git
@@ -223,3 +226,14 @@ Description: Android base library - Development files
  This library is only used by Android SDK currently.
  .
  This package contains the development files.
+
+Package: fastboot
+Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
+Build-Profiles: <!stage1>
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Breaks: android-tools-fastboot
+Replaces: android-tools-fastboot
+Provides: android-tools-fastboot
+Description: Android fastboot tool
+ A command line tool for flashing an Android device, boot an Android device to
+ fastboot mode, etc..

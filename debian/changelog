@@ -1,3 +1,9 @@
+android-platform-system-core (1:7.0.0+r1-2) unstable; urgency=medium
+
+  * Build tools for working with sparse images
+
+ -- Chirayu Desai <chirayudesai1@gmail.com>  Wed, 21 Dec 2016 21:45:45 +0100
+
 android-platform-system-core (1:7.0.0+r1-1) unstable; urgency=medium
 
   * Full stage release (with fastboot)

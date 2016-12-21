@@ -237,3 +237,26 @@ Provides: android-tools-fastboot
 Description: Android fastboot tool
  A command line tool for flashing an Android device, boot an Android device to
  fastboot mode, etc..
+
+Package: simg2img
+Architecture: amd64 i386
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Breaks: android-tools-fsutils
+Replaces: android-tools-fsutils
+Description: Android sparse image conversion tool
+ A command line tool to convert sparse images to raw images, which can then
+ be manipulated with the standard tools.
+
+Package: img2simg
+Architecture: amd64 i386
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Breaks: android-tools-fsutils
+Replaces: android-tools-fsutils
+Description: Android sparse image creation tool
+ A command line tool to create sparse images for usage with Android devices.
+
+Package: append2simg
+Architecture: amd64 i386
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Android sparse image tool
+ A command line tool to append data to the end of a sparse image.

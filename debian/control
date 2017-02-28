@@ -50,7 +50,10 @@ Description: Android NDK logger interfaces - Development files
 Package: android-libcutils
 Section: libs
 Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
-Depends: libbsd0, ${shlibs:Depends}, ${misc:Depends}
+Depends: android-liblog (= ${binary:Version}),
+         libbsd0,
+         ${shlibs:Depends},
+         ${misc:Depends}
 Description: Android utils library for C
  This library provides common functionalities for android related tools.
  .
@@ -76,7 +79,9 @@ Description: Android utils library for C - Development files
 
 Package: adb
 Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: android-libadb (= ${binary:Version}),
+         ${shlibs:Depends},
+         ${misc:Depends}
 Recommends: android-sdk-platform-tools-common
 Breaks: android-tools-adb
 Replaces: android-tools-adb
@@ -187,7 +192,9 @@ Description: Android backtrace library - Development files
 Package: android-libadb
 Section: libs
 Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: android-libbase (= ${binary:Version}),
+         ${shlibs:Depends},
+         ${misc:Depends}
 Description: Library for Android Debug Bridge
  This library provides APIs for accessing and controlling Android devices.
  .
@@ -209,7 +216,9 @@ Description: Library for Android Debug Bridge - Development files
 Package: android-libbase
 Section: libs
 Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: android-liblog (= ${binary:Version}),
+         ${shlibs:Depends},
+         ${misc:Depends}
 Description: Android base library
  This library provides APIs for basic tasks like handling files, Unicode
  strings, logging, memory allocation, integer parsing, etc..
@@ -231,7 +240,9 @@ Description: Android base library - Development files
 Package: fastboot
 Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
 Build-Profiles: <!stage1>
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: android-libadb (= ${binary:Version}),
+         ${shlibs:Depends},
+         ${misc:Depends}
 Breaks: android-tools-fastboot
 Replaces: android-tools-fastboot
 Provides: android-tools-fastboot

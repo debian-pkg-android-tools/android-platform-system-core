@@ -12,7 +12,7 @@ SOURCES = bootimg_utils.cpp \
           util_linux.cpp
 SOURCES := $(foreach source, $(SOURCES), fastboot/$(source))
 CXXFLAGS += -fpermissive
-CPPFLAGS += -DUSE_F2FS -DFASTBOOT_REVISION='"debian"' \
+CPPFLAGS += -DUSE_F2FS -DFASTBOOT_REVISION='"$(DEB_VERSION)"' \
             -Iinclude \
             -Imkbootimg \
             -Iadb \

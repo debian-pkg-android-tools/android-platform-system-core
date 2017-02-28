@@ -38,7 +38,7 @@ lib%.so: debian/lib%.mk
 	make -f $<
 
 libadb.so: debian/libadb.mk libcutils.so libbase.so
-	make -f $<
+	make -f $< DEB_VERSION=$(DEB_VERSION)
 
 libbacktrace.so: debian/libbacktrace.mk libcutils.so libbase.so liblog.so
 	make -f $<
@@ -56,10 +56,10 @@ libziparchive: debian/libziparchive.mk libutils.so liblog.so libbase.so
 	make -f $<
 
 adb: debian/adb.mk libadb.so libcutils.so libbase.so
-	make -f $<
+	make -f $< DEB_VERSION=$(DEB_VERSION)
 
 fastboot: debian/fastboot.mk libziparchive.so libsparse.so libbase.so libcutils.so libadb.so
-	make -f $<
+	make -f $< DEB_VERSION=$(DEB_VERSION)
 
 simg2img: debian/simg2img.mk libsparse.so
 	make -f $<

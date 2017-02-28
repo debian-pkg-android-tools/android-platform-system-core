@@ -19,7 +19,7 @@ SOURCES = adb.cpp \
           services.cpp
 SOURCES := $(foreach source, $(SOURCES), adb/$(source))
 CXXFLAGS += -fpermissive -std=c++14
-CPPFLAGS += -Iinclude -Ibase/include -DADB_HOST=1 -DADB_REVISION='"debian"'
+CPPFLAGS += -Iinclude -Ibase/include -DADB_HOST=1 -DADB_REVISION='"$(DEB_VERSION)"'
 LDFLAGS += -shared -Wl,-soname,$(NAME).so.0 \
            -Wl,-rpath=/usr/lib/$(DEB_HOST_MULTIARCH)/android \
            -lcrypto -lpthread -L. -lbase -lcutils

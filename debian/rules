@@ -73,7 +73,7 @@ append2simg: debian/append2simg.mk libsparse.so
 .PHONY: adb fastboot simg2img img2simg append2simg
 
 %:
-	dh $@
+	dh $@ --with bash-completion
 
 override_dh_auto_build: $(COMPONENTS)
 	pandoc -s -o debian/adb.1 debian/adb.1.md

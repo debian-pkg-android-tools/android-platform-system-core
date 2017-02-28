@@ -1,3 +1,11 @@
+android-platform-system-core (1:7.0.0+r1-3) unstable; urgency=medium
+
+  * install bash-completion for adb and fastboot (Closes: #856418, #856419)
+  * use package version for adb/fastboot's --version (Closes: #856001)
+  * fix depends built from this package to same version (Closes: #848852)
+
+ -- Hans-Christoph Steiner <hans@eds.org>  Tue, 28 Feb 2017 23:45:05 +0100
+
 android-platform-system-core (1:7.0.0+r1-2) unstable; urgency=medium
 
   * Build tools for working with sparse images

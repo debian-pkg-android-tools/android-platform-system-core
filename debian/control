@@ -272,3 +272,19 @@ Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Android sparse image tool
  A command line tool to append data to the end of a sparse image.
+
+Package: android-tools-adb
+Depends: adb, ${misc:Depends}
+Architecture: all
+Priority: extra
+Section: oldlibs
+Description: transitional package
+ This is a transitional package. It can safely be removed.
+
+Package: android-tools-fastboot
+Depends: fastboot, ${misc:Depends}
+Architecture: all
+Priority: extra
+Section: oldlibs
+Description: transitional package
+ This is a transitional package. It can safely be removed.

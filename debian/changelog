@@ -1,3 +1,10 @@
+android-platform-system-core (1:7.0.0+r1-4) unstable; urgency=medium
+
+  * transitional dummy packages for android-tools-adb / android-tools-fastboot
+  * move adb log file to proper dir (Closes: #823792, #688280)
+
+ -- Hans-Christoph Steiner <hans@eds.org>  Wed, 15 Mar 2017 13:47:44 +0100
+
 android-platform-system-core (1:7.0.0+r1-3) unstable; urgency=medium
 
   * install bash-completion for adb and fastboot (Closes: #856418, #856419)

@@ -1,0 +1,14 @@
+--- a/adb/client/main.cpp
++++ b/adb/client/main.cpp
+@@ -54,6 +54,11 @@
+ 
+     return temp_path_utf8 + log_name;
+ #else
++    std::string log_dir = android::base::StringPrintf("/run/user/%u/adb.log", getuid());
++    struct stat st = {0};
++    if (stat(log_dir.c_str(), &st) == 0) {
++        return log_dir;
++    }
+     const char* tmp_dir = getenv("TMPDIR");
+     if (tmp_dir == nullptr) tmp_dir = "/tmp";
+     return android::base::StringPrintf("%s/adb.%u.log", tmp_dir, getuid());

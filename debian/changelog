@@ -2,6 +2,7 @@ android-platform-system-core (1:7.0.0+r1-4) unstable; urgency=medium
 
   * transitional dummy packages for android-tools-adb / android-tools-fastboot
   * move adb log file to proper dir (Closes: #823792, #688280)
+  * import upstream 7.0.0_r31 fixes for CVE-2016-3861 (Closes: #858177)
 
  -- Hans-Christoph Steiner <hans@eds.org>  Wed, 15 Mar 2017 13:47:44 +0100
 

@@ -1,4 +1,3 @@
-import-7.0.0_r31.patch
 libandroidcutils_makefile_pkgconfig
 add_missing_headers.diff
 use_separated_cutils_atomic.diff

@@ -83,8 +83,8 @@ Depends: android-libadb (= ${binary:Version}),
          ${shlibs:Depends},
          ${misc:Depends}
 Recommends: android-sdk-platform-tools-common
-Breaks: android-tools-adb
-Replaces: android-tools-adb
+Breaks: android-tools-adb (<< 6.0~)
+Replaces: android-tools-adb (<< 6.0~)
 Provides: android-tools-adb
 Description: Android Debug Bridge
  A versatile command line tool that lets you communicate with an emulator
@@ -243,8 +243,8 @@ Build-Profiles: <!stage1>
 Depends: android-libadb (= ${binary:Version}),
          ${shlibs:Depends},
          ${misc:Depends}
-Breaks: android-tools-fastboot
-Replaces: android-tools-fastboot
+Breaks: android-tools-fastboot (<< 6.0~)
+Replaces: android-tools-fastboot (<< 6.0~)
 Provides: android-tools-fastboot
 Description: Android fastboot tool
  A command line tool for flashing an Android device, boot an Android device to
@@ -253,8 +253,8 @@ Description: Android fastboot tool
 Package: simg2img
 Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Breaks: android-tools-fsutils
-Replaces: android-tools-fsutils
+Breaks: android-tools-fsutils (<< 6.0~)
+Replaces: android-tools-fsutils (<< 6.0~)
 Description: Android sparse image conversion tool
  A command line tool to convert sparse images to raw images, which can then
  be manipulated with the standard tools.
@@ -262,8 +262,8 @@ Description: Android sparse image conversion tool
 Package: img2simg
 Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Breaks: android-tools-fsutils
-Replaces: android-tools-fsutils
+Breaks: android-tools-fsutils (<< 6.0~)
+Replaces: android-tools-fsutils (<< 6.0~)
 Description: Android sparse image creation tool
  A command line tool to create sparse images for usage with Android devices.
 

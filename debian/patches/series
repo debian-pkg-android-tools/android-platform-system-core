@@ -6,3 +6,4 @@ fs_prepare_path_impl_open_mode_missing.patch
 adb_libssl_11.diff
 adb_libssl_bc.diff
 move-log-file-to-proper-dir.patch
+fix-CVE-2017-0647.patch

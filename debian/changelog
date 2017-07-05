@@ -1,3 +1,9 @@
+android-platform-system-core (1:7.0.0+r33-2) unstable; urgency=medium
+
+  * fix CVE-2017-0647 (Closes: #867229)
+
+ -- Hans-Christoph Steiner <hans@eds.org>  Wed, 05 Jul 2017 15:55:06 +0200
+
 android-platform-system-core (1:7.0.0+r33-1) unstable; urgency=medium
 
   * New upstream release (Closes: #858177, #859081, #858942)

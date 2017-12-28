@@ -276,7 +276,7 @@ Description: Android sparse image tool
 Package: android-tools-adb
 Depends: adb, ${misc:Depends}
 Architecture: all
-Priority: extra
+Priority: optional
 Section: oldlibs
 Description: transitional package
  This is a transitional package. It can safely be removed.
@@ -284,7 +284,7 @@ Description: transitional package
 Package: android-tools-fastboot
 Depends: fastboot, ${misc:Depends}
 Architecture: all
-Priority: extra
+Priority: optional
 Section: oldlibs
 Description: transitional package
  This is a transitional package. It can safely be removed.

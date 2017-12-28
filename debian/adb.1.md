@@ -183,8 +183,7 @@ adb uninstall [-k] _package_
   directories.
 
 adb bugreport [_zipfile_]
-: Return all information from the device that should be included in a bug report
-  that should be included in a bug report.
+: Return all information from the device that should be included in a bug report.
 
 adb backup [-f _file_] [-apk|-noapk] [-obb|-noobb] [-shared|-noshared] [-all] [-system|-nosystem] [_packages..._]
 : Write an archive of the device's data to _file_. If no **-f** option is

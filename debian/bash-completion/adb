@@ -27,11 +27,12 @@ function _adb()
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
   opts="-d -e -s -p"
-  cmds="devices push pull sync shell emu logcat forward jdwp install \
+  cmds="devices push pull sync shell emu logcat forward jdwp install sideload \
         uninstall bugreport help version wait-for-device start-server \
-        reboot reboot-bootloader sideload \
-        kill-server get-state get-serialno status-window remount root ppp"
-  cmds_not_need_device="devices help version start-server kill-server"
+        reboot reboot-bootloader \
+        connect disconnect \
+        kill-server get-state get-serialno status-window remount root ppp backup restore"
+  cmds_not_need_device="devices help version start-server kill-server connect disconnect"
   subcommand=""
   device_selected=""
 
@@ -59,7 +60,8 @@ function _adb()
           ;;
         -s)
           # Use 'adb devices' to list serial numbers.
-          COMPREPLY=( $(compgen -W "$(adb devices|grep 'device$'|cut -f1)" -- ${cur} ) )
+          COMPREPLY=( $(compgen -W "$(adb devices |
+                awk '/(device|recovery|sideload)$/{print $1}')" -- ${cur} ) )
           return 0
           ;;
       esac
@@ -80,6 +82,12 @@ function _adb()
       COMPREPLY=( $(compgen -W "${cmds}" -- ${cur}) )
       return 0
       ;;
+    disconnect)
+      # Use 'adb devices' to list serial numbers.
+      COMPREPLY=( $(compgen -W "$(adb devices |
+            awk '/(device|recovery|sideload|offline|unauthorized)$/{print $1}')" -- ${cur} ) )
+      return 0
+      ;;
     install)
       case "${cur}" in
         -*)
@@ -94,7 +102,7 @@ function _adb()
       return 0
       ;;
     uninstall)
-      local apks=$(adb shell ls /data/data 2>/dev/null | tr '\n' ' ' | tr -d '\r')
+      local apks=$(adb shell pm list packages 2>/dev/null | cut -b9-999 | tr '\n\r' ' ')
       if [[ $prev != "-k" && $cur == "-" ]]; then
           COMPREPLY=( $(compgen -W "-k $apks" -- ${cur}) )
       else
@@ -120,13 +128,23 @@ function _adb()
           ;;
       esac
       ;;
+    backup)
+      case "${cur}" in
+        -*)
+          COMPREPLY=( $(compgen -W "-f -apk -noapk -obb -noobb -shared -noshared -all -system -nosystem" -- ${cur}) )
+          return 0
+          ;;
+      esac
+      ;;
     pull)
       if [ ${prev} == "pull" ]; then
+          local IFS=$'\n'
           if [ -z ${cur} ]; then
-              local files=$(adb shell "ls -a -d /*" 2>/dev/null | tr '\n' ' ' | tr -d '\r')
+              local files=$(adb shell "ls -a -d /*" 2>/dev/null | tr -d '\r')
               COMPREPLY=( $(compgen -W "$files" -o filenames -- ${cur}) )
           else
-              local files=$(adb shell "ls -a -d ${cur}*" 2>/dev/null | tr '\n' ' ' | tr -d '\r')
+              local stripped_cur=$(echo ${cur} | sed 's,^",,')
+              local files=$(adb shell "ls -a -d '${stripped_cur}'*" 2>/dev/null | tr -d '\r')
               COMPREPLY=( $(compgen -W "$files" -o filenames -- ${cur}) )
           fi
           return 0
@@ -134,11 +152,13 @@ function _adb()
       ;;
     push)
       if [ "${COMP_WORDS[COMP_CWORD-2]}" == "push" ]; then
+          local IFS=$'\n'
           if [ -z "${cur}" ]; then
-              local files=$(adb shell "ls -a -d /*" 2>/dev/null | tr '\n' ' ' | tr -d '\r')
+              local files=$(adb shell "ls -a -d /*" 2>/dev/null | tr -d '\r')
               COMPREPLY=( $(compgen -W "$files" -o filenames -- ${cur}) )
           else
-              local files=$(adb shell "ls -a -d ${cur}*" 2>/dev/null | tr '\n' ' ' | tr -d '\r')
+              local stripped_cur=$(echo ${cur} | sed 's,^",,')
+              local files=$(adb shell "ls -a -d '${stripped_cur}'*" 2>/dev/null | tr -d '\r')
               COMPREPLY=( $(compgen -W "$files" -o filenames -- ${cur}) )
           fi
           return 0

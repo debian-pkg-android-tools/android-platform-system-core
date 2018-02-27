@@ -19,8 +19,8 @@ Build-Depends: android-libunwind-dev (>= 7.0.0+r1~) [amd64 i386 armel armhf arm6
                googletest [amd64 i386 armel armhf arm64 mips mipsel mips64el] <!stage1>
 Standards-Version: 3.9.8
 Homepage: https://android.googlesource.com/platform/system/core
-Vcs-Git: https://anonscm.debian.org/git/android-tools/android-platform-system-core.git
-Vcs-Browser: https://anonscm.debian.org/cgit/android-tools/android-platform-system-core.git
+Vcs-Git: https://salsa.debian.org/android-tools-team/android-platform-system-core.git
+Vcs-Browser: https://salsa.debian.org/android-tools-team/android-platform-system-core
 
 Package: android-liblog
 Section: libs

@@ -23,7 +23,7 @@ Vcs-Git: https://salsa.debian.org/android-tools-team/android-platform-system-cor
 Vcs-Browser: https://salsa.debian.org/android-tools-team/android-platform-system-core
 
 Package: android-tools-fsutils
-Depends: simg2img,img2simg,mkuserimg-1.0,android-libext4-utils, ${misc:Depends}
+Depends: ext2simg,ext4fixup,img2simg,mkext4fs,mkuserimg,simg2img,simg2simg,simgdump ${misc:Depends}
 Architecture: all
 Priority: optional
 Section: oldlibs

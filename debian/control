@@ -31,6 +31,23 @@ Description: transitional package
   This is a transitional package. It can safely be removed.
 
 
+Package: simg2simg
+Architecture: amd64 i386
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Breaks: android-tools-fsutils (<< 6.0~)
+Replaces: android-tools-fsutils (<< 6.0~)
+Description: Android sparse image creation tool
+ A command line tool to create sparse images for usage with Android devices.
+
+Package: simgdump
+Architecture: amd64 i386
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Breaks: android-tools-fsutils (<< 6.0~)
+Replaces: android-tools-fsutils (<< 6.0~)
+Description: Android sparse image dump tool
+ A command line tool to create sparse images for usage with Android devices.
+
+
 Package: android-liblog
 Section: libs
 Architecture: amd64 i386 armel armhf arm64 mips mipsel mips64el
@@ -276,13 +293,7 @@ Replaces: android-tools-fsutils (<< 6.0~)
 Description: Android sparse image creation tool
  A command line tool to create sparse images for usage with Android devices.
 
-Package: simg2simg
-Architecture: amd64 i386
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Breaks: android-tools-fsutils (<< 6.0~)
-Replaces: android-tools-fsutils (<< 6.0~)
-Description: Android sparse image creation tool
- A command line tool to create sparse images for usage with Android devices.
+
 
 
 Package: append2simg

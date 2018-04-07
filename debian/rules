@@ -13,6 +13,7 @@ export DEB_LDFLAGS_MAINT_APPEND = -fPIC
 STAGE1_COMPONENTS = adb \
                     simg2img \
                     img2simg \
+		    simg2simg \
                     append2simg \
                     libadb.so \
                     libbacktrace.so \
@@ -64,13 +65,16 @@ fastboot: debian/fastboot.mk libziparchive.so libsparse.so libbase.so libcutils.
 simg2img: debian/simg2img.mk libsparse.so
 	make -f $<
 
+simg2simg: debian/simg2simg.mk libsparse.so
+	make -f $<
+
 img2simg: debian/img2simg.mk libsparse.so
 	make -f $<
 
 append2simg: debian/append2simg.mk libsparse.so
 	make -f $<
 
-.PHONY: adb fastboot simg2img img2simg append2simg
+.PHONY: adb fastboot simg2img img2simg simg2simg append2simg
 
 %:
 	dh $@ --with bash-completion

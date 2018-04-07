@@ -1,0 +1,14 @@
+Package: simgdump
+Source: android-platform-system-core
+Version: 1:7.0.0+r33-2
+Architecture: amd64
+Maintainer: Android Tools Maintainers <android-tools-devel@lists.alioth.debian.org>
+Installed-Size: 27
+Depends: python
+Breaks: android-tools-fsutils (<< 6.0~)
+Replaces: android-tools-fsutils (<< 6.0~)
+Section: devel
+Priority: optional
+Homepage: https://android.googlesource.com/platform/system/core
+Description: Android sparse image dump tool
+ A command line tool to create sparse images for usage with Android devices.

@@ -35,8 +35,8 @@ Description: Transitional package
 Package: android-sdk-libsparse-utils
 Architecture: amd64 i386
 Depends: python,${shlibs:Depends}, ${misc:Depends}
-Breaks: android-tools-fsutils (<< 6.0~)
-Replaces: android-tools-fsutils (<< 6.0~)
+Breaks: android-tools-fsutils (<< 5.1.1.r38-1.1~)
+Replaces: android-tools-fsutils (<< 5.1.1.r38-1.1~)
 Description: Android sparse image creation tool
  Command line tools to create sparse images for usage with Android devices.
 
@@ -271,8 +271,8 @@ Description: Android fastboot tool
 Package: simg2img
 Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Breaks: android-tools-fsutils (<< 6.0~)
-Replaces: android-tools-fsutils (<< 6.0~)
+Breaks: android-tools-fsutils (<< 5.1.1.r38-1.1~)
+Replaces: android-tools-fsutils (<< 5.1.1.r38-1.1~)
 Description: Android sparse image conversion tool
  A command line tool to convert sparse images to raw images, which can then
  be manipulated with the standard tools.
